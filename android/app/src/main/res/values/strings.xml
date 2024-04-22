@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">invoiceGenerator</string>
+    <string name="title_activity_main">invoiceGenerator</string>
+    <string name="package_name">com.zaions.invoiceGenerator</string>
+    <string name="custom_url_scheme">com.zaions.invoiceGenerator</string>
+</resources>

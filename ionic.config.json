@@ -1,0 +1,7 @@
+{
+  "name": "invoice-app-frontend",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "custom"
+}

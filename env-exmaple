@@ -1,0 +1,9 @@
+GENERATE_SOURCEMAP=false
+VITE_TITLE="Invoice"
+VITE_BACKEND_URL='http://localhost:8000'
+VITE_BACKEND_URL_PROD='We need to provide the backend app url of the production app, "{domain}", without the ending "/" and the rest will get handled by the frontend app.'
+VITE_API_URL='http://localhost:8000/api'
+VITE_API_URL_PROD='We need to provide the backend API url of the production app, "{domain}/api" and the rest will get handled by the frontend app.'
+VITE_CRYPTO_SECRET=''
+
+# Added By Developer
