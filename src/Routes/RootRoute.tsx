@@ -6,14 +6,19 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import NotFound404Page from '@/Pages/Common/404';
 import ZFullPageFallbackLoader from '@/Components/Elements/FallbackLoader';
 
+// Radix UI
+import { Theme } from '@radix-ui/themes';
+
 // eslint-disable-next-line react-refresh/only-export-components
 const ZaionsTSRAppRoot: React.FC = () => {
   //
   return (
     <>
-      <Outlet />
-      <ZGlobalComponents />
-      <ToastContainer />
+      <Theme>
+        <Outlet />
+        <ZGlobalComponents />
+        <ToastContainer />
+      </Theme>
 
       {/* React Query Devtools */}
       <ReactQueryDevtools initialIsOpen={false} />

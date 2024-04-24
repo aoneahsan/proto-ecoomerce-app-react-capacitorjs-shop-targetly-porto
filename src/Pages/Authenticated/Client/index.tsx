@@ -64,7 +64,7 @@ import { ItemPerPage } from '@/Data/ItemPerPage.data';
 
 // #region ---- Images Imports ----
 import { productVector, TrashBinSvg, EllipsisSvg } from '@/assets';
-import { constants } from '@/utils/Constants';
+import constants from '@/utils/Constants';
 
 // #endregion
 

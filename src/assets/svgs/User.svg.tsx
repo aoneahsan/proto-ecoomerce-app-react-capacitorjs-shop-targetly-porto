@@ -1,4 +1,4 @@
-import { ZClassNames } from '@/Packages/ClassNames';
+import React from 'react';
 
 const UserSvg: React.FC<{
   color?: string;
@@ -8,21 +8,30 @@ const UserSvg: React.FC<{
   return (
     <svg
       onClick={onClick}
-      className={ZClassNames(className, {
-        'w-5 h-5': true
-      })}
-      xmlns='http://www.w3.org/2000/svg'
-      width='25'
-      height='24'
-      viewBox='0 0 25 24'
+      className={className}
+      viewBox='0 0 24 24'
       fill='none'
+      xmlns='http://www.w3.org/2000/svg'
     >
-      <path
-        fillRule='evenodd'
-        clipRule='evenodd'
-        d='M12.5002 2C6.98024 2 2.50024 6.48 2.50024 12C2.50024 17.52 6.98024 22 12.5002 22C18.0202 22 22.5002 17.52 22.5002 12C22.5002 6.48 18.0202 2 12.5002 2ZM12.5002 5C14.1602 5 15.5002 6.34 15.5002 8C15.5002 9.66 14.1602 11 12.5002 11C10.8402 11 9.50024 9.66 9.50024 8C9.50024 6.34 10.8402 5 12.5002 5ZM6.50024 15.98C7.79024 17.92 10.0002 19.2 12.5002 19.2C15.0002 19.2 17.2102 17.92 18.5002 15.98C18.4702 13.99 14.4902 12.9 12.5002 12.9C10.5002 12.9 6.53024 13.99 6.50024 15.98Z'
-        fill={color}
-      />
+      <g strokeWidth='0' />
+      <g strokeLinecap='round' strokeLinejoin='round' />
+      <g>
+        <path
+          d='M12.1992 12C14.9606 12 17.1992 9.76142 17.1992 7C17.1992 4.23858 14.9606 2 12.1992 2C9.43779 2 7.19922 4.23858 7.19922 7C7.19922 9.76142 9.43779 12 12.1992 12Z'
+          stroke={color}
+          strokeWidth='1.3'
+          strokeLinecap='round'
+          strokeLinejoin='round'
+        />
+        <path
+          d='M3 22C3.57038 20.0332 4.74796 18.2971 6.3644 17.0399C7.98083 15.7827 9.95335 15.0687 12 15C16.12 15 19.63 17.91 21 22'
+          stroke={color}
+          strokeWidth='1.3'
+          strokeLinecap='round'
+          strokeLinejoin='round'
+          transform='translate(0,-1)'
+        />
+      </g>
     </svg>
   );
 };

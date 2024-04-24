@@ -2,13 +2,13 @@
 
 vars:
   BUNDLE_ID:
-    default: com.zaions.invoiceGenerator
+    default: com.zaions.protoEcoomerce
   PACKAGE_NAME:
-    default: com.zaions.invoiceGenerator
+    default: com.zaions.protoEcoomerce
   PRODUCT_NAME:
-    default: "Invoice App"
+    default: 'Invoice App'
   DISPLAY_NAME:
-    default: "Invoice App"
+    default: 'Invoice App'
 
 platforms:
   ios:

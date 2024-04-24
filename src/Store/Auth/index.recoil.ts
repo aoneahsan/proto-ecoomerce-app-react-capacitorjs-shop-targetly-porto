@@ -2,7 +2,7 @@ import { atom, selector } from 'recoil';
 
 //
 import { type UserAuthTokenI } from '@/Types/Auth/index.type';
-import { constants } from '@/utils/Constants';
+import constants from '@/utils/Constants';
 import { Storage } from '@/utils/Helpers';
 import { ZUserRStateAtom } from './User';
 

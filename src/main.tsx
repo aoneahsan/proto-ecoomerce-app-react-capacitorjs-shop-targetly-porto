@@ -1,8 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import AppEntryPoint from './AppEntryPoint';
-import './index.css';
-import './toastify.css';
+
+// === Styles
+
+// Radix UI CSS
+import '@radix-ui/themes/styles.css';
+
+import './css/index.css';
+import './css/toastify.css';
+import './css/demo1.min.css';
 
 const rootElement = document.getElementById('root');
 

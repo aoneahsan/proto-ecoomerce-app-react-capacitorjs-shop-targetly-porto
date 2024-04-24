@@ -8,7 +8,7 @@ import {
 
 // #region Custom imports
 import { Storage } from '@/utils/Helpers';
-import { constants } from '@/utils/Constants';
+import constants from '@/utils/Constants';
 import tanstackRootRoute from './RootRoute';
 import { AppRoutes } from '@/Routes/AppRoutes';
 import { type ZAuthI } from '@/Types/Auth/index.type';
@@ -356,6 +356,6 @@ export const testingRoute = createRoute({
   component: lazyRouteComponent(
     async (): Promise<Record<string, unknown>> =>
       await import('@/Pages/TestingPage')
-  ),
-  beforeLoad: privateRouteHandler
+  )
+  // beforeLoad: privateRouteHandler
 });

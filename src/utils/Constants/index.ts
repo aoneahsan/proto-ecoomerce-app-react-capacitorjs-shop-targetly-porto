@@ -1,4 +1,19 @@
 /**
+ * Product Information
+ */
+const productInfo = {
+  name: 'Porto',
+  domain: 'zaions.com'
+} as const;
+
+/**
+ * Company Details
+ */
+export const companyBusinessDetails = {
+  websiteUrl: 'https://zaions.com'
+} as const;
+
+/**
  * External Url's and other
  */
 const externalSites = {
@@ -59,9 +74,43 @@ const mediaScales = {
 };
 
 /**
+ * Default metadata for React-Helmet component.
+ */
+const helmetDefaults = {
+  title: `${productInfo.name} - Zaions`,
+  description: `${productInfo.name} - eCommerce App`,
+  keywords: 'zaions1, zaions2',
+  author: 'Ahsan Mahmood',
+  viewport: 'width=device-width, initial-scale=1.0',
+  refresh: '8100',
+  ogTitle: 'Zaions.com',
+  ogType: 'website',
+  ogUrl: companyBusinessDetails.websiteUrl,
+  ogImage: '', // product logo here
+  ogDescription: 'Zaions The Group of Projects',
+  ogLocale: 'en_US',
+  ogSiteName: 'Zaions',
+  twitterCard: 'zaions_logo',
+  twitterSite: '@zaions',
+  twitterCreator: '#aoneahsan',
+  twitterTitle: 'Zaions',
+  twitterDescription: ' The Group of Projects',
+  twitterImage: '', // product logo here
+  shortcutIcon: '', // product logo here
+  contentSecurityPolicy:
+    "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';",
+  XUACompatible: 'ie=edge',
+  copyRight: 'Copyright 2021',
+  roboto: 'index,follow'
+  // ...
+} as const;
+
+/**
  * Object containing various constants for the application.
  */
-export const constants = {
+const constants = {
+  productInfo,
+  companyBusinessDetails,
   password,
   localstorageKeys,
   api,
@@ -69,5 +118,8 @@ export const constants = {
   deleteConfirmWords,
   showAllOption,
   externalSites,
-  mediaScales
+  mediaScales,
+  helmetDefaults
 };
+
+export default constants;

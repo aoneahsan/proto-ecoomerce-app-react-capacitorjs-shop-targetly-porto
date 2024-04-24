@@ -35,7 +35,7 @@ import {
 } from '@/utils/Helpers';
 import { zValidationRuleE } from '@/utils/Enums/index.enum';
 import { extractInnerData } from '@/utils/Helpers/APIS';
-import { constants } from '@/utils/Constants';
+import constants from '@/utils/Constants';
 import {
   showErrorNotification,
   showSuccessNotification

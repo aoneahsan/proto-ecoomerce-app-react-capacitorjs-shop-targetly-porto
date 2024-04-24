@@ -9,7 +9,7 @@ import { useSetRecoilState } from 'recoil';
 // #endregion
 
 // #region ---- Custom Imports ----
-import { constants } from '@/utils/Constants';
+import constants from '@/utils/Constants';
 import { Storage } from '@/utils/Helpers';
 import { zAxiosApiRequest } from '@/utils/Helpers/APIS';
 

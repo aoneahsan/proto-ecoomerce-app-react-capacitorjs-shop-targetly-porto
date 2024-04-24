@@ -1,8 +1,8 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.zaions.invoiceGenerator',
-  appName: 'invoiceGenerator',
+  appId: 'com.zaions.protoEcoomerce',
+  appName: 'protoEcoomerce',
   webDir: 'dist',
   server: {
     androidScheme: 'https'

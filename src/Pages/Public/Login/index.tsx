@@ -30,7 +30,7 @@ import ZButton from '@/Components/Elements/Button';
 import Copyright from '@/Components/Inpage/Copyright';
 import { useZRQCreateRequest } from '@/ZHooks/zreactquery.hooks';
 import { extractInnerData } from '@/utils/Helpers/APIS';
-import { constants } from '@/utils/Constants';
+import constants from '@/utils/Constants';
 import { showSuccessNotification } from '@/utils/Helpers/Notification';
 import { messages } from '@/utils/Messages';
 

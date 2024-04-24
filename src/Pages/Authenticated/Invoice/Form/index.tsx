@@ -93,7 +93,7 @@ import {
   ImageSvg,
   SpinSvg
 } from '@/assets';
-import { constants } from '@/utils/Constants';
+import constants from '@/utils/Constants';
 import { ENVS } from '@/utils/EnvKeys';
 // #endregion
 

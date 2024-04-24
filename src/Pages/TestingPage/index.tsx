@@ -1,4 +1,6 @@
 // #region ---- Core Imports ----
+import { ZRUButton } from '@/Components/RadixUI';
+import { ZRUColorE } from '@/Types/radixUI/index.type';
 import React from 'react';
 
 // #endregion
@@ -28,7 +30,13 @@ import React from 'react';
 // #endregion
 
 const TestingPage: React.FC = () => {
-  return <>this is a testing page </>;
+  return (
+    <>
+      <ZRUButton color={ZRUColorE.bronze} size={{ xl: '4', lg: '3', md: '2' }}>
+        Test
+      </ZRUButton>
+    </>
+  );
 };
 
 export default TestingPage;

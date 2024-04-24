@@ -31,6 +31,13 @@ import CheckSvg from './svgs/Check.svg';
 import EllipsisSvg from './svgs/Ellipsis.svg';
 import Z404Svg from './svgs/404.svg';
 import ZLockSvg from './svgs/Lock.svg';
+import ZFacebookSvg from './svgs/Facebook.svg';
+import ZTwitterSvg from './svgs/Twitter.svg';
+import ZInstagramSvg from './svgs/Instagram.svg';
+import ZPhoneSvg from './svgs/Phone.svg';
+import ZHeartSvg from './svgs/Heart.svg';
+import ZChevronLeftSvg from './svgs/ChevronLeft.svg';
+import ZCartBagSvg from './svgs/CartBag.svg';
 
 // Lottie's
 import flowLottie from './lotties/flow.json';
@@ -74,5 +81,12 @@ export {
   CheckSvg,
   EllipsisSvg,
   Z404Svg,
-  ZLockSvg
+  ZLockSvg,
+  ZFacebookSvg,
+  ZTwitterSvg,
+  ZInstagramSvg,
+  ZPhoneSvg,
+  ZHeartSvg,
+  ZChevronLeftSvg,
+  ZCartBagSvg
 };
