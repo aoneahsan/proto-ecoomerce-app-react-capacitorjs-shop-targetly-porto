@@ -436,10 +436,10 @@
   background-color: #f4f4f4 !important;
 }
 .bg-dark {
-  background-color: #222529 !important;
+  background-color: rgb(34, 37, 41) !important;
 }
 .bg-dark2 {
-  background-color: #2f3946 !important;
+  background-color: rgb(47, 57, 70) !important;
 }
 .bg-primary {
   background-color: #08c !important;

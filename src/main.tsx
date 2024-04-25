@@ -9,7 +9,6 @@ import '@radix-ui/themes/styles.css';
 
 import './css/index.css';
 import './css/toastify.css';
-import './css/demo1.min.css';
 
 const rootElement = document.getElementById('root');
 

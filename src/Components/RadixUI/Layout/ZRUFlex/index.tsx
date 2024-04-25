@@ -20,7 +20,7 @@ import {
   type ZRUDirectionE,
   type ZRUAlignE,
   type ZRUJustifyE,
-  type ZRUWrapE,
+  type ZRUWrapFlexE,
   type ZRUStyleI
 } from '@/Types/radixUI/index.type';
 import { type Responsive } from '@radix-ui/themes/dist/cjs/props';
@@ -34,7 +34,7 @@ interface ZRUFlexI extends ZRUStyleI {
   display: Responsive<ZRUDisplayE>;
   align: Responsive<ZRUAlignE>;
   justify: Responsive<ZRUJustifyE>;
-  wrap: Responsive<ZRUWrapE>;
+  wrap: Responsive<ZRUWrapFlexE>;
   gap: Responsive<string>;
   gapX: Responsive<string>;
   gapY: Responsive<string>;

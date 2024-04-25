@@ -1,6 +1,24 @@
 import { type Responsive } from '@radix-ui/themes/dist/cjs/props';
 // #region ===== Enums =====
 /**
+ * Enum representing the side of radix ui elements.
+ */
+export enum ZRUSideE {
+  left = 'left',
+  right = 'right'
+}
+
+/**
+ * Enum representing the variant of radix ui elements.
+ */
+export enum ZRUTriggerVariantE {
+  classic = 'classic',
+  surface = 'surface',
+  soft = 'soft',
+  ghost = 'ghost'
+}
+
+/**
  * Enum representing the variant of radix ui button element.
  */
 export enum ZRUVariantE {
@@ -13,7 +31,7 @@ export enum ZRUVariantE {
 }
 
 /**
- * Enum representing the color of radix ui button element.
+ * Enum representing the color of radix ui elements.
  */
 export enum ZRUColorE {
   gray = 'gray',
@@ -56,11 +74,33 @@ export enum ZRURadiusE {
 }
 
 /**
- * Enum representing the 'as' of radix ui flex element.
+ * Enum representing the 'as' of radix ui elements.
  */
 export enum ZRUAsE {
   div = 'div',
   span = 'span'
+}
+
+/**
+ * Enum representing the 'as' of radix ui Text elements.
+ */
+export enum ZRUTextAsE {
+  div = 'div',
+  span = 'span',
+  label = 'label',
+  p = 'p'
+}
+
+/**
+ * Enum representing the 'as' of radix ui Heading elements.
+ */
+export enum ZRUHeadingAsE {
+  h1 = 'h1',
+  h2 = 'h2',
+  h3 = 'h3',
+  h4 = 'h4',
+  h5 = 'h5',
+  h6 = 'h6'
 }
 
 /**
@@ -102,6 +142,16 @@ export enum ZRUContainerDisplayE {
 }
 
 /**
+ * Enum representing the 'display' of radix ui box element.
+ */
+export enum ZRUBoxDisplayE {
+  none = 'none',
+  inline = 'inline',
+  inlineBlock = 'inline-block',
+  block = 'block'
+}
+
+/**
  * Enum representing the 'align' of radix ui flex element.
  */
 export enum ZRUAlignE {
@@ -113,12 +163,22 @@ export enum ZRUAlignE {
 }
 
 /**
- * Enum representing the 'align' of radix ui container element.
+ * Enum representing the alignment options for various radix UI elements.
  */
-export enum ZRUContainerAlignE {
+export enum ZRUGeneralAlignE {
   left = 'left',
   center = 'center',
   right = 'right'
+}
+
+/**
+ * Enum representing the trim options for various radix UI elements.
+ */
+export enum ZRUTrimE {
+  normal = 'normal',
+  start = 'start',
+  end = 'end',
+  both = 'both'
 }
 
 /**
@@ -134,10 +194,20 @@ export enum ZRUJustifyE {
 /**
  * Enum representing the 'wrap' of radix ui flex element.
  */
-export enum ZRUWrapE {
+export enum ZRUWrapFlexE {
   nowrap = 'nowrap',
   wrap = 'wrap',
   wrapReverse = 'wrap-reverse'
+}
+
+/**
+ * Enum representing the 'wrap' of radix ui flex element.
+ */
+export enum ZRUWrapE {
+  nowrap = 'nowrap',
+  wrap = 'wrap',
+  pretty = 'pretty',
+  balance = 'balance'
 }
 
 /**
@@ -149,6 +219,24 @@ export enum ZRUOverflowE {
   clip = 'clip',
   scroll = 'scroll',
   auto = 'auto'
+}
+
+/**
+ * Enum representing the 'weight' of radix ui flex element.
+ */
+export enum ZRUWeightE {
+  light = 'light',
+  regular = 'regular',
+  medium = 'medium',
+  bold = 'bold'
+}
+
+/**
+ * Enum representing the 'position' of radix ui Select.Content element.
+ */
+export enum ZRUSelectContentPositionE {
+  itemAligned = 'item-aligned',
+  popper = 'popper'
 }
 // #endregion
 
@@ -186,6 +274,21 @@ export interface ZRUStyleI {
   gridRowStart?: Responsive<string>;
   gridRowEnd?: Responsive<string>;
 }
+
+export interface ZRUMarginI {
+  m?: Responsive<string>;
+  mx?: Responsive<string>;
+  my?: Responsive<string>;
+  mt?: Responsive<string>;
+  mr?: Responsive<string>;
+  mb?: Responsive<string>;
+  ml?: Responsive<string>;
+}
+
+export interface ZRUSelectValueI {
+  value: string;
+  label: string;
+}
 // #endregion
 
 // #region ===== Types =====
@@ -199,6 +302,11 @@ export type ResponsiveT<T> = T | Record<string, T>;
  * Type representing the size of radix ui button element.
  */
 export type ZRUSizeT = '1' | '2' | '3' | '4';
+
+/**
+ * Type representing the size of radix ui button element.
+ */
+export type ZRUTextSizeT = '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9';
 
 /**
  * Type representing the margin of radix ui elements.

@@ -36,48 +36,54 @@ import {
 } from '@/assets';
 import { ZCurrenciesData } from '@/Data/Currencies.data';
 import ZLanguagesData from '@/Data/Languages.data';
+import {
+  ZRUInput,
+  ZRUInputSlot,
+  ZRUSelect,
+  ZRUText
+} from '@/Components/RadixUI';
+import {
+  ZRURadiusE,
+  ZRUSelectContentPositionE,
+  ZRUSideE,
+  ZRUTextAsE,
+  ZRUTriggerVariantE
+} from '@/Types/radixUI/index.type';
+import classNames from 'classnames';
 
 // #endregion
 
 const ZCurrenciesDropDown: React.FC = () => {
   return (
-    <div className='pl-1 ml-3 header-dropdown'>
-      <span className='flex items-center gap-1'>
-        USD <ChevronDown className='w-4 h-4' />
-      </span>
-      <div className='header-menu'>
-        <ul className='!ps-3 !pe-6'>
-          {ZCurrenciesData?.map((el, index) => (
-            <li key={index}>
-              <span className='text-[#777] mb-1 block cursor-pointer'>
-                {el?.value}
-              </span>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
+    <ZRUSelect
+      options={ZCurrenciesData?.map((el) => ({
+        label: el?.value,
+        value: el?.value
+      }))}
+      defaultValue={ZCurrenciesData?.[0]?.value}
+      trigger={{
+        placeholder: 'Select Currency',
+        variant: ZRUTriggerVariantE.ghost,
+        className: 'text-white font-medium text-xs'
+      }}
+    />
   );
 };
 
 const ZLanguagesDropDown: React.FC = () => {
   return (
-    <div className='mr-auto header-dropdown mr-sm-3 mr-md-0'>
-      <span className='flex items-center gap-1'>
-        ENG <ChevronDown className='w-4 h-4' />
-      </span>
-      <div className='header-menu'>
-        <ul className='!ps-3 !pe-6'>
-          {ZLanguagesData?.map((el, index) => (
-            <li key={index}>
-              <span className='text-[#777] mb-1 block cursor-pointer'>
-                {el?.shortForm}
-              </span>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
+    <ZRUSelect
+      options={ZLanguagesData?.map((el) => ({
+        label: el?.shortForm,
+        value: el?.value
+      }))}
+      defaultValue={ZLanguagesData?.[0]?.value}
+      trigger={{
+        placeholder: 'Select Languages',
+        variant: ZRUTriggerVariantE.ghost,
+        className: 'text-white font-medium text-xs'
+      }}
+    />
   );
 };
 
@@ -86,74 +92,47 @@ const ZLanguagesDropDown: React.FC = () => {
  */
 const ZPublicNavigation: React.FC = () => {
   return (
-    <header className='header home'>
+    <header>
       {/* Top bar */}
-      <div className='header-top bg-primary text-uppercase'>
-        <div className='container mx-auto'>
+      <div className='w-full py-3 bg-primary text-uppercase'>
+        <div className='container flex items-center mx-auto'>
           {/* Countries & Languages dropdowns */}
-          <div className='header-left'>
+          <div className='flex items-center gap-6 font-medium'>
             <ZLanguagesDropDown />
 
             <ZCurrenciesDropDown />
           </div>
 
-          <div className='ml-0 header-right header-dropdowns ml-sm-auto'>
-            <p className='mb-0 uppercase top-message d-none d-sm-block'>
+          <div className='flex items-center ms-auto'>
+            <p className='hidden mb-0 text-xs font-medium uppercase me-8 sm:block text-light-blue-100'>
               Welcome To {constants?.productInfo?.name}!
             </p>
 
             {/* Menu */}
-            <div className='mr-3 header-dropdown dropdown-expanded'>
-              <a href='#'>Links</a>
-              <div className='header-menu'>
-                <ul>
-                  <li>
-                    <span className='font-bold uppercase cursor-pointer'>
-                      My Account
-                    </span>
-                  </li>
-                  <li>
-                    <span className='font-bold uppercase cursor-pointer'>
-                      Contact Us
-                    </span>
-                  </li>
-                  <li>
-                    <span className='font-bold uppercase cursor-pointer'>
-                      My Wishlist
-                    </span>
-                  </li>
-                  <li>
-                    <span className='font-bold uppercase cursor-pointer'>
-                      Site Map
-                    </span>
-                  </li>
-                  <li>
-                    <span className='font-bold uppercase cursor-pointer'>
-                      Cart
-                    </span>
-                  </li>
-                  <li>
-                    <span className='font-bold uppercase cursor-pointer'>
-                      Log In
-                    </span>
-                  </li>
-                </ul>
-              </div>
-              {/* End .header-menu */}
-            </div>
+            <ul className='flex items-center gap-8 *:inline-block *:mb-0 *:text-xs *:font-medium *:uppercase *:cursor-pointer *:text-light-blue-100'>
+              <li>My Account</li>
+              <li>Contact us</li>
+              <li>My wishlist</li>
+              <li>Site map</li>
+              <li>Cart</li>
+              <li>Login</li>
+            </ul>
 
-            <span className='separator'></span>
+            {/* separator */}
+            <div className='h-5 border-l ms-5 me-4 border-light-blue-100'></div>
 
-            {/* Social icons */}
-            <div className='social-icons'>
-              <div className='inline ml-0 cursor-pointer social-icon social-facebook'>
-                <ZFacebookSvg className='w-5 h-5' />
+            {/* Social buttons */}
+            <div className='*:flex *:items-center *:rounded-full *:cursor-pointer *:justify-center *:social-icon flex items-center *:text-[0.8125rem] *:w-6 *:h-6 gap-1'>
+              <div className='hover:bg-facebook'>
+                <ZFacebookSvg className='w-[60%] h-[60%] text-light-blue-100' />
               </div>
-              <div className='inline ml-0 cursor-pointer social-icon social-twitter'>
-                <ZTwitterSvg className='w-5 h-5' />
+
+              <div className='hover:bg-twitter'>
+                <ZTwitterSvg className='w-[60%] h-[60%] text-light-blue-100' />
               </div>
-              <div className='inline ml-0 cursor-pointer social-icon social-instagram'>
-                <ZInstagramSvg className='w-5 h-5' />
+
+              <div className='hover:bg-instagram'>
+                <ZInstagramSvg className='w-[60%] h-[60%] text-light-blue-100' />
               </div>
             </div>
           </div>
@@ -161,12 +140,9 @@ const ZPublicNavigation: React.FC = () => {
       </div>
 
       {/* Middle bar */}
-      <div className='header-middle text-dark sticky-header'>
-        <div className='container mx-auto'>
-          <div className='w-1/6 pl-0 header-left'>
-            <button className='mr-2 mobile-menu-toggler' type='button'>
-              <i className='fas fa-bars'></i>
-            </button>
+      <div className='w-full py-3 pt-5 text-dark'>
+        <div className='container flex items-center mx-auto'>
+          <div className='flex items-center w-1/6 ps-0'>
             <img
               src={productLogo}
               width='111'
@@ -175,88 +151,66 @@ const ZPublicNavigation: React.FC = () => {
               className='cursor-pointer logo'
             />
           </div>
-          {/* End .header-left */}
 
-          <div className='flex-1 pl-2 header-right'>
-            <div className='flex-1 header-search header-icon header-search-inline header-search-category'>
-              <a href='#' className='search-toggle' role='button'>
-                <i className='icon-search-3'></i>
-              </a>
-              <form action='#' method='get'>
-                <div className='header-search-wrapper'>
-                  <input
-                    type='search'
-                    className='flex-1 form-control'
-                    name='q'
-                    id='q'
-                    placeholder='Search...'
-                    required
-                  />
-                  <div className='select-custom'>
-                    <select id='cat' name='cat'>
-                      <option value=''>All Categories</option>
-                      <option value='4'>Fashion</option>
-                      <option value='12'>- Women</option>
-                      <option value='13'>- Men</option>
-                      <option value='66'>- Jewellery</option>
-                      <option value='67'>- Kids Fashion</option>
-                      <option value='5'>Electronics</option>
-                      <option value='21'>- Smart TVs</option>
-                      <option value='22'>- Cameras</option>
-                      <option value='63'>- Games</option>
-                      <option value='7'>Home &amp; Garden</option>
-                      <option value='11'>Motors</option>
-                      <option value='31'>- Cars and Trucks</option>
-                      <option value='32'>
-                        - Motorcycles &amp; Powersports
-                      </option>
-                      <option value='33'>- Parts &amp; Accessories</option>
-                      <option value='34'>- Boats</option>
-                      <option value='57'>- Auto Tools &amp; Supplies</option>
-                    </select>
-                  </div>
-                  {/* End .select-custom */}
-                  <button
-                    className='flex items-center justify-center btn'
-                    type='submit'
-                  >
-                    <SearchSvg className='w-8 h-8' />
-                  </button>
-                </div>
-                {/* End .header-search-wrapper */}
-              </form>
-            </div>
-            {/* End .header-search */}
+          <div className='flex items-center flex-1 pl-2 mx-auto pe-3 text-dark'>
+            <ZRUInput
+              className='flex-1'
+              placeholder='Search...'
+              size='3'
+              radius={ZRURadiusE.full}
+            >
+              <ZRUInputSlot
+                side={ZRUSideE.right}
+                className='border-gray-100 border-s'
+              >
+                <ZRUSelect
+                  options={[
+                    { label: 'All Categories', value: 'All Categories' }
+                  ]}
+                  content={{
+                    position: ZRUSelectContentPositionE.popper
+                  }}
+                  trigger={{
+                    placeholder: 'All Categories',
+                    variant: ZRUTriggerVariantE.ghost,
+                    className: 'font-medium text-sm text-medium'
+                  }}
+                />
+              </ZRUInputSlot>
+              <ZRUInputSlot
+                side={ZRUSideE.right}
+                className='border-gray-100 border-s'
+              >
+                <SearchSvg className='w-8 h-8 px-1 text-medium' />
+              </ZRUInputSlot>
+            </ZRUInput>
 
-            <div className='hidden gap-3 ms-5 me-5 header-contact lg:flex align-items-center xl:pe-5 xl:me-3'>
-              <ZPhoneSvg className='w-16 h-16' />
-              <h6 className='pt-1 line-height-1'>
+            <div className='items-center hidden gap-2 uppercase ms-7 me-5 lg:flex xl:pe-5 xl:me-3'>
+              <ZPhoneSvg className='w-10 h-10' />
+              <ZRUText className='pt-1 text-xs font-medium leading-none'>
                 Call us now
-                <a href='tel:#' className='pt-1 d-block text-dark ls-10'>
+                <ZRUText className='block text-lg tracking-wide text-dark ls-10'>
                   +123 5678 890
-                </a>
-              </h6>
-            </div>
-            {/* End .header-contact */}
-
-            <div className='mx-4'>
-              <UserSvg className='w-14 h-14' />
+                </ZRUText>
+              </ZRUText>
             </div>
 
             <div className='mx-4'>
-              <ZHeartSvg className='w-14 h-14' />
+              <UserSvg className='w-8 h-8' />
+            </div>
+
+            <div className='mx-4'>
+              <ZHeartSvg className='w-8 h-8' />
             </div>
 
             <div className='ms-4 me-2'>
-              <ZCartBagSvg className='w-12 h-12' />
+              <ZCartBagSvg className='w-8 h-8' />
             </div>
             <div className=''>
-              <ZChevronLeftSvg className='w-8 h-8 text-dark' />
+              <ZChevronLeftSvg className='w-5 h-5 text-dark' />
             </div>
           </div>
-          {/* End .header-right */}
         </div>
-        {/* End .container */}
       </div>
     </header>
   );

@@ -1,6 +1,4 @@
 // #region ---- Core Imports ----
-import { ZRUButton } from '@/Components/RadixUI';
-import { ZRUColorE } from '@/Types/radixUI/index.type';
 import React from 'react';
 
 // #endregion
@@ -10,6 +8,7 @@ import React from 'react';
 // #endregion
 
 // #region ---- Custom Imports ----
+import { ZRUButton, ZRUContainer, ZRUSelect } from '@/Components/RadixUI';
 
 // #endregion
 
@@ -26,16 +25,22 @@ import React from 'react';
 // #endregion
 
 // #region ---- Types Imports ----
+import { ZRUColorE } from '@/Types/radixUI/index.type';
 
 // #endregion
 
 const TestingPage: React.FC = () => {
   return (
-    <>
+    <ZRUContainer>
       <ZRUButton color={ZRUColorE.bronze} size={{ xl: '4', lg: '3', md: '2' }}>
         Test
       </ZRUButton>
-    </>
+      <ZRUSelect
+        trigger={{
+          placeholder: 'Select a value'
+        }}
+      />
+    </ZRUContainer>
   );
 };
 

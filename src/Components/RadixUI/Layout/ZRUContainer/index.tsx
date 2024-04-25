@@ -15,18 +15,19 @@ import { Container } from '@radix-ui/themes';
 // #region ---- Types Imports ----
 import { type Responsive } from '@radix-ui/themes/dist/cjs/props';
 import {
-  type ZRUContainerAlignE,
+  type ZRUGeneralAlignE,
   type ZRUContainerDisplayE,
-  type ZRUSizeT
+  type ZRUSizeT,
+  type ZRUStyleI
 } from '@/Types/radixUI/index.type';
-interface ZRUContainerI {
+interface ZRUContainerI extends ZRUStyleI {
   children?: React.ReactNode;
   asChild?: boolean;
   className?: string;
   style?: Record<string, unknown>;
   size?: Responsive<ZRUSizeT>;
   display?: Responsive<ZRUContainerDisplayE>;
-  align?: Responsive<ZRUContainerAlignE>;
+  align?: Responsive<ZRUGeneralAlignE>;
 }
 // #endregion
 

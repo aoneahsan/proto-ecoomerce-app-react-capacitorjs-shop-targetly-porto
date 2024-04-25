@@ -15,11 +15,11 @@ import {
   type ZRURadiusE,
   type ZRUSizeT,
   type ZRUColorE,
-  ZRUMarginT
+  type ZRUMarginI
 } from '@/Types/radixUI/index.type';
 import { type Responsive } from '@radix-ui/themes/dist/cjs/props';
 
-interface ZRUButtonI {
+interface ZRUButtonI extends ZRUMarginI {
   children?: React.ReactNode;
   asChild?: boolean;
   className?: string;
@@ -31,13 +31,7 @@ interface ZRUButtonI {
   loading?: boolean;
   disabled?: boolean;
   style?: Record<string, unknown>;
-  m?: Responsive<ZRUMarginT> | string;
-  mx?: Responsive<ZRUMarginT> | string;
-  my?: Responsive<ZRUMarginT> | string;
-  mt?: Responsive<ZRUMarginT> | string;
-  mr?: Responsive<ZRUMarginT> | string;
-  mb?: Responsive<ZRUMarginT> | string;
-  ml?: Responsive<ZRUMarginT> | string;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 // #endregion
 
@@ -62,7 +56,8 @@ const ZRUButton: React.FC<ZRUButtonI> = ({
   highContrast,
   radius,
   loading = false,
-  disabled = false
+  disabled = false,
+  onClick
 }) => {
   return (
     <Button
@@ -86,6 +81,7 @@ const ZRUButton: React.FC<ZRUButtonI> = ({
         '!cursor-pointer': !loading,
         '!cursor-not-allowed': loading
       })}
+      onClick={onClick}
     >
       {children}
     </Button>
