@@ -18,9 +18,11 @@ const AppRoutesCommonPath = {
 
 const AppRoutesE = {
   home: '/',
-  login: '/sign-in',
-  register: '/sign-up',
+  login: '/login',
+  register: '/register',
   forgotPassword: '/forgot-password',
+  category: '/category',
+  product: '/product',
 
   onBoardingSub: {
     profileDetailsStep: {

@@ -228,7 +228,7 @@ const Invoices: React.FC = () => {
                 }
               >
                 10
-                <ChevronDown className='ms-2 w-[1.75rem] h-[1.75rem]' />
+                <ZChevronDown className='ms-2 w-[1.75rem] h-[1.75rem]' />
               </ZButton> */}
               <ZBtnSelect
                 options={ItemPerPage}
@@ -292,7 +292,7 @@ const Invoices: React.FC = () => {
                 }
               >
                 Show All
-                <ChevronDown className='ms-2 w-[1.75rem] h-[1.75rem]' />
+                <ZChevronDown className='ms-2 w-[1.75rem] h-[1.75rem]' />
               </ZButton> */}
 
               <ZBtnSelect

@@ -11,11 +11,37 @@ export enum ZRUSideE {
 /**
  * Enum representing the variant of radix ui elements.
  */
+export enum ZRUCommonVariantE {
+  classic = 'classic',
+  surface = 'surface'
+}
+
+/**
+ * Enum representing the variant of radix ui elements.
+ */
+export enum ZRUBasicVariantE {
+  classic = 'classic',
+  surface = 'surface',
+  ghost = 'ghost'
+}
+
+/**
+ * Enum representing the variant of radix ui elements.
+ */
 export enum ZRUTriggerVariantE {
   classic = 'classic',
   surface = 'surface',
+  soft = 'soft'
+}
+
+/**
+ * Enum representing the variant of radix ui Badge element.
+ */
+export enum ZRUBadgeVariantE {
+  solid = 'solid',
   soft = 'soft',
-  ghost = 'ghost'
+  surface = 'surface',
+  outline = 'outline'
 }
 
 /**
@@ -71,6 +97,25 @@ export enum ZRURadiusE {
   medium = 'medium',
   large = 'large',
   full = 'full'
+}
+
+/**
+ * Enum representing the scrollbars of radix ui ScrollArea element.
+ */
+export enum ZRUScrollbarsE {
+  vertical = 'vertical',
+  horizontal = 'horizontal',
+  both = 'both'
+}
+
+/**
+ * Enum representing the type of radix ui ScrollArea element.
+ */
+export enum ZRUScrollbarTypeE {
+  auto = 'auto',
+  always = 'always',
+  scroll = 'scroll',
+  hover = 'hover'
 }
 
 /**
@@ -237,6 +282,15 @@ export enum ZRUWeightE {
 export enum ZRUSelectContentPositionE {
   itemAligned = 'item-aligned',
   popper = 'popper'
+}
+// #endregion
+
+/**
+ * Enum representing the 'type' of radix ui According element.
+ */
+export enum ZRUAccordingTypeE {
+  single = 'single',
+  multiple = 'multiple'
 }
 // #endregion
 

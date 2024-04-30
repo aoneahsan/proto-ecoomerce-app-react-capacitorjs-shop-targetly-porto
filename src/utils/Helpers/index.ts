@@ -5,7 +5,7 @@ import { ZValidator } from '@/Packages/Validator';
 import constants from '@/utils/Constants';
 import { CONTAINS, zValidationRuleE } from '../Enums/index.enum';
 import { AES, enc } from 'crypto-js';
-import { ENVS } from '@/utils/EnvKeys';
+import ENVS from '@/utils/EnvKeys';
 import { Preferences } from '@capacitor/preferences';
 import { Dialog } from '@capacitor/dialog';
 import { type ZInvoiceTypeE } from '@/Types/Auth/Invoice';

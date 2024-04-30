@@ -1,6 +1,12 @@
 import { type ZColorEnum } from '@/utils/Enums/Elements.enum';
+import { type ConnectionStatus } from '@capacitor/network';
 
 export type ZGenericObject<T> = Record<string, T>;
+
+export enum ZSideE {
+  start = 'start',
+  end = 'end'
+}
 
 // app vise sidebar interface
 export interface ZSidebarI {
@@ -11,6 +17,7 @@ export interface ZSidebarI {
   //
   width?: string;
   shouldBackdropClose?: boolean;
+  side?: ZSideE;
 }
 
 // app vise loader interface
@@ -52,4 +59,13 @@ export interface useZMediaQueryScaleReturnInterface {
   is1250pxScale: boolean;
   is1150pxScale: boolean;
   is1100pxScale: boolean;
+  is900pxScale: boolean;
+  isBelow900pxScale: boolean;
+}
+
+/**
+ * network details interface.
+ */
+export interface ZNetworkI {
+  status?: ConnectionStatus;
 }

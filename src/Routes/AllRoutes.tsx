@@ -56,6 +56,7 @@ const publicRouteHandler = async (): Promise<void> => {
   });
 };
 
+// #region  ----- Public routes -----
 // --- Home
 export const homeRoute = createRoute({
   getParentRoute: () => tanstackRootRoute,
@@ -199,7 +200,9 @@ export const onboardingRoutesTree = onboardingRoute.addChildren([
   onboardingBankRoute
 ]);
 
-// #region Auth routes
+// #endregion
+
+// #region  ----- Auth routes -----
 // --- Profile Settings
 const profileSettingsRoute = createRoute({
   getParentRoute: () => tanstackRootRoute,
@@ -349,7 +352,32 @@ export const invoiceFormRouteTree = invoiceFormRoute.addChildren([
 
 // #endregion
 
-// Testing Page
+// #region  ----- Common routes -----
+// --- Category
+export const categoryRoute = createRoute({
+  getParentRoute: () => tanstackRootRoute,
+  path: AppRoutes.category,
+  component: lazyRouteComponent(
+    async (): Promise<Record<string, unknown>> =>
+      await import('@/Pages/Common/Category')
+  )
+  // beforeLoad: async ({ location }) => {},
+});
+
+// --- Product
+export const productRoute = createRoute({
+  getParentRoute: () => tanstackRootRoute,
+  path: AppRoutes.product,
+  component: lazyRouteComponent(
+    async (): Promise<Record<string, unknown>> =>
+      await import('@/Pages/Common/Product')
+  )
+  // beforeLoad: async ({ location }) => {},
+});
+
+// #endregion
+
+// #region  ----- Testing routes -----
 export const testingRoute = createRoute({
   getParentRoute: () => tanstackRootRoute,
   path: AppRoutes.Testing,
@@ -359,3 +387,5 @@ export const testingRoute = createRoute({
   )
   // beforeLoad: privateRouteHandler
 });
+
+// #endregion

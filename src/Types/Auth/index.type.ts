@@ -1,3 +1,4 @@
+import { type FetchUserAttributesOutput } from 'aws-amplify/auth';
 import { type ZRSelectOptions } from '../Elements/Select.type';
 
 // Enums
@@ -19,6 +20,33 @@ export enum ZErrorCodeEnum {
 }
 
 // Interfaces
+export interface ZUserI {
+  id?: string;
+  attributes?: FetchUserAttributesOutput;
+  username?: string;
+  email?: string;
+  password?: string;
+  canViewPassword?: boolean; // for frontend only
+  canViewConfirmPassword?: boolean; // for frontend only
+  confirmPassword?: string;
+
+  nickname?: string;
+  company?: string;
+  address?: string;
+  zipCode?: number;
+  city?: string;
+  country?: string;
+  logo?: {
+    url: string;
+    path: string;
+    file: null | File;
+  };
+  phoneNumber?: string;
+  note?: string;
+
+  //
+  verificationCode?: string;
+}
 export interface ZAuthI {
   id?: string;
   name?: string;
@@ -57,6 +85,7 @@ export interface ZAuthI {
 
 export interface UserAuthTokenI {
   token?: string;
+  accessToken?: string;
 }
 
 export interface ZFileI {

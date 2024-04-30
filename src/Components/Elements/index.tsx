@@ -5,3 +5,4 @@ export { default as ZInput } from './Input';
 export { default as ZSelect } from './Select';
 export { default as ZTextarea } from './Textarea';
 export { default as ZUploadInput } from './UploadInput';
+export { default as ZCarousel } from './Carousel';

@@ -9,119 +9,127 @@ import React from 'react';
 
 // #region ---- Custom Imports ----
 import { ZPage } from '@/Components/Elements';
+import { ZRUBox, ZRUText } from '@/Components/RadixUI';
 import ZPublicNavigation from '@/Components/Public/Navigation';
-import { ZRUBox, ZRUHeading, ZRUText } from '@/Components/RadixUI';
-import { ZRUHeadingAsE, ZRUTextAsE } from '@/Types/radixUI/index.type';
+import ZBrowseCategoriesBox from '@/Components/Public/Home/BrowseCategoriesBox';
+import ZSaleCarouselBox from '@/Components/Public/Home/SaleCarouselBox';
+import ZTestimonialCarouselBox from '@/Components/Public/Home/TestimonialCarouselBox';
+import ZInformationBox from '@/Components/Public/Home/InfoBox';
+import ZProductCarouselBox from '@/Components/Public/Home/ProductCarouselBox';
+import ZBrandsCarouselBox from '@/Components/Public/Home/BrandsCarouselBox';
+import ProductsWidgetsBox from '@/Components/Public/Home/ProductsWidgetsBox';
+import ZFeaturesBox from '@/Components/Public/Home/FeaturesBox';
+import ZPublicFooter from '@/Components/Public/Footer';
+import { useZMediaQueryScale } from '@/ZHooks/Helpers.hook';
+import { useZSideBar } from '@/ZHooks/ZGlobalComponents.hook';
 
 // #endregion
 
 // #region ---- Types Imports ----
+import { ZRUTextAsE } from '@/Types/radixUI/index.type';
 
 // #endregion
 
 // #region ---- Store Imports ----
+import { CloseSvg } from '@/assets';
 
 // #endregion
 
-// #region ---- Images Imports ----
+const ZAsideMenu: React.FC<{
+  closeSidebar: () => void;
+}> = ({ closeSidebar }) => {
+  return (
+    <ZRUBox>
+      <ZRUBox className='flex items-center justify-end'>
+        <CloseSvg
+          className='cursor-pointer'
+          onClick={() => {
+            closeSidebar();
+          }}
+        />
+      </ZRUBox>
 
-// #endregion
+      <ZRUBox className='min380px:w-[22rem] w-[15rem] mt-4 overflow-hidden'>
+        {/* Browse Categories */}
+        <ZBrowseCategoriesBox />
+
+        {/* Sale Carousel */}
+        <ZSaleCarouselBox />
+
+        {/* Testimonial Carousel */}
+        <ZTestimonialCarouselBox />
+      </ZRUBox>
+    </ZRUBox>
+  );
+};
 
 const Home: React.FC = () => {
+  // #region Custom Hooks
+  const { isLgScale } = useZMediaQueryScale();
+
+  const { openSidebar: openAsideMenuSidebar } = useZSideBar({
+    component: ZAsideMenu,
+    width: '24.75rem'
+  });
+  // #endregion
+
   return (
     <ZPage>
-      <ZPublicNavigation />
+      {/* Navigation */}
+      <ZPublicNavigation
+        menuBtnOnClickHandler={() => {
+          openAsideMenuSidebar();
+        }}
+      />
 
       <main className='main home'>
-        <div className='container mx-auto mb-2'>
-          {/*  */}
-          <div className='flex mb-2 border border-gray-100 *:flex *:items-center *:justify-center *:flex-1 *:m-[.8rem_0_.6rem] *:p-[.6rem] *:border-e *:border-gray-100'>
-            <div>
-              <i className='icon-shipping' />
+        <ZRUBox className='mx-auto mb-2 xl:container maxXl:px-3'>
+          {/* Information */}
+          <ZInformationBox />
 
-              <div>
-                <h4 className='text-sm font-bold uppercase'>
-                  FREE SHIPPING &amp; RETURN
-                </h4>
-                <p className='font-light text-sm tracking-[0.01em] text-body'>
-                  Free shipping on all orders over $99
-                </p>
-              </div>
-            </div>
-
-            <div>
-              <i className='icon-money'></i>
-
-              <div>
-                <h4 className='text-sm font-bold uppercase'>
-                  MONEY BACK GUARANTEE
-                </h4>
-                <p className='text-sm font-light tracking-[0.01em] text-body'>
-                  100% money back guarantee
-                </p>
-              </div>
-            </div>
-
-            <div>
-              <i className='icon-support'></i>
-
-              <div>
-                <h4 className='text-sm font-bold uppercase'>
-                  ONLINE SUPPORT 24/7
-                </h4>
-                <p className='text-sm font-light tracking-[0.01em] text-body'>
-                  Lorem ipsum dolor sit amet.
-                </p>
-              </div>
-              {/* End .info-box-content */}
-            </div>
-            {/* End .info-box */}
-          </div>
-
-          {/*  */}
-          <div className='flex mt-4'>
-            <div className='lg:w-3/4'>
-              {/* aside */}
+          {/* Content */}
+          <ZRUBox className='flex gap-5 mt-4'>
+            {/* Aside */}
+            {isLgScale ? (
               <aside className='text-sm sidebar-home lg:w-3/12'>
                 {/* Browse Categories */}
-                <ZRUBox className='mb-2 uppercase border border-gray-100'>
-                  <ZRUHeading
-                    as={ZRUHeadingAsE.h2}
-                    className='cursor-pointer text-[.8rem] bg-gray ls-n-25 p-[.5rem_1.5rem_.5rem] font-bold border-b border-gray-200'
-                  >
-                    Browse Categories
-                  </ZRUHeading>
+                <ZBrowseCategoriesBox />
 
-                  <ul className='*:px-[1.4rem] *:font-medium *:text-sm *:text-medium *:cursor-pointer hover:*:bg-primary hover:*:text-gray-100'>
-                    <li className='group/item'>
-                      <ZRUText
-                        as={ZRUTextAsE.p}
-                        className='text-inherit py-[.6rem] border-b border-b-gray-100 group-hover/item:border-b-transparent transition-all'
-                      >
-                        Home
-                      </ZRUText>
-                    </li>
+                {/* Sale Carousel */}
+                <ZSaleCarouselBox />
 
-                    <li className='group/item'>
-                      <ZRUText
-                        as={ZRUTextAsE.p}
-                        className='text-inherit py-[.6rem] transition-all'
-                      >
-                        Home
-                      </ZRUText>
-                    </li>
-                  </ul>
-                </ZRUBox>
-
-                {/* Sale */}
-                <ZRUBox className='mb-2 uppercase border border-gray-100'></ZRUBox>
+                {/* Testimonial Carousel */}
+                <ZTestimonialCarouselBox />
               </aside>
+            ) : null}
+
+            {/* RHS */}
+            <div className='lg:w-[calc(100%-25%-1.25rem)] w-full'>
+              <ZRUText
+                as={ZRUTextAsE.div}
+                className='py-1 mb-4 text-base font-bold uppercase border-b border-gray-100 maxSm:text-center'
+              >
+                Featured Products
+              </ZRUText>
+              <ZProductCarouselBox />
+
+              {/* Brands */}
+              <ZBrandsCarouselBox />
+
+              {/* Products Widgets */}
+              <ProductsWidgetsBox />
+
+              {/* Features */}
+              <ZFeaturesBox />
             </div>
-          </div>
-        </div>
+          </ZRUBox>
+        </ZRUBox>
       </main>
+
+      <ZPublicFooter />
     </ZPage>
   );
 };
+// <ZHorizontalProductCard />
 
 export default Home;

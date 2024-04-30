@@ -12,8 +12,6 @@ const MenuSvg: React.FC<{
       className={ZClassNames(className, {
         'w-5 h-5': true
       })}
-      version='1.1'
-      id='Layer_1'
       xmlns='http://www.w3.org/2000/svg'
       viewBox='0 0 150 150'
     >

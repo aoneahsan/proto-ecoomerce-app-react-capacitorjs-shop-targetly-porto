@@ -94,7 +94,7 @@ import {
   SpinSvg
 } from '@/assets';
 import constants from '@/utils/Constants';
-import { ENVS } from '@/utils/EnvKeys';
+import ENVS from '@/utils/EnvKeys';
 // #endregion
 
 // #region ---- Types Imports ----

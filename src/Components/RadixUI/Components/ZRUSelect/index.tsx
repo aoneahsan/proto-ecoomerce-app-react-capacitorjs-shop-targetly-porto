@@ -14,16 +14,20 @@ import { Select } from '@radix-ui/themes';
 
 // #region ---- Types Imports ----
 import {
-  type ZRUColorE,
-  type ZRUTriggerVariantE,
+  ZRUColorE,
+  type ZRUBasicVariantE,
   type ZRURadiusE,
   type ZRUMarginI,
   type ZRUSelectValueI,
-  type ZRUSelectContentPositionE
+  type ZRUSelectContentPositionE,
+  ZRUTextAsE
 } from '@/Types/radixUI/index.type';
 import { Responsive } from '@radix-ui/themes/dist/cjs/props';
+import ZRUBox from '../../Layout/ZRUBox';
+import ZRUText from '../../Typography/ZRUText';
 interface ZRUSelectI {
   children?: React.ReactNode;
+  label?: string;
   asChild?: boolean;
   className?: string;
   style?: Record<string, unknown>;
@@ -40,7 +44,7 @@ interface ZRUSelectI {
   onValueChange?(value: string): void;
 
   trigger?: {
-    variant?: ZRUTriggerVariantE;
+    variant?: ZRUBasicVariantE;
     color?: ZRUColorE;
     radius?: ZRURadiusE;
     placeholder?: string;
@@ -59,29 +63,48 @@ interface ZRUSelectI {
 
 const ZRUSelect: React.FC<ZRUSelectI> = (props) => {
   return (
-    <Select.Root
-      size={props.size}
-      name={props.name}
-      open={props.open}
-      value={props.value}
-      disabled={props.disabled}
-      required={props.required}
-      defaultOpen={props.defaultOpen}
-      defaultValue={props.defaultValue}
-      autoComplete={props.autoComplete}
-      onOpenChange={props.onOpenChange}
-      onValueChange={props.onValueChange}
-    >
-      <Select.Trigger {...props?.trigger} />
+    <ZRUBox>
+      {props?.label !== undefined && props?.label?.trim()?.length > 0 ? (
+        <ZRUText as={ZRUTextAsE.label} size='1' className='block mb-px'>
+          {props?.label}
+          {props?.required ? (
+            <ZRUText
+              as={ZRUTextAsE.span}
+              className='ms-1'
+              color={ZRUColorE.tomato}
+            >
+              *
+            </ZRUText>
+          ) : null}
+        </ZRUText>
+      ) : null}
 
-      <Select.Content {...props?.content}>
-        {props?.options?.map((option) => {
-          return (
-            <Select.Item value={option?.value}>{option?.label}</Select.Item>
-          );
-        })}
-      </Select.Content>
-    </Select.Root>
+      <Select.Root
+        size={props.size}
+        name={props.name}
+        open={props.open}
+        value={props.value}
+        disabled={props.disabled}
+        required={props.required}
+        defaultOpen={props.defaultOpen}
+        defaultValue={props.defaultValue}
+        autoComplete={props.autoComplete}
+        onOpenChange={props.onOpenChange}
+        onValueChange={props.onValueChange}
+      >
+        <Select.Trigger {...props?.trigger} />
+
+        <Select.Content {...props?.content}>
+          {props?.options?.map((option, index) => {
+            return (
+              <Select.Item value={option?.value} key={index}>
+                {option?.label}
+              </Select.Item>
+            );
+          })}
+        </Select.Content>
+      </Select.Root>
+    </ZRUBox>
   );
 };
 

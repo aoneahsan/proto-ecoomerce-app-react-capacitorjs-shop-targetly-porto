@@ -166,7 +166,9 @@ const LogoutModal: React.FC<{
 
 const ZAuthNavigation: React.FC = () => {
   // #region Custom Hooks
-  const { openSidebar } = useZSideBar(ZNavSidebarContent);
+  const { openSidebar } = useZSideBar({
+    component: ZNavSidebarContent
+  });
   const navigate = useZNavigate();
   const matchRoute = useMatchRoute();
 

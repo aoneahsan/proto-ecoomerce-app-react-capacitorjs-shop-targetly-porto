@@ -17,11 +17,16 @@ import { ZColorEnum } from '@/utils/Enums/Elements.enum';
  * @param props - Additional properties to be passed to the sidebar component.
  * @returns An object containing functions to open and close the sidebar.
  */
-export const useZSideBar = <T>(
+export const useZSideBar = <T>({
+  component,
+  props,
+  width
+}: {
   // eslint-disable-next-line
-  component: React.FC<any>,
-  props?: ZGenericObject<T>
-): {
+  component: React.FC<any>;
+  props?: ZGenericObject<T>;
+  width?: string;
+}): {
   openSidebar: () => void;
   closeSidebar: () => void;
 } => {
@@ -35,7 +40,8 @@ export const useZSideBar = <T>(
       ...oldValues,
       isOpen: true,
       component,
-      componentProps: { closeSidebar, ...props }
+      componentProps: { closeSidebar, ...props },
+      width: width
     }));
   };
 

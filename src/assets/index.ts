@@ -1,5 +1,6 @@
 // Generics
 import productLogo from './images/global/logo.png';
+import productWhiteLogo from './images/global/logo-white.png';
 import arrowDown from './images/global/arrow-down.png';
 import paidTag from './images/global/paid-tag.png';
 import ratioDot from './images/global/ratio-dot.png';
@@ -21,7 +22,7 @@ import UserSvg from './svgs/User.svg';
 import CartSvg from './svgs/Cart.svg';
 import MenuSvg from './svgs/Menu.svg';
 import CloseSvg from './svgs/Close.svg';
-import ChevronDown from './svgs/ChevronDown.svg';
+import ZChevronDown from './svgs/ChevronDown.svg';
 import SearchSvg from './svgs/Search.svg';
 import TrashBinSvg from './svgs/TrashBin.svg';
 import AddSvg from './svgs/Add.svg';
@@ -35,13 +36,42 @@ import ZFacebookSvg from './svgs/Facebook.svg';
 import ZTwitterSvg from './svgs/Twitter.svg';
 import ZInstagramSvg from './svgs/Instagram.svg';
 import ZPhoneSvg from './svgs/Phone.svg';
-import ZHeartSvg from './svgs/Heart.svg';
 import ZChevronLeftSvg from './svgs/ChevronLeft.svg';
 import ZCartBagSvg from './svgs/CartBag.svg';
+import ZVerisignLogoSvg from './svgs/Verisign.svg';
+
+// React Icons Package
+import { FaHeart as ZSolidHeartIcon } from 'react-icons/fa';
+import { FaRegHeart as ZHeartIcon } from 'react-icons/fa';
+import { BiSupport as ZSupportIcon } from 'react-icons/bi';
+import { CiCreditCard1 as ZCreditCardIcon } from 'react-icons/ci';
+import { IoMdReturnLeft as ZMdReturnIcon } from 'react-icons/io';
+import { LiaShippingFastSolid as ZShippingFastIcon } from 'react-icons/lia';
+import { CiDollar as ZDollarCoinIcon } from 'react-icons/ci';
+import { Ri24HoursLine as Z24HoursLine } from 'react-icons/ri';
+import { FaCcVisa as ZVisaLogoIcon } from 'react-icons/fa';
+import { FaCcPaypal as ZPaypalLogoIcon } from 'react-icons/fa';
+import { FaCcStripe as ZStripeLogoIcon } from 'react-icons/fa';
+import { TfiMenu as ZMenuIcon } from 'react-icons/tfi';
+import { LuFilter as ZFilterIcon } from 'react-icons/lu';
+import { BsStar as ZStarOutlineIcon } from 'react-icons/bs';
+import { BsStarFill as ZStarFillIcon } from 'react-icons/bs';
+import { BsStarHalf as ZStarHalfFillIcon } from 'react-icons/bs';
+import { FaLinkedinIn as ZLinkedinIcon } from 'react-icons/fa';
+import { FaGooglePlusG as ZGooglePlusIcon } from 'react-icons/fa';
+import { IoMdMail as ZMailIcon } from 'react-icons/io';
 
 // Lottie's
 import flowLottie from './lotties/flow.json';
 import paymentAnimationLottie from './lotties/paymentAnimation.json';
+
+// Brands
+import davidSmith from './images/brand/davidSmith.png';
+import ronJones from './images/brand/ronJones.png';
+import goldenGrid from './images/brand/goldenGrid.png';
+import CTM from './images/brand/ctm.png';
+import golden from './images/brand/golden.png';
+import avantGarde from './images/brand/avantGarde.png';
 
 // Exporting all images
 export {
@@ -51,6 +81,7 @@ export {
 
   // Generics
   productLogo,
+  productWhiteLogo,
   arrowDown,
   paidTag,
   ratioDot,
@@ -64,6 +95,14 @@ export {
   ryanMcMannonImg,
   rangeImg,
 
+  // Brands
+  davidSmith,
+  ronJones,
+  goldenGrid,
+  CTM,
+  golden,
+  avantGarde,
+
   // Svg
   SpinSvg,
   ExitSvg,
@@ -72,7 +111,7 @@ export {
   CartSvg,
   MenuSvg,
   CloseSvg,
-  ChevronDown,
+  ZChevronDown,
   SearchSvg,
   TrashBinSvg,
   AddSvg,
@@ -86,7 +125,28 @@ export {
   ZTwitterSvg,
   ZInstagramSvg,
   ZPhoneSvg,
-  ZHeartSvg,
   ZChevronLeftSvg,
-  ZCartBagSvg
+  ZCartBagSvg,
+  ZVerisignLogoSvg,
+
+  // Icons
+  ZHeartIcon,
+  ZSolidHeartIcon,
+  ZSupportIcon,
+  ZCreditCardIcon,
+  ZMdReturnIcon,
+  ZShippingFastIcon,
+  ZDollarCoinIcon,
+  Z24HoursLine,
+  ZVisaLogoIcon,
+  ZPaypalLogoIcon,
+  ZStripeLogoIcon,
+  ZMenuIcon,
+  ZFilterIcon,
+  ZStarOutlineIcon,
+  ZStarFillIcon,
+  ZStarHalfFillIcon,
+  ZLinkedinIcon,
+  ZGooglePlusIcon,
+  ZMailIcon
 };

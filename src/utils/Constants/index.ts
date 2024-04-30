@@ -7,6 +7,14 @@ const productInfo = {
 } as const;
 
 /**
+ * Time intervals.
+ */
+const timeInterval = {
+  resetTimeInterval: 30, // minutes
+  resendCodeTimeInterval: 1 // minutes
+} as const;
+
+/**
  * Company Details
  */
 export const companyBusinessDetails = {
@@ -51,7 +59,8 @@ const password = {
 const localstorageKeys = {
   authToken: 'ejtufng_ligrjdf_i',
   userData: 'mlkfd_powefds_o',
-  resetPassword: 'rezv_pesfeds_o'
+  resetPassword: 'rezv_pesfeds_o',
+  register: 'zasdef_ondef_b'
 } as const;
 
 /**
@@ -119,7 +128,8 @@ const constants = {
   showAllOption,
   externalSites,
   mediaScales,
-  helmetDefaults
+  helmetDefaults,
+  timeInterval
 };
 
 export default constants;

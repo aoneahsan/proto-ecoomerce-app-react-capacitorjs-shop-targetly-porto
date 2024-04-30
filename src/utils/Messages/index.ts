@@ -12,7 +12,10 @@ const formValidations = {
   phoneNumberRequired: 'Phone number is require.',
   passwordNotMatch: 'Password does not match. please try again!',
 
-  currency: 'currency is required.'
+  currency: 'currency is required.',
+  resendCodeLimitExceeded:
+    'Attempt limit exceeded, please try after some time.',
+  resendCodeSuccess: 'Confirmation code resent successfully.'
 } as const;
 
 const auth = {
@@ -20,7 +23,7 @@ const auth = {
   loginSuccess: 'Logged in successfully.',
   loggedSuccess: 'Logged out successfully.',
   registerSuccess: 'registered successfully.',
-  resetPasswordSuccess: 'Password reset successfully.',
+  resetPasswordSuccess: 'Password reset successfully. login to continue.',
   logoutConfirmDialog: {
     title: 'Confirm Logout',
     messages: 'Are you sure you want to logout?'
@@ -78,6 +81,27 @@ const expense = {
   deleted: 'Expense deleted successfully.'
 } as const;
 
+const login = {
+  loggingIn: 'Logging in please wait a second...',
+  loggedIn: 'Logged in successfully.'
+} as const;
+
+const register = {
+  resendCodeSuccess: 'Confirmation code resent successfully.',
+  resendingCodeSuccess: 'Resenting confirmation code please wait a second...',
+  sendCodeSuccess: 'Confirmation code was sent to your email.',
+  signingUp: 'Signing up please wait a second...',
+  signUpDoneLogin: 'Sign up complete. Please log in to continue.',
+  confirmingCode: 'Confirming verification code please wait a second...'
+} as const;
+
+const network = {
+  noInternet: {
+    title: 'Connection failure',
+    message: `Cannot connect to ${constants.productInfo.name} because there is no Internet access available.`
+  }
+} as const;
+
 export const messages = {
   general,
   formValidations,
@@ -85,5 +109,8 @@ export const messages = {
   user,
   client,
   invoice,
-  expense
+  expense,
+  login,
+  register,
+  network
 };

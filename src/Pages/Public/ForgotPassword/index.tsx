@@ -1,12 +1,43 @@
 // #region ---- Core Imports ----
-import React, { useEffect, useMemo, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useState
+} from 'react';
 
 // #endregion
 
 // #region ---- Packages Imports ----
-import { ZClassNames } from '@/Packages/ClassNames';
-import { AxiosError } from 'axios';
+import dayjs from 'dayjs';
+import {
+  AuthError,
+  confirmResetPassword,
+  resendSignUpCode,
+  resetPassword
+} from 'aws-amplify/auth';
 import { useSetRecoilState } from 'recoil';
+
+// #endregion
+
+// #region ---- Custom Imports ----
+import {
+  ZRUBox,
+  ZRUButton,
+  ZRUHeading,
+  ZRUInput,
+  ZRUText
+} from '@/Components/RadixUI';
+import { ZPage } from '@/Components/Elements';
+import ZPublicNavTopBar from '@/Components/Public/Navigation/TopBar';
+import {
+  Storage,
+  isZNonEmptyString,
+  reportCustomError,
+  validateField,
+  validateFields
+} from '@/utils/Helpers';
 import {
   ZFormik,
   ZFormikForm,
@@ -15,26 +46,9 @@ import {
   type zSetFieldErrorType,
   type zSetFieldValueType
 } from '@/Packages/Formik';
-
-// #endregion
-
-// #region ---- Custom Imports ----
-import Copyright from '@/Components/Inpage/Copyright';
-import ZInput from '@/Components/Elements/Input';
-import ZButton from '@/Components/Elements/Button';
-import { useZRQUpdateRequest } from '@/ZHooks/zreactquery.hooks';
 import { useZNavigate } from '@/ZHooks/Navigation.hook';
 import { AppRoutes } from '@/Routes/AppRoutes';
-import {
-  Storage,
-  isZNonEmptyString,
-  reportCustomError,
-  validateField,
-  validateFields,
-  zStringify
-} from '@/utils/Helpers';
 import { zValidationRuleE } from '@/utils/Enums/index.enum';
-import { extractInnerData } from '@/utils/Helpers/APIS';
 import constants from '@/utils/Constants';
 import {
   showErrorNotification,
@@ -45,14 +59,16 @@ import { messages } from '@/utils/Messages';
 // #endregion
 
 // #region ---- Types Imports ----
-import { ZFill } from '@/utils/Enums/Elements.enum';
-import { ApiUrlEnum } from '@/utils/Enums/apis.enum';
-import { type ZAuthI } from '@/Types/Auth/index.type';
+import { type ZUserI } from '@/Types/Auth/index.type';
 import {
-  extractInnerDataObjectEnum,
-  extractInnerDataOptionsEnum
-} from '@/Types/APIs/index.type';
-import { ZInvoiceTypeE } from '@/Types/Auth/Invoice';
+  ZRUHeadingAsE,
+  ZRUTextAsE,
+  ZRUVariantE
+} from '@/Types/radixUI/index.type';
+import {
+  ZAwsResetPasswordStep,
+  ZErrorException
+} from '@/Types/APIs/AWS/index.type';
 
 // #endregion
 
@@ -62,22 +78,10 @@ import { ZAuthTokenData } from '@/Store/Auth/index.recoil';
 
 // #endregion
 
-// #region ---- Images Imports ----
-import { SpinSvg, productLogo, productVector } from '@/assets';
-import dayjs from 'dayjs';
-
-// #endregion
-
 // #region ---- Types Imports ----
-enum currentStepE {
-  sentOtp = 'sentOtp',
-  verifyOtp = 'verifyOtp',
-  resetPassword = 'resetPassword'
-}
-
 interface resetPasswordI {
   email?: string;
-  otp?: string;
+  verificationCode?: string;
   otpValidTill?: string;
   password?: string;
   confirmPassword?: string;
@@ -89,80 +93,75 @@ interface resetPasswordI {
 
 const ForgotPassword: React.FC = () => {
   const [compState, setCompState] = useState<{
-    currentStep: currentStepE;
+    currentStep: ZAwsResetPasswordStep;
     email?: string;
     otpValidTill?: string;
+    isProcessing: boolean;
+    resendCodeEnableTime?: string;
+    canResendCode?: boolean;
+    isCanResendBtnProcessing: boolean;
   }>({
-    currentStep: currentStepE.sentOtp,
+    currentStep: ZAwsResetPasswordStep.resetPassword,
     email: '',
-    otpValidTill: ''
+    otpValidTill: '',
+    isProcessing: false,
+    canResendCode: false,
+    isCanResendBtnProcessing: false
   });
 
   // #region custom hooks
   const navigate = useZNavigate();
   // #endregion
 
-  // #region APIs
-  const {
-    mutateAsync: forgotPasswordMutateAsync,
-    isPending: isForgotPasswordPending
-  } = useZRQUpdateRequest({
-    _url: ApiUrlEnum.forgotPasswordOtp,
-    _authenticated: false
-  });
-
-  const { mutateAsync: verifyOtpMutateAsync, isPending: isVerifyOtpPending } =
-    useZRQUpdateRequest({
-      _url: ApiUrlEnum.verifyOtp,
-      _authenticated: false
-    });
-
-  const {
-    mutateAsync: resetPasswordMutateAsync,
-    isPending: isResetPasswordPending
-  } = useZRQUpdateRequest({
-    _url: ApiUrlEnum.resetPassword,
-    _authenticated: false
-  });
-  // #endregion
-
   // #region Recoil
-  const setZUserRStateAtom = useSetRecoilState(ZUserRStateAtom);
+  const setZUserRState = useSetRecoilState(ZUserRStateAtom);
 
   const setZAuthTokenRStateAtom = useSetRecoilState(ZAuthTokenData);
   // #endregion
 
   // #region Function
-  const signInBtnClickHandler = (): void => {
-    try {
-      void navigate({ to: AppRoutes.login });
-    } catch (error) {
-      reportCustomError(error);
-    }
-  };
+  const processing = useCallback(() => {
+    setCompState((oldValues) => ({
+      ...oldValues,
+      isProcessing: true
+    }));
+  }, []);
 
-  const sendOtpHandler = async (
-    value: string,
-    setFieldError: zSetFieldErrorType,
-    setFieldValue: zSetFieldValueType
-  ): Promise<void> => {
+  const finishedProcessing = useCallback(() => {
+    setCompState((oldValues) => ({
+      ...oldValues,
+      isProcessing: false
+    }));
+  }, []);
+
+  const sendOtpHandler = useCallback(async (values: ZUserI) => {
     try {
-      const _response = await forgotPasswordMutateAsync({
-        requestData: value
+      processing();
+      const _response = await resetPassword({
+        username: values?.email ?? ''
       });
 
-      if (_response !== undefined && _response !== null) {
-        const _data = extractInnerData<{
-          success: boolean;
-          email: string;
-          otp_code_valid_till: string;
-        }>(_response, extractInnerDataOptionsEnum.createRequestResponseItem);
+      if (
+        _response !== undefined &&
+        _response !== null &&
+        typeof _response === 'object'
+      ) {
+        if (
+          _response?.nextStep?.resetPasswordStep ===
+          ZAwsResetPasswordStep.confirmResetPasswordWithCode
+        ) {
+          const _resendCodeEnableTime = dayjs()
+            .add(constants.timeInterval.resendCodeTimeInterval, 'm')
+            .toISOString();
 
-        if (_data?.success) {
           const _resetPasswordData = {
-            email: _data?.email,
-            currentStep: currentStepE.verifyOtp,
-            otpValidTill: _data?.otp_code_valid_till
+            email: values?.email,
+            currentStep: ZAwsResetPasswordStep.confirmResetPasswordWithCode,
+            expiateAt: dayjs().add(
+              constants.timeInterval.resetTimeInterval,
+              'm'
+            ),
+            resendCodeEnableTime: _resendCodeEnableTime
           };
 
           await Storage.set(
@@ -172,250 +171,252 @@ const ForgotPassword: React.FC = () => {
 
           setCompState((oldValues) => ({
             ...oldValues,
-            currentStep: currentStepE.verifyOtp
+            email: values.email,
+            currentStep: ZAwsResetPasswordStep.confirmResetPasswordWithCode,
+            resendCodeEnableTime: _resendCodeEnableTime
           }));
 
-          await setFieldValue(
-            'otpValidTill',
-            _data?.otp_code_valid_till,
-            false
-          );
+          finishedProcessing();
 
           showSuccessNotification(
             messages.user.resetPassword.otpSendSuccessfully
           );
         }
       }
-    } catch (error) {
-      reportCustomError(error);
 
-      if (error instanceof AxiosError) {
-        const _data = extractInnerData<{
-          item: string[];
-          email: string[];
-        }>(
-          error?.response?.data,
-          extractInnerDataOptionsEnum.createRequestResponseData,
-          extractInnerDataObjectEnum.error
-        );
-        void setFieldValue('isApiError', true, false);
-
-        if (Array.isArray(_data?.item) && isZNonEmptyString(_data?.item[0])) {
-          setFieldError('email', _data?.item[0]);
-        }
-
-        if (Array.isArray(_data?.email) && isZNonEmptyString(_data?.email[0])) {
-          setFieldError('email', _data?.email[0]);
-        }
-      }
-    }
-  };
-
-  const verifyOtpHandler = async (
-    value: string,
-    setFieldError: zSetFieldErrorType,
-    setFieldValue: zSetFieldValueType
-  ): Promise<void> => {
-    try {
-      const _response = await verifyOtpMutateAsync({
-        requestData: value
-      });
-
-      if (_response !== undefined && _response !== null) {
-        const _data = extractInnerData<{
-          success: boolean;
-          email?: string;
-        }>(_response, extractInnerDataOptionsEnum.createRequestResponseItem);
-
-        if (_data?.success) {
-          const _resetPasswordData = {
-            email: _data?.email,
-            currentStep: currentStepE.resetPassword,
-            otpValidTill: null
-          };
-
-          await Storage.set(
-            constants.localstorageKeys.resetPassword,
-            _resetPasswordData
-          );
-
-          setCompState((oldValues) => ({
-            ...oldValues,
-            currentStep: currentStepE.resetPassword
-          }));
-
-          await setFieldValue('otpValidTill', '', false);
-
-          showSuccessNotification(
-            messages.user.resetPassword.otpVerifiedSuccessfully
-          );
-        }
+      if (compState?.isProcessing) {
+        finishedProcessing();
       }
     } catch (error) {
+      finishedProcessing();
       reportCustomError(error);
-
-      if (error instanceof AxiosError) {
-        const _data = extractInnerData<{
-          item: string[];
-          otp_code: string[];
-        }>(
-          error?.response?.data,
-          extractInnerDataOptionsEnum.createRequestResponseData,
-          extractInnerDataObjectEnum.error
-        );
-        void setFieldValue('isApiError', true, false);
-        if (Array.isArray(_data?.item) && isZNonEmptyString(_data?.item[0])) {
-          setFieldError('otp', _data?.item[0]);
-        }
-
-        if (
-          Array.isArray(_data?.otp_code) &&
-          isZNonEmptyString(_data?.otp_code[0])
-        ) {
-          setFieldError('otp', _data?.otp_code[0]);
-        }
-      }
     }
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  const resetPasswordHandler = async (
-    value: string,
-    setFieldError: zSetFieldErrorType,
-    setFieldValue: zSetFieldValueType
-  ): Promise<void> => {
-    try {
-      const _response = await resetPasswordMutateAsync({
-        requestData: value
-      });
+  const verifyOtpHandler = useCallback(
+    async (values: ZUserI, setFieldError: zSetFieldErrorType) => {
+      try {
+        processing();
 
-      if (_response !== undefined && _response !== null) {
-        const _data = extractInnerData<{
-          success: boolean;
-          user: ZAuthI;
-          token: string;
-        }>(_response, extractInnerDataOptionsEnum.createRequestResponseData);
+        // eslint-disable-next-line @typescript-eslint/no-confusing-void-expression
+        const _response = await confirmResetPassword({
+          confirmationCode: String(values?.verificationCode) ?? '',
+          newPassword: values?.password ?? '',
+          username: values?.email ?? ''
+        });
 
-        if (_data?.success) {
+        if (_response === undefined) {
           await Storage.remove(constants.localstorageKeys.resetPassword);
 
-          // store User data.
-          void Storage.set(constants.localstorageKeys.userData, _data?.user);
-
-          // store auth token.
-          void Storage.set(constants.localstorageKeys.authToken, _data?.token);
-
-          // Storing user data in user Recoil State.
-          setZUserRStateAtom((oldValues) => ({
-            ...oldValues,
-            ..._data?.user
-          }));
-
-          // Storing token data in token Recoil State.
-          setZAuthTokenRStateAtom((oldValues) => ({
-            ...oldValues,
-            token: _data?.token
-          }));
+          finishedProcessing();
 
           showSuccessNotification(messages.auth.resetPasswordSuccess);
 
           void navigate({
-            to: AppRoutes.authRoutes.invoices,
-            params: {
-              invoiceType: ZInvoiceTypeE.inv
-            }
+            to: AppRoutes.login
           });
         }
+
+        if (compState?.isProcessing) {
+          finishedProcessing();
+        }
+      } catch (error) {
+        finishedProcessing();
+        if (error instanceof AuthError) {
+          if (
+            error?.name === ZErrorException.CodeMismatchException ||
+            error?.name === ZErrorException.ExpiredCodeException
+          ) {
+            setFieldError('verificationCode', error.message);
+          }
+          if (error?.name === ZErrorException.InvalidPasswordException) {
+            setFieldError('password', error.message);
+          }
+        }
+
+        reportCustomError(error);
       }
-    } catch (error) {
-      reportCustomError(error);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
 
-      if (error instanceof AxiosError) {
-        const _data = extractInnerData<{
-          item: string[];
-          confirm_password: string[];
-          password: string[];
-        }>(
-          error?.response?.data,
-          extractInnerDataOptionsEnum.createRequestResponseData,
-          extractInnerDataObjectEnum.error
-        );
-        void setFieldValue('isApiError', true, false);
-        if (Array.isArray(_data?.item) && isZNonEmptyString(_data?.item[0])) {
-          showErrorNotification(_data?.item[0]);
-        }
-
-        if (
-          Array.isArray(_data?.password) &&
-          isZNonEmptyString(_data?.password[0])
+  const formikSubmitHandler = useCallback(
+    async (
+      values: resetPasswordI,
+      formikHelpers: ZFormikHelpers<resetPasswordI>
+    ): Promise<void> => {
+      try {
+        if (compState?.currentStep === ZAwsResetPasswordStep.resetPassword) {
+          await sendOtpHandler(values);
+        } else if (
+          compState?.currentStep ===
+          ZAwsResetPasswordStep.confirmResetPasswordWithCode
         ) {
-          setFieldError('password', _data?.password[0]);
+          await verifyOtpHandler(values, formikHelpers.setFieldError);
         }
-
-        if (
-          Array.isArray(_data?.confirm_password) &&
-          isZNonEmptyString(_data?.confirm_password[0])
-        ) {
-          setFieldError('confirmPassword', _data?.confirm_password[0]);
-        }
+      } catch (error) {
+        reportCustomError(error);
       }
-    }
-  };
+    },
+    [compState?.currentStep]
+  );
 
-  const formikSubmitHandler = async (
-    values: resetPasswordI,
-    formikHelpers: ZFormikHelpers<resetPasswordI>
-  ): Promise<void> => {
+  const resendSignUpCodeHandler = useCallback(async () => {
     try {
-      if (compState?.currentStep === currentStepE.sentOtp) {
-        await sendOtpHandler(
-          zStringify({
-            email: values?.email
-          }),
-          formikHelpers.setFieldError,
-          formikHelpers.setFieldValue
-        );
-      } else if (compState?.currentStep === currentStepE.verifyOtp) {
-        await verifyOtpHandler(
-          zStringify({
-            email: values?.email,
-            otp_code: String(values?.otp),
-            otp_code_valid_till: values?.otpValidTill
-          }),
-          formikHelpers.setFieldError,
-          formikHelpers.setFieldValue
-        );
-      } else if (compState?.currentStep === currentStepE.resetPassword) {
-        await resetPasswordHandler(
-          zStringify({
-            email: values?.email,
-            password: values?.password,
-            password_confirmation: values?.confirmPassword
-          }),
-          formikHelpers.setFieldError,
-          formikHelpers.setFieldValue
-        );
+      setCompState((prevState) => ({
+        ...prevState,
+        isCanResendBtnProcessing: true
+      }));
+
+      const _response = await resendSignUpCode({
+        username: compState?.email ?? ''
+      });
+
+      if (
+        _response !== undefined &&
+        _response !== null &&
+        isZNonEmptyString(_response?.destination)
+      ) {
+        const _resendCodeEnableTime = dayjs()
+          .add(constants.timeInterval.resendCodeTimeInterval, 'm')
+          .toISOString();
+
+        await Storage.set(constants.localstorageKeys.resetPassword, {
+          email: compState?.email,
+          currentStep: ZAwsResetPasswordStep.confirmResetPasswordWithCode,
+          expiateAt: dayjs().add(constants.timeInterval.resetTimeInterval, 'm'),
+          resendCodeEnableTime: _resendCodeEnableTime
+        });
+
+        setCompState((prevState) => ({
+          ...prevState,
+          currentStep: ZAwsResetPasswordStep.confirmResetPasswordWithCode,
+          isProcessing: false,
+          isCanResendBtnProcessing: false,
+          resendCodeEnableTime: _resendCodeEnableTime,
+          canResendCode: false
+        }));
+
+        showSuccessNotification(messages.formValidations.resendCodeSuccess);
       }
+
+      if (compState?.isProcessing || compState?.isCanResendBtnProcessing) {
+        setCompState((prevState) => ({
+          ...prevState,
+          isCanResendBtnProcessing: false,
+          isProcessing: false
+        }));
+      }
+    } catch (error) {
+      setCompState((prevState) => ({
+        ...prevState,
+        isCanResendBtnProcessing: false,
+        isProcessing: false
+      }));
+
+      if (error instanceof AuthError) {
+        if (error?.name === ZErrorException.LimitExceededException) {
+          showErrorNotification(
+            messages.formValidations.resendCodeLimitExceeded
+          );
+        }
+      }
+
+      reportCustomError(error);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [compState?.email]);
+
+  const loginBtnClickHandler = useCallback((): void => {
+    try {
+      void navigate({ to: AppRoutes.login });
     } catch (error) {
       reportCustomError(error);
     }
-  };
+  }, []);
 
-  const getResetStateFromStorage = async (): Promise<
+  const goBackBtnHandler = useCallback((setFieldValue: zSetFieldValueType) => {
+    setCompState((oldValues) => ({
+      ...oldValues,
+      currentStep: ZAwsResetPasswordStep.resetPassword
+    }));
+
+    void setFieldValue('verificationCode', '');
+    void setFieldValue('password', '');
+    void setFieldValue('confirmPassword', '');
+
+    const _resetPasswordData = {
+      currentStep: ZAwsResetPasswordStep.resetPassword,
+      resendCodeEnableTime: null,
+      expiateAt: null,
+      email: null
+    };
+
+    void Storage.set(
+      constants.localstorageKeys.resetPassword,
+      _resetPasswordData
+    );
+  }, []);
+
+  const formikValidationHandler = useCallback((values: resetPasswordI) => {
+    const errors: { confirmPassword?: string } = {};
+
+    if (compState.currentStep === ZAwsResetPasswordStep.resetPassword) {
+      validateField(
+        'email',
+        values as Record<string, unknown>,
+        errors,
+        zValidationRuleE.email
+      );
+    }
+
+    if (
+      compState.currentStep ===
+      ZAwsResetPasswordStep.confirmResetPasswordWithCode
+    ) {
+      validateFields(
+        ['verificationCode', 'password', 'confirmPassword'],
+        values as Record<string, unknown>,
+        errors,
+        [
+          zValidationRuleE.otp,
+          zValidationRuleE.password,
+          zValidationRuleE.confirm_password
+        ]
+      );
+
+      // checking the confirm password is === password ? validated : setting an error + invalidate
+      if (values.confirmPassword !== values.password) {
+        errors.confirmPassword = messages?.formValidations?.passwordNotMatch;
+      } else {
+        delete errors.confirmPassword;
+      }
+    }
+
+    return errors;
+  }, []);
+
+  const getResetStateFromStorage = useCallback(async (): Promise<
     | {
-        email?: string | undefined;
-        otpValidTill?: string | undefined;
-        currentStep: currentStepE;
+        email?: string;
+        resendCodeEnableTime?: string;
+        currentStep: ZAwsResetPasswordStep;
+        expiateAt?: string;
       }
     | undefined
   > => {
     return await Storage.get<{
       email?: string;
-      otpValidTill?: string;
-      currentStep: currentStepE;
+      resendCodeEnableTime?: string;
+      currentStep: ZAwsResetPasswordStep;
+      expiateAt?: string;
     }>(constants.localstorageKeys.resetPassword);
-  };
+  }, []);
   // #endregion
 
+  // #region Constants
   const formikInitialValues: resetPasswordI = useMemo(
     () => ({
       email: compState?.email ?? '',
@@ -429,262 +430,204 @@ const ForgotPassword: React.FC = () => {
     [compState]
   );
 
-  useEffect(() => {
-    const _setData = async (): Promise<void> => {
-      const _data = await getResetStateFromStorage();
+  const pageHelmet = useMemo(
+    () => ({
+      title: `${constants.productInfo.name} - Forgot password page - Zaions`
+    }),
+    []
+  );
+  // #endregion
 
-      if (_data !== undefined && _data !== null) {
-        let _otpValidTill = dayjs()?.toString();
+  // #region Effects
+  useLayoutEffect(() => {
+    void (async () => {
+      // const user = await getCurrentUser();
+      const _register = await getResetStateFromStorage();
+      if (_register !== undefined && _register !== null) {
+        let _resendCodeEnableTime = dayjs()?.toString();
         if (
-          _data?.otpValidTill !== undefined &&
-          isZNonEmptyString(_data?.otpValidTill) &&
-          dayjs(_data?.otpValidTill)?.isValid()
+          _register?.resendCodeEnableTime !== undefined &&
+          isZNonEmptyString(_register?.resendCodeEnableTime) &&
+          dayjs(_register?.resendCodeEnableTime)?.isValid()
         ) {
-          _otpValidTill = _data?.otpValidTill;
+          _resendCodeEnableTime = _register?.resendCodeEnableTime;
         } else {
-          _otpValidTill = dayjs()?.add(constants.otpTimeLimit, 'm')?.toString();
+          _resendCodeEnableTime = dayjs()
+            ?.add(constants.timeInterval.resendCodeTimeInterval, 'm')
+            ?.toString();
         }
 
-        setCompState((oldValues) => ({
-          ...oldValues,
-          currentStep: _data?.currentStep,
-          email: _data?.email,
-          otpValidTill: _otpValidTill
-        }));
+        if (dayjs().isAfter(dayjs(_register?.expiateAt))) {
+          setCompState((prevState) => ({
+            ...prevState,
+            currentStep: ZAwsResetPasswordStep.resetPassword,
+            email: '',
+            resendCodeEnableTime: '',
+            canResendCode: false
+          }));
+        } else {
+          setCompState((prevState) => ({
+            ...prevState,
+            currentStep: _register?.currentStep,
+            email: _register?.email,
+            resendCodeEnableTime: _resendCodeEnableTime,
+            canResendCode: false
+          }));
+        }
       }
-    };
-
-    void _setData();
+    })();
   }, []);
-  return (
-    <div className='relative flex flex-col items-center justify-between w-full min-h-screen pt-10 bg-secondary h max-h-max pe-8'>
-      <div className='flex flex-col items-center w-[25.5625rem] max-w-full h-full mt-6'>
-        <img
-          className='w-[4.8rem] cursor-pointer h-[4.8rem] maxSm:mx-auto relative'
-          alt='Logo'
-          src={productLogo}
-          onClick={() => {
-            void navigate({ to: AppRoutes.home });
-          }}
-        />
 
-        <div className='w-full pt-3 mt-10 text-start ps-4'>
+  useEffect(() => {
+    if (
+      compState?.currentStep ===
+        ZAwsResetPasswordStep.confirmResetPasswordWithCode &&
+      compState?.resendCodeEnableTime !== undefined &&
+      isZNonEmptyString(compState?.resendCodeEnableTime)
+    ) {
+      const limit = dayjs(compState?.resendCodeEnableTime).diff(dayjs());
+      setTimeout(() => {
+        setCompState((preState) => ({
+          ...preState,
+          canResendCode: true
+        }));
+      }, limit);
+    }
+    // eslint-disable-next-line
+  }, [compState?.resendCodeEnableTime, compState?.canResendCode]);
+  // #endregion
+
+  return (
+    <ZPage
+      className='relative flex-col w-full min-h-screen bg-light h max-h-max'
+      helmet={pageHelmet}
+    >
+      {/* Navigation */}
+      <ZPublicNavTopBar />
+
+      <ZRUBox className='flex flex-col items-center w-full h-full max-w-full mt-6'>
+        <ZRUBox className='pt-3 mt-10 w-full sm:w-[25.5625rem] text-start px-1 sm:ps-4'>
           <ZFormik
             initialValues={formikInitialValues}
             enableReinitialize
             validate={(values) => {
-              const errors: { confirmPassword?: string } = {};
-
-              if (compState.currentStep === currentStepE.sentOtp) {
-                validateField(
-                  'email',
-                  values as Record<string, unknown>,
-                  errors,
-                  zValidationRuleE.email
-                );
-              }
-
-              if (compState.currentStep === currentStepE.verifyOtp) {
-                validateField(
-                  'otp',
-                  values as Record<string, unknown>,
-                  errors,
-                  zValidationRuleE.otp
-                );
-              }
-
-              if (compState.currentStep === currentStepE.resetPassword) {
-                validateFields(
-                  ['password', 'confirmPassword'],
-                  values as Record<string, unknown>,
-                  errors,
-                  [zValidationRuleE.password, zValidationRuleE.confirm_password]
-                );
-
-                // checking the confirm password is === password ? validated : setting an error + invalidate
-                if (values.confirmPassword !== values.password) {
-                  errors.confirmPassword =
-                    messages?.formValidations?.passwordNotMatch;
-                } else {
-                  delete errors.confirmPassword;
-                }
-              }
-
-              return errors;
+              return formikValidationHandler(values);
             }}
             onSubmit={(values, formikHelpers) => {
               void formikSubmitHandler(values, formikHelpers);
             }}
           >
-            {({
-              handleSubmit,
-              isValid,
-              values,
-              setFieldError,
-              setFieldValue,
-              submitForm
-            }) => {
+            {({ isValid, values, handleSubmit, setFieldValue, submitForm }) => {
               return (
                 <ZFormikForm onSubmit={handleSubmit}>
-                  <h2
-                    className={ZClassNames({
-                      'text-primary text-start text-[2.25rem] font-black uppercase font-mont-heavy maxMd:text-center mb-9':
-                        true
-                    })}
+                  <ZRUHeading
+                    as={ZRUHeadingAsE.h2}
+                    className='text-tertiary text-start text-[2.25rem] font-semibold normal-case maxMd:text-center mb-4'
                   >
                     Forget password
-                  </h2>
+                  </ZRUHeading>
 
-                  <div className='mt-6'>
-                    {compState?.currentStep === currentStepE.sentOtp ? (
+                  <ZRUBox className='mt-6'>
+                    {compState?.currentStep ===
+                    ZAwsResetPasswordStep.resetPassword ? (
                       <SendOtpStep />
-                    ) : compState?.currentStep === currentStepE.verifyOtp ? (
-                      <VerifyOtpStep />
                     ) : compState?.currentStep ===
-                      currentStepE.resetPassword ? (
-                      <ResetPassword />
+                      ZAwsResetPasswordStep.confirmResetPasswordWithCode ? (
+                      <VerifyOtpStep />
                     ) : null}
-                  </div>
+                  </ZRUBox>
 
-                  <div className='flex gap-1 pt-6 mt-6 maxSm:flex-col'>
-                    <ZButton
+                  <ZRUBox className='mt-6'>
+                    <ZRUButton
+                      size='3'
                       type='button'
+                      className='flex items-center justify-center w-full normal-case'
                       onClick={() => {
                         void submitForm();
                       }}
-                      className={ZClassNames({
-                        'flex items-center justify-center uppercase': true,
-                        'cursor-not-allowed':
-                          (compState?.currentStep === currentStepE.sentOtp &&
-                            isForgotPasswordPending) ||
-                          isVerifyOtpPending ||
-                          isResetPasswordPending
-                      })}
+                      loading={
+                        compState?.currentStep ===
+                          ZAwsResetPasswordStep.resetPassword &&
+                        compState?.isProcessing
+                      }
                       disabled={
                         !isValid ||
                         Boolean(values?.isApiError) ||
-                        (compState?.currentStep === currentStepE.sentOtp &&
-                          isForgotPasswordPending) ||
-                        isVerifyOtpPending ||
-                        isResetPasswordPending
+                        (compState?.currentStep ===
+                          ZAwsResetPasswordStep.resetPassword &&
+                          compState?.isProcessing)
                       }
                     >
-                      {(compState?.currentStep === currentStepE.sentOtp &&
-                        isForgotPasswordPending) ||
-                      isVerifyOtpPending ||
-                      isResetPasswordPending ? (
-                        <SpinSvg className='me-2 text-secondary' />
-                      ) : (
-                        ''
-                      )}
-                      {compState?.currentStep === currentStepE.sentOtp
-                        ? 'Send OTP'
-                        : compState?.currentStep === currentStepE.verifyOtp
-                          ? 'Verify OTP'
-                          : compState?.currentStep ===
-                              currentStepE.resetPassword
-                            ? 'New Password'
-                            : ''}
-                    </ZButton>
+                      {compState?.currentStep ===
+                      ZAwsResetPasswordStep.resetPassword
+                        ? 'Send code'
+                        : ZAwsResetPasswordStep.confirmResetPasswordWithCode
+                          ? 'Verify code'
+                          : ''}
+                    </ZRUButton>
 
                     {/*  */}
-                    {compState?.currentStep === currentStepE.sentOtp ? (
-                      <ZButton
-                        fill={ZFill.clear}
-                        type='button'
-                        onClick={signInBtnClickHandler}
-                      >
-                        <span className='me-2 pe-1 text-tertiary'>OR</span>
-                        <span>SIGN IN</span>
-                      </ZButton>
+                    {compState?.currentStep ===
+                    ZAwsResetPasswordStep.resetPassword ? (
+                      <ZRUBox className='mt-2 text-center'>
+                        <ZRUText
+                          as={ZRUTextAsE.span}
+                          className='cursor-pointer text-primary hover:underline'
+                          onClick={loginBtnClickHandler}
+                        >
+                          Login
+                        </ZRUText>
+                      </ZRUBox>
                     ) : null}
-                  </div>
+                  </ZRUBox>
 
-                  {compState?.currentStep === currentStepE.verifyOtp ? (
+                  {compState?.currentStep ===
+                  ZAwsResetPasswordStep.confirmResetPasswordWithCode ? (
                     <>
-                      <div className='flex w-full gap-1 pt-6 mt-6 maxSm:flex-col'>
-                        <ZButton
-                          fill={ZFill.outline}
+                      <ZRUBox className='flex w-full gap-1 pt-6 mt-6 maxSm:flex-col'>
+                        <ZRUButton
+                          size='3'
                           type='button'
-                          className='w-1/2 me-2'
+                          variant={ZRUVariantE.outline}
+                          className='flex-1 me-2'
                           onClick={() => {
-                            setCompState((oldValues) => ({
-                              ...oldValues,
-                              currentStep:
-                                oldValues?.currentStep ===
-                                currentStepE.verifyOtp
-                                  ? currentStepE.sentOtp
-                                  : currentStepE.verifyOtp
-                            }));
-
-                            const _resetPasswordData = {
-                              currentStep: currentStepE.sentOtp,
-                              otpValidTill: null,
-                              email: null
-                            };
-
-                            void Storage.set(
-                              constants.localstorageKeys.resetPassword,
-                              _resetPasswordData
-                            );
+                            goBackBtnHandler(setFieldValue);
                           }}
                         >
                           Go Back
-                        </ZButton>
+                        </ZRUButton>
 
                         {/*  */}
-                        <ZButton
+                        <ZRUButton
+                          size='3'
+                          type='button'
+                          className='flex items-center justify-center flex-1'
                           onClick={() => {
-                            void sendOtpHandler(
-                              zStringify({
-                                email: values?.email
-                              }),
-                              setFieldError,
-                              setFieldValue
-                            );
-
-                            void setFieldValue('canResendOtp', false, false);
+                            if (compState?.canResendCode) {
+                              void resendSignUpCodeHandler();
+                            }
                           }}
-                          fill={ZFill.outline}
-                          className={ZClassNames({
-                            'flex items-center w-1/2 justify-center uppercase':
-                              true,
-                            'cursor-not-allowed':
-                              isForgotPasswordPending || !values?.canResendOtp
-                          })}
+                          loading={compState?.isCanResendBtnProcessing}
                           disabled={
-                            isForgotPasswordPending || !values?.canResendOtp
+                            compState?.isCanResendBtnProcessing ||
+                            !compState?.canResendCode
                           }
                         >
-                          {isForgotPasswordPending ? (
-                            <SpinSvg className='me-2 text-primary' />
-                          ) : (
-                            ''
-                          )}
-                          resend
-                        </ZButton>
-                      </div>
-                      <div className='w-full mt-4 text-sm font-medium text-end text-primary font-roboto-regular'>
+                          Resend
+                        </ZRUButton>
+                      </ZRUBox>
+                      <ZRUBox className='w-full mt-4 text-sm font-medium text-end text-primary font-roboto-regular'>
                         You can request for resend after 5 minutes
-                      </div>
+                      </ZRUBox>
                     </>
                   ) : null}
                 </ZFormikForm>
               );
             }}
           </ZFormik>
-        </div>
-      </div>
-
-      <img
-        src={productVector}
-        alt='product vector'
-        className='maxMd:hidden absolute bottom-0 left-0 maxMd:w-[16rem] maxLg:w-[17rem] w-[19.5rem]'
-      />
-      <div className='flex items-end w-full text-center'>
-        <Copyright className='pb-[1.2rem] pt-[2.5rem] w-full' />
-      </div>
-    </div>
+        </ZRUBox>
+      </ZRUBox>
+    </ZPage>
   );
 };
 
@@ -692,22 +635,20 @@ const SendOtpStep: React.FC = () => {
   const { values, touched, errors, handleChange, handleBlur, setFieldValue } =
     useZFormikContext<resetPasswordI>();
   return (
-    <ZInput
-      label='Email*'
+    <ZRUInput
+      size='3'
+      required
       name='email'
+      inputClassName='w-full'
+      label='Email address'
       value={values?.email}
-      touched={touched?.email}
-      className='w-full max-w-[23.438rem]'
+      errorNode={errors?.email}
       isValid={
         touched.email !== undefined
           ? touched.email && !isZNonEmptyString(errors?.email)
           : true
       }
-      errorNode={errors?.email}
       onChange={(e) => {
-        if (values?.isApiError) {
-          void setFieldValue('isApiError', false, false);
-        }
         handleChange(e);
       }}
       onBlur={(e) => {
@@ -721,45 +662,76 @@ const VerifyOtpStep: React.FC = () => {
   const { values, touched, errors, handleChange, handleBlur, setFieldValue } =
     useZFormikContext<resetPasswordI>();
 
-  useEffect(() => {
-    if (
-      values?.otpValidTill !== undefined &&
-      isZNonEmptyString(values?.otpValidTill)
-    ) {
-      const limit = dayjs(values?.otpValidTill).diff(dayjs());
-      setTimeout(() => {
-        void setFieldValue('canResendOtp', true, false);
-      }, limit);
-    }
-    // eslint-disable-next-line
-  }, [values?.otpValidTill]);
-
   return (
-    <div className='w-full'>
-      <ZInput
-        label='OTP*'
-        name='otp'
-        value={values?.otp}
-        type='number'
-        touched={touched?.otp}
-        className='w-full max-w-[23.438rem]'
+    <ZRUBox className='w-full'>
+      <ZRUInput
+        size='3'
+        required
+        name='verificationCode'
+        className='mt-5'
+        inputClassName='w-full'
+        label='Verification code'
+        value={values?.verificationCode}
+        errorNode={errors?.verificationCode}
         isValid={
-          touched.otp !== undefined
-            ? touched.otp && !isZNonEmptyString(errors?.otp)
+          touched.verificationCode !== undefined
+            ? touched.verificationCode &&
+              !isZNonEmptyString(errors?.verificationCode)
             : true
         }
-        errorNode={errors?.otp}
         onChange={(e) => {
-          if (values?.isApiError) {
-            void setFieldValue('isApiError', false, false);
-          }
           handleChange(e);
         }}
         onBlur={(e) => {
           handleBlur(e);
         }}
       />
-    </div>
+
+      <ZRUInput
+        size='3'
+        required
+        name='password'
+        className='mt-5'
+        label='Password'
+        inputClassName='w-full'
+        value={values?.password}
+        errorNode={errors?.password}
+        isValid={
+          touched.password !== undefined
+            ? touched.password && !isZNonEmptyString(errors?.password)
+            : true
+        }
+        onChange={(e) => {
+          handleChange(e);
+        }}
+        onBlur={(e) => {
+          handleBlur(e);
+        }}
+      />
+
+      <ZRUInput
+        size='3'
+        required
+        name='confirmPassword'
+        className='mt-5'
+        label='Confirm password'
+        inputClassName='w-full'
+        value={values?.confirmPassword}
+        errorNode={errors?.confirmPassword}
+        isValid={
+          touched.confirmPassword !== undefined
+            ? touched.confirmPassword &&
+              !isZNonEmptyString(errors?.confirmPassword)
+            : true
+        }
+        onChange={(e) => {
+          handleChange(e);
+        }}
+        onBlur={(e) => {
+          handleBlur(e);
+        }}
+      />
+    </ZRUBox>
   );
 };
 
@@ -768,23 +740,21 @@ const ResetPassword: React.FC = () => {
     useZFormikContext<resetPasswordI>();
   return (
     <>
-      <ZInput
+      <ZRUInput
+        size='3'
+        required
         name='password'
-        label='Password*'
-        type='password'
-        className='w-full max-w-[23.438rem] mt-4'
+        className='mt-5'
+        label='Password'
+        inputClassName='w-full'
         value={values?.password}
-        touched={touched?.password}
+        errorNode={errors?.password}
         isValid={
           touched.password !== undefined
             ? touched.password && !isZNonEmptyString(errors?.password)
             : true
         }
-        errorNode={errors?.password}
         onChange={(e) => {
-          if (values?.isApiError) {
-            void setFieldValue('isApiError', false, false);
-          }
           handleChange(e);
         }}
         onBlur={(e) => {
@@ -792,24 +762,22 @@ const ResetPassword: React.FC = () => {
         }}
       />
 
-      <ZInput
+      <ZRUInput
+        size='3'
+        required
         name='confirmPassword'
-        label='Confirm Password*'
-        type='password'
-        className='w-full max-w-[23.438rem] mt-4'
+        className='mt-5'
+        label='Confirm password'
+        inputClassName='w-full'
         value={values?.confirmPassword}
-        touched={touched?.confirmPassword}
+        errorNode={errors?.confirmPassword}
         isValid={
           touched.confirmPassword !== undefined
             ? touched.confirmPassword &&
               !isZNonEmptyString(errors?.confirmPassword)
             : true
         }
-        errorNode={errors?.confirmPassword}
         onChange={(e) => {
-          if (values?.isApiError) {
-            void setFieldValue('isApiError', false, false);
-          }
           handleChange(e);
         }}
         onBlur={(e) => {
