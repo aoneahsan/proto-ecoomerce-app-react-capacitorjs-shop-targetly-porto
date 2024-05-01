@@ -24,7 +24,7 @@ import {
   ZRUText
 } from '@/Components/RadixUI';
 import { ZPage } from '@/Components/Elements';
-import ZPublicNavTopBar from '@/Components/Public/Navigation/TopBar';
+import ZPublicNavTopBar from '@/Components/Common/Navigation/TopBar';
 import {
   ZFormik,
   ZFormikForm,
@@ -130,7 +130,7 @@ const Login: React.FC = () => {
             ...oldValues,
             username: _user?.username,
             id: _user?.userId,
-            attributes: _userAttribute
+            ..._userAttribute
           }));
 
           showSuccessNotification(messages.login.loggedIn);

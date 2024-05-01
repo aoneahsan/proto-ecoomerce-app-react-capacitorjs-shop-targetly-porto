@@ -56,6 +56,14 @@ const ZPagesLinks = () => {
       reportCustomError(error);
     }
   }, []);
+
+  const homeOnClickHandler = useCallback(() => {
+    try {
+      void navigate({ to: AppRoutes.home });
+    } catch (error) {
+      reportCustomError(error);
+    }
+  }, []);
   // #endregion
 
   // #region Routes
@@ -70,7 +78,7 @@ const ZPagesLinks = () => {
 
   return (
     <ul className='flex min900px:items-center min900px:gap-5 gap-3 max900px:flex-col *:text-xs *:mx-2 *:uppercase *:cursor-pointer min900px:hover:*:text-primary *:transition-all *:border-b *:border-transparent min900px:hover:*:border-primary *:font-semibold'>
-      <li>Home</li>
+      <li onClick={homeOnClickHandler}>Home</li>
       <li
         className={ZClassNames({
           'text-primary !border-primary': isCategoryPage

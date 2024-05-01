@@ -23,6 +23,7 @@ const AppRoutesE = {
   forgotPassword: '/forgot-password',
   category: '/category',
   product: '/product',
+  cart: '/cart',
 
   onBoardingSub: {
     profileDetailsStep: {

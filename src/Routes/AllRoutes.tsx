@@ -63,7 +63,7 @@ export const homeRoute = createRoute({
   path: AppRoutes.home,
   component: lazyRouteComponent(
     async (): Promise<Record<string, unknown>> =>
-      await import('@/Pages/Public/Home')
+      await import('@/Pages/Common/Home')
   )
   // beforeLoad: async ({ location }) => {},
 });
@@ -350,6 +350,16 @@ export const invoiceFormRouteTree = invoiceFormRoute.addChildren([
   invoiceEditRoute
 ]);
 
+// --- Product
+export const cartRoute = createRoute({
+  getParentRoute: () => tanstackRootRoute,
+  path: AppRoutes.cart,
+  component: lazyRouteComponent(
+    async (): Promise<Record<string, unknown>> =>
+      await import('@/Pages/Authenticated/Cart')
+  )
+  // beforeLoad: async ({ location }) => {},
+});
 // #endregion
 
 // #region  ----- Common routes -----

@@ -10,16 +10,16 @@ import React from 'react';
 // #region ---- Custom Imports ----
 import { ZPage } from '@/Components/Elements';
 import { ZRUBox, ZRUText } from '@/Components/RadixUI';
-import ZPublicNavigation from '@/Components/Public/Navigation';
-import ZBrowseCategoriesBox from '@/Components/Public/Home/BrowseCategoriesBox';
-import ZSaleCarouselBox from '@/Components/Public/Home/SaleCarouselBox';
-import ZTestimonialCarouselBox from '@/Components/Public/Home/TestimonialCarouselBox';
-import ZInformationBox from '@/Components/Public/Home/InfoBox';
-import ZProductCarouselBox from '@/Components/Public/Home/ProductCarouselBox';
-import ZBrandsCarouselBox from '@/Components/Public/Home/BrandsCarouselBox';
-import ProductsWidgetsBox from '@/Components/Public/Home/ProductsWidgetsBox';
-import ZFeaturesBox from '@/Components/Public/Home/FeaturesBox';
-import ZPublicFooter from '@/Components/Public/Footer';
+import ZPublicNavigation from '@/Components/Common/Navigation';
+import ZBrowseCategoriesBox from '@/Components/Common/Home/BrowseCategoriesBox';
+import ZSaleCarouselBox from '@/Components/Common/Home/SaleCarouselBox';
+import ZTestimonialCarouselBox from '@/Components/Common/Home/TestimonialCarouselBox';
+import ZInformationBox from '@/Components/Common/Home/InfoBox';
+import ZProductCarouselBox from '@/Components/Common/Home/ProductCarouselBox';
+import ZBrandsCarouselBox from '@/Components/Common/Home/BrandsCarouselBox';
+import ProductsWidgetsBox from '@/Components/Common/Home/ProductsWidgetsBox';
+import ZFeaturesBox from '@/Components/Common/Home/FeaturesBox';
+import ZPublicFooter from '@/Components/Common/Footer';
 import { useZMediaQueryScale } from '@/ZHooks/Helpers.hook';
 import { useZSideBar } from '@/ZHooks/ZGlobalComponents.hook';
 

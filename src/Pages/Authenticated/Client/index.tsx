@@ -33,7 +33,7 @@ import {
 } from '@/utils/Helpers/Notification';
 import { useZNavigate } from '@/ZHooks/Navigation.hook';
 import { AppRoutes } from '@/Routes/AppRoutes';
-import { queryKeys } from '@/utils/Constants/Query';
+import { queryKeys } from '@/utils/Constants/query';
 import TableSkeleton from '@/Components/Skeleton/Table';
 import { ZBtnSelect } from '@/Components/Elements/Select';
 import { ZSearchBtnInput } from '@/Components/Elements/Input';

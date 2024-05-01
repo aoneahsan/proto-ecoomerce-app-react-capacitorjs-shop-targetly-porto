@@ -16,10 +16,10 @@ import {
   ZRUText
 } from '@/Components/RadixUI';
 import { ZPage } from '@/Components/Elements';
-import ZPublicNavigation from '@/Components/Public/Navigation';
+import ZPublicNavigation from '@/Components/Common/Navigation';
 import ZProductCard from '@/Components/Elements/Cards/ProductCard';
 import ZCategoriesFilters from '@/Components/Common/Category/Filter';
-import ZPublicFooter from '@/Components/Public/Footer';
+import ZPublicFooter from '@/Components/Common/Footer';
 import ZPagesMenu from '@/Components/Common/PagesMenu';
 import constants from '@/utils/Constants';
 import { useZMediaQueryScale } from '@/ZHooks/Helpers.hook';

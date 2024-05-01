@@ -1,5 +1,5 @@
 // #region ---- Core Imports ----
-import React from 'react';
+import React, { useCallback } from 'react';
 
 // #endregion
 
@@ -15,6 +15,7 @@ import {
   ZRUText
 } from '@/Components/RadixUI';
 import { useZMediaQueryScale } from '@/ZHooks/Helpers.hook';
+import { useIsZAuthenticated } from '@/ZHooks/Auth.hook';
 import constants from '@/utils/Constants';
 
 // #endregion
@@ -32,7 +33,9 @@ import ZLanguagesData from '@/Data/Languages.data';
 
 // #region ---- Images Imports ----
 import { ZFacebookSvg, ZInstagramSvg, ZTwitterSvg } from '@/assets';
-import { useIsZAuthenticated } from '@/ZHooks/Auth.hook';
+import { Navigate } from 'react-router-dom';
+import { useZNavigate } from '@/ZHooks/Navigation.hook';
+import { AppRoutes } from '@/Routes/AppRoutes';
 
 // #endregion
 
@@ -73,8 +76,22 @@ const ZLanguagesDropDown: React.FC = () => {
 const ZMenu: React.FC = () => {
   // #region Custom Hooks
   const { isAuthenticated } = useIsZAuthenticated();
+  const navigate = useZNavigate();
   // #endregion
 
+  // #region Functions
+  const loginBtnHandler = useCallback(() => {
+    void navigate({
+      to: AppRoutes.login
+    });
+  }, []);
+
+  const registerBtnHandler = useCallback(() => {
+    void navigate({
+      to: AppRoutes.register
+    });
+  }, []);
+  // #endregion
   return (
     <>
       <ul className='flex max900px:flex-col min900px:items-center lg:gap-8 gap-3 max900px:ps-3 max900px:pe-10 max900px:py-2 max900px:*:inline-block *:mb-0 *:text-xs *:font-medium *:uppercase *:cursor-pointer min900px:*:text-light-blue-100 *:text-dark'>
@@ -83,7 +100,10 @@ const ZMenu: React.FC = () => {
         {isAuthenticated ? <li>My wishlist</li> : null}
         <li>Site map</li>
         {isAuthenticated ? <li>Cart</li> : null}
-        <li>Login</li>
+        {!isAuthenticated ? <li onClick={loginBtnHandler}>Login</li> : null}
+        {!isAuthenticated ? (
+          <li onClick={registerBtnHandler}>Register</li>
+        ) : null}
       </ul>
     </>
   );

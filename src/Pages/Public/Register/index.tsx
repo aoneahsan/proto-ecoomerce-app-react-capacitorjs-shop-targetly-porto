@@ -33,7 +33,7 @@ import {
   ZRUInput,
   ZRUText
 } from '@/Components/RadixUI';
-import ZPublicNavTopBar from '@/Components/Public/Navigation/TopBar';
+import ZPublicNavTopBar from '@/Components/Common/Navigation/TopBar';
 import { ZPage } from '@/Components/Elements';
 import {
   ZFormik,

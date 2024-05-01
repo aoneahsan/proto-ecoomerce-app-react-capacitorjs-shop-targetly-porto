@@ -17,11 +17,11 @@ import {
 } from '@/Components/RadixUI';
 import { ZCarousel, ZPage } from '@/Components/Elements';
 import ZPagesMenu from '@/Components/Common/PagesMenu';
-import ZPublicNavigation from '@/Components/Public/Navigation';
+import ZPublicNavigation from '@/Components/Common/Navigation';
 import ZQuantitySelector from '@/Components/Elements/QuantitySelector';
-import ZProductCarouselBox from '@/Components/Public/Home/ProductCarouselBox';
+import ZProductCarouselBox from '@/Components/Common/Home/ProductCarouselBox';
 import ZHorizontalProductCard from '@/Components/Elements/Cards/HorizontalProductCard';
-import ZPublicFooter from '@/Components/Public/Footer';
+import ZPublicFooter from '@/Components/Common/Footer';
 import constants from '@/utils/Constants';
 
 // #endregion

@@ -20,7 +20,7 @@ import {
   useZRQGetRequest,
   useZUpdateRQCacheData
 } from '@/ZHooks/zreactquery.hooks';
-import { queryKeys } from '@/utils/Constants/Query';
+import { queryKeys } from '@/utils/Constants/query';
 import TableSkeleton from '@/Components/Skeleton/Table';
 import { ZInvoiceTypeE, type ZInvoiceI } from '@/Types/Auth/Invoice';
 import { useZLoader } from '@/ZHooks/ZGlobalComponents.hook';

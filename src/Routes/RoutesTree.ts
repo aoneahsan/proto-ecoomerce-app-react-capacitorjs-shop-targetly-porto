@@ -11,7 +11,8 @@ import {
   invoiceFormRouteTree,
   forgotRoute,
   categoryRoute,
-  productRoute
+  productRoute,
+  cartRoute
 } from './AllRoutes';
 import tanstackRootRoute from './RootRoute';
 
@@ -28,7 +29,8 @@ const routeTree = tanstackRootRoute.addChildren([
   invoiceFormRouteTree,
   forgotRoute,
   categoryRoute,
-  productRoute
+  productRoute,
+  cartRoute
 ]);
 
 export default routeTree;

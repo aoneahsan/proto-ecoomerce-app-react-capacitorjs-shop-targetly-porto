@@ -60,6 +60,7 @@ import { BsStarHalf as ZStarHalfFillIcon } from 'react-icons/bs';
 import { FaLinkedinIn as ZLinkedinIcon } from 'react-icons/fa';
 import { FaGooglePlusG as ZGooglePlusIcon } from 'react-icons/fa';
 import { IoMdMail as ZMailIcon } from 'react-icons/io';
+import { IoChevronForwardSharp as ZChevronRightIcon } from 'react-icons/io5';
 
 // Lottie's
 import flowLottie from './lotties/flow.json';
@@ -148,5 +149,6 @@ export {
   ZStarHalfFillIcon,
   ZLinkedinIcon,
   ZGooglePlusIcon,
-  ZMailIcon
+  ZMailIcon,
+  ZChevronRightIcon
 };

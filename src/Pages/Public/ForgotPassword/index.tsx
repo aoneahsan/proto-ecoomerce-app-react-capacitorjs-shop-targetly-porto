@@ -30,7 +30,7 @@ import {
   ZRUText
 } from '@/Components/RadixUI';
 import { ZPage } from '@/Components/Elements';
-import ZPublicNavTopBar from '@/Components/Public/Navigation/TopBar';
+import ZPublicNavTopBar from '@/Components/Common/Navigation/TopBar';
 import {
   Storage,
   isZNonEmptyString,
