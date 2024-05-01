@@ -1,4 +1,4 @@
-import constants from '../Constants';
+import constants from '../constants12';
 
 const general = {
   failed: 'Request Failed.',

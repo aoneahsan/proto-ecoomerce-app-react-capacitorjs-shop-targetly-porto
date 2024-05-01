@@ -8,7 +8,7 @@ import {
 
 // #region Custom imports
 import { Storage } from '@/utils/Helpers';
-import constants from '@/utils/Constants';
+import constants from '@/utils/constants12';
 import tanstackRootRoute from './RootRoute';
 import { AppRoutes } from '@/Routes/AppRoutes';
 import { type ZAuthI } from '@/Types/Auth/index.type';
