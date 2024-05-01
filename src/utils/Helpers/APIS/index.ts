@@ -5,7 +5,7 @@ import {
   type zAxiosApiRequestInterface
 } from '@/Types/Global/zapi-hooks.type';
 import axiosInstance from '@/axiosInstance';
-import constants from '@/utils/constants12';
+import constants from '@/utils/constants';
 import ENVS from '@/utils/EnvKeys';
 import { Storage, getAuthToken, reportCustomError } from '@/utils/Helpers';
 import { type AxiosRequestConfig } from 'axios';

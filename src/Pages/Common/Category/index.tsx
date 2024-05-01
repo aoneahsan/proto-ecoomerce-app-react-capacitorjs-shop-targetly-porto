@@ -21,7 +21,7 @@ import ZProductCard from '@/Components/Elements/Cards/ProductCard';
 import ZCategoriesFilters from '@/Components/Common/Category/Filter';
 import ZPublicFooter from '@/Components/Common/Footer';
 import ZPagesMenu from '@/Components/Common/PagesMenu';
-import constants from '@/utils/constants12';
+import constants from '@/utils/constants';
 import { useZMediaQueryScale } from '@/ZHooks/Helpers.hook';
 import { useZSideBar } from '@/ZHooks/ZGlobalComponents.hook';
 

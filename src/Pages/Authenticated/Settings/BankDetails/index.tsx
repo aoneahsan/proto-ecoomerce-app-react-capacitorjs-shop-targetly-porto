@@ -26,7 +26,7 @@ import {
 import BackDetailsForm from '@/Components/Inpage/BankDetailsForm';
 import { useZRQUpdateRequest } from '@/ZHooks/zreactquery.hooks';
 import { extractInnerData } from '@/utils/Helpers/APIS';
-import constants from '@/utils/constants12';
+import constants from '@/utils/constants';
 import {
   showErrorNotification,
   showSuccessNotification

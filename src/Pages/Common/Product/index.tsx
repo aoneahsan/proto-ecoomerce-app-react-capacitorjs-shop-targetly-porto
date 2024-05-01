@@ -22,7 +22,7 @@ import ZQuantitySelector from '@/Components/Elements/QuantitySelector';
 import ZProductCarouselBox from '@/Components/Common/Home/ProductCarouselBox';
 import ZHorizontalProductCard from '@/Components/Elements/Cards/HorizontalProductCard';
 import ZPublicFooter from '@/Components/Common/Footer';
-import constants from '@/utils/constants12';
+import constants from '@/utils/constants';
 
 // #endregion
 

@@ -33,7 +33,7 @@ import {
 } from '@/utils/Helpers/Notification';
 import { useZNavigate } from '@/ZHooks/Navigation.hook';
 import { AppRoutes } from '@/Routes/AppRoutes';
-import { queryKeys } from '@/utils/constants12/query';
+import { queryKeys } from '@/utils/constants/query';
 import TableSkeleton from '@/Components/Skeleton/Table';
 import { ZBtnSelect } from '@/Components/Elements/Select';
 import { ZSearchBtnInput } from '@/Components/Elements/Input';
@@ -64,7 +64,7 @@ import { ItemPerPage } from '@/Data/ItemPerPage.data';
 
 // #region ---- Images Imports ----
 import { productVector, TrashBinSvg, EllipsisSvg } from '@/assets';
-import constants from '@/utils/constants12';
+import constants from '@/utils/constants';
 
 // #endregion
 

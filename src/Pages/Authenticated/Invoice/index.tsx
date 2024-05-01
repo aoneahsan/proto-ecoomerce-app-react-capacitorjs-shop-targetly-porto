@@ -22,7 +22,7 @@ import {
   useZRQGetRequest,
   useZUpdateRQCacheData
 } from '@/ZHooks/zreactquery.hooks';
-import { queryKeys } from '@/utils/constants12/query';
+import { queryKeys } from '@/utils/constants/query';
 import TableSkeleton from '@/Components/Skeleton/Table';
 import { ZInvoiceTypeE, type ZInvoiceI } from '@/Types/Auth/Invoice';
 import { useZLoader } from '@/ZHooks/ZGlobalComponents.hook';
@@ -70,7 +70,7 @@ import { ItemPerPage } from '@/Data/ItemPerPage.data';
 
 // #region ---- Images Imports ----
 import { productVector, TrashBinSvg, EllipsisSvg } from '@/assets';
-import constants from '@/utils/constants12';
+import constants from '@/utils/constants';
 
 // #endregion
 dayjs.extend(advancedFormat);

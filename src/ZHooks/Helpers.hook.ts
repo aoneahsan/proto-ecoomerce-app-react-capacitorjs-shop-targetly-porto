@@ -1,5 +1,5 @@
 import { useMediaQuery } from 'react-responsive';
-import constants from '@/utils/constants12';
+import constants from '@/utils/constants';
 import { type useZMediaQueryScaleReturnInterface } from '@/Types/Global/index.type';
 
 /**

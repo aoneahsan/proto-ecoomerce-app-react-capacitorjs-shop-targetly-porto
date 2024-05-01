@@ -9,7 +9,7 @@ import { ZPage } from '@/Components/Elements';
 // #endregion
 
 // #region ---- Custom Imports ----
-import constants from '@/utils/constants12';
+import constants from '@/utils/constants';
 import ZPublicNavigation from '@/Components/Common/Navigation';
 import ZPagesMenu from '@/Components/Common/PagesMenu';
 import { ZRUBox, ZRUHeading, ZRUText } from '@/Components/RadixUI';

@@ -20,7 +20,7 @@ import {
 } from '@/ZHooks/ZGlobalComponents.hook';
 import { AppRoutes } from '@/Routes/AppRoutes';
 import { messages } from '@/utils/Messages';
-import constants from '@/utils/constants12';
+import constants from '@/utils/constants';
 import { Storage, reportCustomError } from '@/utils/Helpers';
 import { useZRQCreateRequest } from '@/ZHooks/zreactquery.hooks';
 import { extractInnerData } from '@/utils/Helpers/APIS';
