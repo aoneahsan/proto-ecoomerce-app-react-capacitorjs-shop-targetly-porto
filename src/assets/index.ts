@@ -61,6 +61,14 @@ import { FaLinkedinIn as ZLinkedinIcon } from 'react-icons/fa';
 import { FaGooglePlusG as ZGooglePlusIcon } from 'react-icons/fa';
 import { IoMdMail as ZMailIcon } from 'react-icons/io';
 import { IoChevronForwardSharp as ZChevronRightIcon } from 'react-icons/io5';
+import { FiChevronsRight as ZDoubleChevronRightIcon } from 'react-icons/fi';
+import { MdOutlineShoppingCart as ZShoppingCartIcon } from 'react-icons/md';
+import { PiDownload as ZDownloadIcon } from 'react-icons/pi';
+import { PiAddressBook as ZAddressIcon } from 'react-icons/pi';
+import { PiHeartDuotone as ZHeartDuotoneIcon } from 'react-icons/pi';
+import { RiLogoutCircleRLine as ZLogoutCircleIcon } from 'react-icons/ri';
+import { FaEllipsisVertical as ZEllipsisVerticalIcon } from 'react-icons/fa6';
+import { IoEllipsisVerticalCircle as ZEllipsisVerticalCircleIcon } from 'react-icons/io5';
 
 // Lottie's
 import flowLottie from './lotties/flow.json';
@@ -150,5 +158,13 @@ export {
   ZLinkedinIcon,
   ZGooglePlusIcon,
   ZMailIcon,
-  ZChevronRightIcon
+  ZChevronRightIcon,
+  ZShoppingCartIcon,
+  ZDoubleChevronRightIcon,
+  ZDownloadIcon,
+  ZAddressIcon,
+  ZHeartDuotoneIcon,
+  ZLogoutCircleIcon,
+  ZEllipsisVerticalIcon,
+  ZEllipsisVerticalCircleIcon
 };

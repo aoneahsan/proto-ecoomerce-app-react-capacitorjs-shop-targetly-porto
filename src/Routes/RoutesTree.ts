@@ -12,7 +12,9 @@ import {
   forgotRoute,
   categoryRoute,
   productRoute,
-  cartRoute
+  purchaseTree,
+  myAccountTree,
+  wishlistRoute
 } from './AllRoutes';
 import tanstackRootRoute from './RootRoute';
 
@@ -30,7 +32,9 @@ const routeTree = tanstackRootRoute.addChildren([
   forgotRoute,
   categoryRoute,
   productRoute,
-  cartRoute
+  purchaseTree,
+  myAccountTree,
+  wishlistRoute
 ]);
 
 export default routeTree;

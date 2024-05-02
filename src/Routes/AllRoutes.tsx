@@ -350,16 +350,155 @@ export const invoiceFormRouteTree = invoiceFormRoute.addChildren([
   invoiceEditRoute
 ]);
 
-// --- Product
-export const cartRoute = createRoute({
+// --- Purchase
+export const purchaseRoute = createRoute({
   getParentRoute: () => tanstackRootRoute,
-  path: AppRoutes.cart,
+  path: AppRoutes.purchase,
   component: lazyRouteComponent(
     async (): Promise<Record<string, unknown>> =>
-      await import('@/Pages/Authenticated/Cart')
+      await import('@/Pages/Authenticated/Purchase')
   )
   // beforeLoad: async ({ location }) => {},
 });
+
+// --- Purchase cart
+const purchaseCartRoute = createRoute({
+  getParentRoute: () => purchaseRoute,
+  path: AppRoutes.purchaseSub.cart.path,
+  component: lazyRouteComponent(
+    async (): Promise<Record<string, unknown>> =>
+      await import('@/Components/Auth/Purchase/Cart')
+  )
+  // beforeLoad: privateRouteHandler
+});
+
+// --- Purchase checkout
+const purchaseCheckoutRoute = createRoute({
+  getParentRoute: () => purchaseRoute,
+  path: AppRoutes.purchaseSub.checkout.path,
+  component: lazyRouteComponent(
+    async (): Promise<Record<string, unknown>> =>
+      await import('@/Components/Auth/Purchase/Checkout')
+  )
+  // beforeLoad: privateRouteHandler
+});
+
+// --- Purchase completed
+const purchaseCompletedRoute = createRoute({
+  getParentRoute: () => purchaseRoute,
+  path: AppRoutes.purchaseSub.completed.path,
+  component: lazyRouteComponent(
+    async (): Promise<Record<string, unknown>> =>
+      await import('@/Components/Auth/Purchase/Completed')
+  )
+  // beforeLoad: privateRouteHandler
+});
+
+/// --- -- Purchase form tree
+export const purchaseTree = purchaseRoute.addChildren([
+  purchaseCartRoute,
+  purchaseCheckoutRoute,
+  purchaseCompletedRoute
+]);
+
+// -- My Account
+const myAccountRoute = createRoute({
+  getParentRoute: () => tanstackRootRoute,
+  path: AppRoutes.myAccount,
+  component: lazyRouteComponent(
+    async (): Promise<Record<string, unknown>> =>
+      await import('@/Pages/Authenticated/MyAccount')
+  )
+  // beforeLoad: privateRouteHandler
+});
+
+// --- Purchase dashboard
+const myAccountDashboardRoute = createRoute({
+  getParentRoute: () => myAccountRoute,
+  path: AppRoutes.myAccountSub.dashboard.path,
+  component: lazyRouteComponent(
+    async (): Promise<Record<string, unknown>> =>
+      await import('@/Components/Auth/MyAccount/Dashboard')
+  )
+  // beforeLoad: privateRouteHandler
+});
+
+// --- Purchase orders
+const myAccountOrdersRoute = createRoute({
+  getParentRoute: () => myAccountRoute,
+  path: AppRoutes.myAccountSub.orders.path,
+  component: lazyRouteComponent(
+    async (): Promise<Record<string, unknown>> =>
+      await import('@/Components/Auth/MyAccount/Orders')
+  )
+  // beforeLoad: privateRouteHandler
+});
+
+// --- Purchase downloads
+const myAccountDownloadsRoute = createRoute({
+  getParentRoute: () => myAccountRoute,
+  path: AppRoutes.myAccountSub.downloads.path,
+  component: lazyRouteComponent(
+    async (): Promise<Record<string, unknown>> =>
+      await import('@/Components/Auth/MyAccount/Downloads')
+  )
+  // beforeLoad: privateRouteHandler
+});
+
+// --- Purchase addresses
+const myAccountAddressesRoute = createRoute({
+  getParentRoute: () => myAccountRoute,
+  path: AppRoutes.myAccountSub.addresses.path,
+  component: lazyRouteComponent(
+    async (): Promise<Record<string, unknown>> =>
+      await import('@/Components/Auth/MyAccount/Addresses')
+  )
+  // beforeLoad: privateRouteHandler
+});
+
+// --- Purchase account details
+const myAccountDetailsRoute = createRoute({
+  getParentRoute: () => myAccountRoute,
+  path: AppRoutes.myAccountSub.accountDetails.path,
+  component: lazyRouteComponent(
+    async (): Promise<Record<string, unknown>> =>
+      await import('@/Components/Auth/MyAccount/AccountDetails')
+  )
+  // beforeLoad: privateRouteHandler
+});
+
+// --- Purchase shopping address
+const myAccountShoppingAddressRoute = createRoute({
+  getParentRoute: () => myAccountRoute,
+  path: AppRoutes.myAccountSub.shoppingAddress.path,
+  component: lazyRouteComponent(
+    async (): Promise<Record<string, unknown>> =>
+      await import('@/Components/Auth/MyAccount/ShoppingAddress')
+  )
+  // beforeLoad: privateRouteHandler
+});
+
+// --- Purchase logout
+const myAccountLogoutRoute = createRoute({
+  getParentRoute: () => myAccountRoute,
+  path: AppRoutes.myAccountSub.logout.path,
+  component: lazyRouteComponent(
+    async (): Promise<Record<string, unknown>> =>
+      await import('@/Components/Auth/MyAccount/Logout')
+  )
+  // beforeLoad: privateRouteHandler
+});
+
+/// --- -- Purchase form tree
+export const myAccountTree = myAccountRoute.addChildren([
+  myAccountDashboardRoute,
+  myAccountOrdersRoute,
+  myAccountDownloadsRoute,
+  myAccountAddressesRoute,
+  myAccountDetailsRoute,
+  myAccountShoppingAddressRoute,
+  myAccountLogoutRoute
+]);
 // #endregion
 
 // #region  ----- Common routes -----
@@ -385,6 +524,14 @@ export const productRoute = createRoute({
   // beforeLoad: async ({ location }) => {},
 });
 
+export const wishlistRoute = createRoute({
+  getParentRoute: () => tanstackRootRoute,
+  path: AppRoutes.wishlist,
+  component: lazyRouteComponent(
+    async (): Promise<Record<string, unknown>> =>
+      await import('@/Pages/Common/Wishlist')
+  )
+});
 // #endregion
 
 // #region  ----- Testing routes -----

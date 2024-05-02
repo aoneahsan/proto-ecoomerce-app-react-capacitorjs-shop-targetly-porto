@@ -60,7 +60,7 @@ const ZRUInput: React.FC<ZRUInputI> = ({
   size,
   color,
   radius,
-  isValid,
+  isValid = true,
   errorNode,
   infoText,
   label,

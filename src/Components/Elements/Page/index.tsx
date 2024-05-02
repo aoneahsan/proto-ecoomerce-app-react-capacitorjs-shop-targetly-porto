@@ -31,7 +31,10 @@ interface IZPage {
 const ZPage: React.FC<IZPage> = ({ children, className, helmet }) => {
   return (
     <div
-      className={ZClassNames('w-full min-h-screen overflow-hidden', className)}
+      className={ZClassNames(
+        'w-full min-h-screen flex flex-col overflow-hidden',
+        className
+      )}
     >
       <ZReactHelmet {...helmet} />
       {children}

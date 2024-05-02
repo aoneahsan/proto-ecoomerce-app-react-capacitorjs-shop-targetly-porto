@@ -45,7 +45,7 @@ import {
  */
 const ZPublicFooter: React.FC = () => {
   return (
-    <footer className='flex flex-col items-center text-left text-medium-100 bg-dark text-surface'>
+    <footer className='flex flex-col items-center mt-auto text-left text-medium-100 bg-dark text-surface'>
       <ZRUBox className='pt-6 mt-3 xl:px-6 xl:container maxXl:px-3'>
         <ZRUBox className='flex items-start justify-between place-items-center lg:*:w-1/4 md:*:w-1/3 maxMd:flex-wrap sm:*:w-1/2 xs:*:w-full'>
           {/* About us */}

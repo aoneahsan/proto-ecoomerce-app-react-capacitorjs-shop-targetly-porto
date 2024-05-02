@@ -91,15 +91,37 @@ const ZMenu: React.FC = () => {
       to: AppRoutes.register
     });
   }, []);
+
+  const cartBtnHandler = useCallback(() => {
+    void navigate({
+      to: AppRoutes.purchaseSub.cart.completePath
+    });
+  }, []);
+
+  const myAccountBtnHandler = useCallback(() => {
+    void navigate({
+      to: AppRoutes.myAccountSub.dashboard.completePath
+    });
+  }, []);
+
+  const wishlistBtnHandler = useCallback(() => {
+    void navigate({
+      to: AppRoutes.wishlist
+    });
+  }, []);
   // #endregion
   return (
     <>
       <ul className='flex max900px:flex-col min900px:items-center lg:gap-8 gap-3 max900px:ps-3 max900px:pe-10 max900px:py-2 max900px:*:inline-block *:mb-0 *:text-xs *:font-medium *:uppercase *:cursor-pointer min900px:*:text-light-blue-100 *:text-dark'>
-        {isAuthenticated ? <li>My Account</li> : null}
+        {isAuthenticated ? (
+          <li onClick={myAccountBtnHandler}>My Account</li>
+        ) : null}
         <li>Contact us</li>
-        {isAuthenticated ? <li>My wishlist</li> : null}
+        {isAuthenticated ? (
+          <li onClick={wishlistBtnHandler}>My wishlist</li>
+        ) : null}
         <li>Site map</li>
-        {isAuthenticated ? <li>Cart</li> : null}
+        {isAuthenticated ? <li onClick={cartBtnHandler}>Cart</li> : null}
         {!isAuthenticated ? <li onClick={loginBtnHandler}>Login</li> : null}
         {!isAuthenticated ? (
           <li onClick={registerBtnHandler}>Register</li>
