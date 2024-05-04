@@ -19,8 +19,8 @@ import {
   ZRUSelect,
   ZRUText
 } from '@/components/RadixUI';
-import { useZMediaQueryScale } from '@/hook/helpers.hook';
-import { useZSideBar } from '@/hook/globalComponents.hook';
+import { useZMediaQueryScale } from '@/hooks/helpers.hook';
+import { useZSideBar } from '@/hooks/globalComponents.hook';
 
 // #endregion
 

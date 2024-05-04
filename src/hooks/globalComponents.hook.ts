@@ -7,7 +7,7 @@ import {
   ZSidebarRStateAtom
 } from '@/store/global/index.recoil';
 import { type ZGenericObject } from '@/types/global/index.type';
-import { ZColorEnum } from '@/utils/enums/Elements.enum';
+import { ZColorEnum } from '@/utils/enums/elements.enum';
 
 /**
  * Custom hook for managing a sidebar state in a React application.

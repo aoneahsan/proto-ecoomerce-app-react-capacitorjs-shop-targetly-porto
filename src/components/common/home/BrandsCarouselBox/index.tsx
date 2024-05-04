@@ -9,7 +9,7 @@ import { ZCarousel } from '@/components/Elements';
 // #endregion
 
 // #region ---- Custom Imports ----
-import { useZMediaQueryScale } from '@/hook/helpers.hook';
+import { useZMediaQueryScale } from '@/hooks/helpers.hook';
 
 // #endregion
 

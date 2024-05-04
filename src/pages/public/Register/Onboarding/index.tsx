@@ -10,7 +10,7 @@ import { Outlet } from '@tanstack/react-router';
 
 // #region ---- Custom Imports ----
 import Copyright from '@/components/inpage/Copyright';
-import { useZNavigate } from '@/hook/navigation.hook';
+import { useZNavigate } from '@/hooks/navigation.hook';
 import { AppRoutes } from '@/Routes/AppRoutes';
 
 // #endregion

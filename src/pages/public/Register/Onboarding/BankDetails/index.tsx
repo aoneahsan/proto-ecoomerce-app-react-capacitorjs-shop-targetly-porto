@@ -23,23 +23,23 @@ import {
   reportCustomError,
   validateField,
   zStringify
-} from '@/utils/helpers123';
-import { useZRQUpdateRequest } from '@/hook/zreactquery.hooks';
+} from '@/utils/helpers';
+import { useZRQUpdateRequest } from '@/hooks/zreactquery.hooks';
 import { extractInnerData } from '@/utils/helpers/APIS';
 import constants from '@/utils/constants';
 import {
   showErrorNotification,
   showSuccessNotification
 } from '@/utils/helpers/Notification';
-import { messages } from '@/utils/messages123';
+import { messages } from '@/utils/messages';
 import BackDetailsForm from '@/components/inpage/BankDetailsForm';
-import { useZNavigate } from '@/hook/navigation.hook';
+import { useZNavigate } from '@/hooks/navigation.hook';
 import { AppRoutes } from '@/Routes/AppRoutes';
 
 // #endregion
 
 // #region ---- Types Imports ----
-import { ZFill } from '@/utils/enums/Elements.enum';
+import { ZFill } from '@/utils/enums/elements.enum';
 import { zValidationRuleE } from '@/utils/enums/index.enum';
 import { ApiUrlEnum } from '@/utils/enums/apis.enum';
 import { type ZAuthI } from '@/types/auth/index.type';
@@ -57,7 +57,7 @@ import { ZUserRStateAtom } from '@/store/auth/user/index.recoil.ts';
 
 // #region ---- Images Imports ----
 import { SpinSvg } from '@/assets';
-import { ZInvoiceTypeE } from '@/types/auth/invoice123';
+import { ZInvoiceTypeE } from '@/types/auth/invoice';
 
 // #endregion
 

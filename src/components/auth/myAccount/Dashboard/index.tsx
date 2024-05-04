@@ -9,9 +9,9 @@ import React, { useCallback } from 'react';
 
 // #region ---- Custom Imports ----
 import { ZRUBox, ZRUText } from '@/components/RadixUI';
-import { useZNavigate } from '@/hook/navigation.hook';
+import { useZNavigate } from '@/hooks/navigation.hook';
 import { AppRoutes } from '@/Routes/AppRoutes';
-import { reportCustomError } from '@/utils/helpers123';
+import { reportCustomError } from '@/utils/helpers';
 
 // #endregion
 

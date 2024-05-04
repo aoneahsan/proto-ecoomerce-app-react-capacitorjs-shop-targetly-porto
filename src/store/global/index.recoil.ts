@@ -6,7 +6,7 @@ import {
   type ZSidebarI,
   ZNetworkI
 } from '@/types/global/index.type';
-import { ZColorEnum } from '@/utils/enums/Elements.enum';
+import { ZColorEnum } from '@/utils/enums/elements.enum';
 
 export const ZSidebarRStateAtom = atom<ZSidebarI>({
   key: 'ZSidebarRStateAtom_Key',

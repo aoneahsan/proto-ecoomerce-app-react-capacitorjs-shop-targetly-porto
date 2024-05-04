@@ -18,20 +18,20 @@ import {
   useZRQDeleteRequest,
   useZRQGetRequest,
   useZUpdateRQCacheData
-} from '@/hook/zreactquery.hooks';
-import { useZLoader } from '@/hook/globalComponents.hook';
+} from '@/hooks/zreactquery.hooks';
+import { useZLoader } from '@/hooks/globalComponents.hook';
 import {
   isZNonEmptyString,
   reportCustomError,
   showZPrompt
-} from '@/utils/helpers123';
-import { messages } from '@/utils/messages123';
+} from '@/utils/helpers';
+import { messages } from '@/utils/messages';
 import { extractInnerData } from '@/utils/helpers/APIS';
 import {
   showSuccessNotification,
   showWarningNotification
 } from '@/utils/helpers/Notification';
-import { useZNavigate } from '@/hook/navigation.hook';
+import { useZNavigate } from '@/hooks/navigation.hook';
 import { AppRoutes } from '@/Routes/AppRoutes';
 import { queryKeys } from '@/utils/constants/query';
 import TableSkeleton from '@/components/skeleton/Table';
@@ -41,7 +41,7 @@ import { ZSearchBtnInput } from '@/components/Elements/Input';
 // #endregion
 
 // #region ---- Types Imports ----
-import { ZFill } from '@/utils/enums/Elements.enum';
+import { ZFill } from '@/utils/enums/elements.enum';
 import {
   ApiUrlEnum,
   RouteParams,
@@ -58,7 +58,7 @@ import {
   ZClientsRStateAtom,
   ZClientRStateSelector
 } from '@/store/client/index.recoil';
-import { ItemPerPage } from '@/Data/ItemPerPage.data';
+import { ItemPerPage } from '@/data/ItemPerPage.data';
 
 // #endregion
 

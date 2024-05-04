@@ -7,7 +7,7 @@ import {
   type ZPaginationInfoI,
   type ZFilterOptions
 } from '@/types/auth/index.type';
-import { ZFilterAndPaginateData } from '@/utils/helpers123';
+import { ZFilterAndPaginateData } from '@/utils/helpers';
 
 export const ZClientsRStateAtom = atom<ZClientI[]>({
   key: 'ZClientsRStateAtom_key',

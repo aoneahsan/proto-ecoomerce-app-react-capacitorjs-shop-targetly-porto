@@ -26,20 +26,20 @@ import {
   useZRQGetRequest,
   useZRQUpdateRequest,
   useZUpdateRQCacheData
-} from '@/hook/zreactquery.hooks';
+} from '@/hooks/zreactquery.hooks';
 import { queryKeys } from '@/utils/constants/query';
 import {
   isZNonEmptyString,
   reportCustomError,
   validateFields,
   zStringify
-} from '@/utils/helpers123';
+} from '@/utils/helpers';
 import {
   showErrorNotification,
   showSuccessNotification
 } from '@/utils/helpers/Notification';
-import { messages } from '@/utils/messages123';
-import { useZNavigate } from '@/hook/navigation.hook';
+import { messages } from '@/utils/messages';
+import { useZNavigate } from '@/hooks/navigation.hook';
 import { AppRoutes } from '@/Routes/AppRoutes';
 import ZClientFormSkeleton from '@/components/skeleton/Form/clientFormSkeleton';
 
@@ -53,7 +53,7 @@ import {
   ZRQGetRequestExtractEnum,
   ZRQUpdaterAction
 } from '@/utils/enums/apis.enum';
-import { ZFill } from '@/utils/enums/Elements.enum';
+import { ZFill } from '@/utils/enums/elements.enum';
 import { type ZClientI } from '@/types/auth/clients/index.type';
 import {
   extractInnerDataObjectEnum,

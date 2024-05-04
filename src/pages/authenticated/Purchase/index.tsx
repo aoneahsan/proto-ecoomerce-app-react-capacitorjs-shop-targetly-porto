@@ -11,13 +11,13 @@ import { Outlet, useMatchRoute } from '@tanstack/react-router';
 // #region ---- Custom Imports ----
 import { ZRUBox, ZRUText } from '@/components/RadixUI';
 import { ZPage } from '@/components/Elements';
-import ZPagesMenu from '@/components/common124/PagesMenu';
-import ZPublicNavigation from '@/components/common124/Navigation';
+import ZPagesMenu from '@/components/common/PagesMenu';
+import ZPublicNavigation from '@/components/common/Navigation';
 import constants from '@/utils/constants';
-import { useZMediaQueryScale } from '@/hook/helpers.hook';
+import { useZMediaQueryScale } from '@/hooks/helpers.hook';
 import { AppRoutes } from '@/Routes/AppRoutes';
 import { ZClassNames } from '@/Packages/ClassNames';
-import ZPublicFooter from '@/components/common124/Footer';
+import ZPublicFooter from '@/components/common/Footer';
 
 // #endregion
 

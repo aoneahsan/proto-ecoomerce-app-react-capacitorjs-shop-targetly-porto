@@ -25,7 +25,7 @@ import { ZClassNames } from '@/Packages/ClassNames';
 // #endregion
 
 // #region ---- Types Imports ----
-import { ZColorEnum, ZFill } from '@/utils/enums/Elements.enum';
+import { ZColorEnum, ZFill } from '@/utils/enums/elements.enum';
 interface ZButtonI {
   children?: ReactNode;
   className?: string;

@@ -16,12 +16,12 @@ import {
   ZRUText
 } from '@/components/RadixUI';
 import { ZCarousel, ZPage } from '@/components/Elements';
-import ZPagesMenu from '@/components/common124/PagesMenu';
-import ZPublicNavigation from '@/components/common124/Navigation';
+import ZPagesMenu from '@/components/common/PagesMenu';
+import ZPublicNavigation from '@/components/common/Navigation';
 import ZQuantitySelector from '@/components/Elements/QuantitySelector';
-import ZProductCarouselBox from '@/components/common124/home/ProductCarouselBox';
+import ZProductCarouselBox from '@/components/common/home/ProductCarouselBox';
 import ZHorizontalProductCard from '@/components/Elements/Cards/HorizontalProductCard';
-import ZPublicFooter from '@/components/common124/Footer';
+import ZPublicFooter from '@/components/common/Footer';
 import constants from '@/utils/constants';
 
 // #endregion

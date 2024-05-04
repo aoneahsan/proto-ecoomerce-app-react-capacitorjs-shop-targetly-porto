@@ -1,4 +1,4 @@
-import { type ZColorEnum } from '@/utils/enums/Elements.enum';
+import { type ZColorEnum } from '@/utils/enums/elements.enum';
 import { type ConnectionStatus } from '@capacitor/network';
 
 export type ZGenericObject<T> = Record<string, T>;

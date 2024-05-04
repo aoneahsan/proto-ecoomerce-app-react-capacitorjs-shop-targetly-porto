@@ -11,7 +11,7 @@ import { ZClassNames } from '@/Packages/ClassNames';
 
 // #region ---- Custom Imports ----
 import Copyright from '@/components/inpage/Copyright';
-import { useZNavigate } from '@/hook/navigation.hook';
+import { useZNavigate } from '@/hooks/navigation.hook';
 import { AppRoutes } from '@/Routes/AppRoutes';
 import ZAuthNavigation from '@/components/auth/Navigation';
 

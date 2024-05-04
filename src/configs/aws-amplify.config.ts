@@ -1,4 +1,4 @@
-import ENVS from '@/utils/envKeys123';
+import ENVS from '@/utils/envKeys';
 import { Amplify } from 'aws-amplify';
 
 Amplify.configure({

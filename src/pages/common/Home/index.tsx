@@ -10,18 +10,18 @@ import React from 'react';
 // #region ---- Custom Imports ----
 import { ZPage } from '@/components/Elements';
 import { ZRUBox, ZRUText } from '@/components/RadixUI';
-import ZPublicNavigation from '@/components/common124/Navigation';
-import ZBrowseCategoriesBox from '@/components/common124/home/BrowseCategoriesBox';
-import ZSaleCarouselBox from '@/components/common124/home/SaleCarouselBox';
-import ZTestimonialCarouselBox from '@/components/common124/home/TestimonialCarouselBox';
-import ZInformationBox from '@/components/common124/home/InfoBox';
-import ZProductCarouselBox from '@/components/common124/home/ProductCarouselBox';
-import ZBrandsCarouselBox from '@/components/common124/home/BrandsCarouselBox';
-import ProductsWidgetsBox from '@/components/common124/home/ProductsWidgetsBox';
-import ZFeaturesBox from '@/components/common124/home/FeaturesBox';
-import ZPublicFooter from '@/components/common124/Footer';
-import { useZMediaQueryScale } from '@/hook/helpers.hook';
-import { useZSideBar } from '@/hook/globalComponents.hook';
+import ZPublicNavigation from '@/components/common/Navigation';
+import ZBrowseCategoriesBox from '@/components/common/home/BrowseCategoriesBox';
+import ZSaleCarouselBox from '@/components/common/home/SaleCarouselBox';
+import ZTestimonialCarouselBox from '@/components/common/home/TestimonialCarouselBox';
+import ZInformationBox from '@/components/common/home/InfoBox';
+import ZProductCarouselBox from '@/components/common/home/ProductCarouselBox';
+import ZBrandsCarouselBox from '@/components/common/home/BrandsCarouselBox';
+import ProductsWidgetsBox from '@/components/common/home/ProductsWidgetsBox';
+import ZFeaturesBox from '@/components/common/home/FeaturesBox';
+import ZPublicFooter from '@/components/common/Footer';
+import { useZMediaQueryScale } from '@/hooks/helpers.hook';
+import { useZSideBar } from '@/hooks/globalComponents.hook';
 
 // #endregion
 

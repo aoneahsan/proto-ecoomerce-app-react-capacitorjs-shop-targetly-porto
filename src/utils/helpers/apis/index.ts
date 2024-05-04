@@ -6,10 +6,10 @@ import {
 } from '@/types/global/zapi-hooks.type';
 import axiosInstance from '@/axiosInstance';
 import constants from '@/utils/constants';
-import ENVS from '@/utils/envKeys123';
-import { Storage, getAuthToken, reportCustomError } from '@/utils/helpers123';
+import ENVS from '@/utils/envKeys';
+import { Storage, getAuthToken, reportCustomError } from '@/utils/helpers';
 import { type AxiosRequestConfig } from 'axios';
-import { messages } from '@/utils/messages123';
+import { messages } from '@/utils/messages';
 import { type ApiUrlEnum } from '@/utils/enums/apis.enum';
 import { type ZGenericObject } from '@/types/global/index.type';
 import {

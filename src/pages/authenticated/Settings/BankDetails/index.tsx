@@ -22,21 +22,21 @@ import {
   reportCustomError,
   validateFields,
   zStringify
-} from '@/utils/helpers123';
+} from '@/utils/helpers';
 import BackDetailsForm from '@/components/inpage/BankDetailsForm';
-import { useZRQUpdateRequest } from '@/hook/zreactquery.hooks';
+import { useZRQUpdateRequest } from '@/hooks/zreactquery.hooks';
 import { extractInnerData } from '@/utils/helpers/APIS';
 import constants from '@/utils/constants';
 import {
   showErrorNotification,
   showSuccessNotification
 } from '@/utils/helpers/Notification';
-import { messages } from '@/utils/messages123';
+import { messages } from '@/utils/messages';
 
 // #endregion
 
 // #region ---- Types Imports ----
-import { ZFill } from '@/utils/enums/Elements.enum';
+import { ZFill } from '@/utils/enums/elements.enum';
 import { zValidationRuleE } from '@/utils/enums/index.enum';
 import { ApiUrlEnum } from '@/utils/enums/apis.enum';
 import {

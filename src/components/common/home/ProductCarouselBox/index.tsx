@@ -11,7 +11,7 @@ import React from 'react';
 import { ZRUBox, ZRUText } from '@/components/RadixUI';
 import { ZCarousel } from '@/components/Elements';
 import ZProductCard from '@/components/Elements/Cards/ProductCard';
-import { useZMediaQueryScale } from '@/hook/helpers.hook';
+import { useZMediaQueryScale } from '@/hooks/helpers.hook';
 
 // #endregion
 

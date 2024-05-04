@@ -14,8 +14,8 @@ import {
   ZRUSelect,
   ZRUText
 } from '@/components/RadixUI';
-import { useZMediaQueryScale } from '@/hook/helpers.hook';
-import { useIsZAuthenticated } from '@/hook/auth.hook';
+import { useZMediaQueryScale } from '@/hooks/helpers.hook';
+import { useIsZAuthenticated } from '@/hooks/auth.hook';
 import constants from '@/utils/constants';
 
 // #endregion
@@ -26,15 +26,15 @@ import { ZRUBasicVariantE } from '@/types/radixUI/index.type';
 // #endregion
 
 // #region ---- Store Imports ----
-import { ZCurrenciesData } from '@/Data/Currencies.data';
-import ZLanguagesData from '@/Data/Languages.data';
+import { ZCurrenciesData } from '@/data/currencies.data';
+import ZLanguagesData from '@/data/languages.data';
 
 // #endregion
 
 // #region ---- Images Imports ----
 import { ZFacebookSvg, ZInstagramSvg, ZTwitterSvg } from '@/assets';
 import { Navigate } from 'react-router-dom';
-import { useZNavigate } from '@/hook/navigation.hook';
+import { useZNavigate } from '@/hooks/navigation.hook';
 import { AppRoutes } from '@/Routes/AppRoutes';
 
 // #endregion

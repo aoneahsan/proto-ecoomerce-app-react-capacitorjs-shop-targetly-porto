@@ -16,14 +16,14 @@ import {
   ZRUText
 } from '@/components/RadixUI';
 import { ZPage } from '@/components/Elements';
-import ZPublicNavigation from '@/components/common124/Navigation';
+import ZPublicNavigation from '@/components/common/Navigation';
 import ZProductCard from '@/components/Elements/Cards/ProductCard';
-import ZCategoriesFilters from '@/components/common124/category/Filter';
-import ZPublicFooter from '@/components/common124/Footer';
-import ZPagesMenu from '@/components/common124/PagesMenu';
+import ZCategoriesFilters from '@/components/common/category/Filter';
+import ZPublicFooter from '@/components/common/Footer';
+import ZPagesMenu from '@/components/common/PagesMenu';
 import constants from '@/utils/constants';
-import { useZMediaQueryScale } from '@/hook/helpers.hook';
-import { useZSideBar } from '@/hook/globalComponents.hook';
+import { useZMediaQueryScale } from '@/hooks/helpers.hook';
+import { useZSideBar } from '@/hooks/globalComponents.hook';
 
 // #endregion
 

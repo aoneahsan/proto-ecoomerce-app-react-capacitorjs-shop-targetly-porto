@@ -9,10 +9,10 @@ import React, { useMemo } from 'react';
 
 // #region ---- Custom Imports ----
 import { ZPage } from '@/components/Elements';
-import ZPublicNavigation from '@/components/common124/Navigation';
-import ZPagesMenu from '@/components/common124/PagesMenu';
+import ZPublicNavigation from '@/components/common/Navigation';
+import ZPagesMenu from '@/components/common/PagesMenu';
 import constants from '@/utils/constants';
-import ZPublicFooter from '@/components/common124/Footer';
+import ZPublicFooter from '@/components/common/Footer';
 import {
   ZRUBox,
   ZRUButton,

@@ -10,7 +10,7 @@ import { useRecoilValue } from 'recoil';
 
 // #region ---- Custom Imports ----
 import ZButton from '@/components/Elements/Button';
-import { useZNavigate } from '@/hook/navigation.hook';
+import { useZNavigate } from '@/hooks/navigation.hook';
 
 // #endregion
 
@@ -26,7 +26,7 @@ import { IsAuthenticatedRStateSelector } from '@/store/auth/index.recoil';
 // #region ---- Images Imports ----
 import { Z404Svg } from '@/assets';
 import { AppRoutes } from '@/Routes/AppRoutes';
-import { ZInvoiceTypeE } from '@/types/auth/invoice123';
+import { ZInvoiceTypeE } from '@/types/auth/invoice';
 
 // #endregion
 

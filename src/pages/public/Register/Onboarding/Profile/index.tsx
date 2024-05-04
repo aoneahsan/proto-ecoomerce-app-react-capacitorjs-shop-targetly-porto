@@ -21,18 +21,18 @@ import {
   reportCustomError,
   validateFields,
   zStringify
-} from '@/utils/helpers123';
+} from '@/utils/helpers';
 
 // #endregion
 
 // #region ---- Types Imports ----
-import { ZFill } from '@/utils/enums/Elements.enum';
+import { ZFill } from '@/utils/enums/elements.enum';
 
 // #endregion
 
 // #region ---- Store Imports ----
 import { zValidationRuleE } from '@/utils/enums/index.enum';
-import { useZRQUpdateRequest } from '@/hook/zreactquery.hooks';
+import { useZRQUpdateRequest } from '@/hooks/zreactquery.hooks';
 import { ApiUrlEnum } from '@/utils/enums/apis.enum';
 import { extractInnerData } from '@/utils/helpers/APIS';
 import {
@@ -47,11 +47,11 @@ import {
   showErrorNotification,
   showSuccessNotification
 } from '@/utils/helpers/Notification';
-import { messages } from '@/utils/messages123';
+import { messages } from '@/utils/messages';
 import { AxiosError } from 'axios';
 import { SpinSvg } from '@/assets';
 import { AppRoutes } from '@/Routes/AppRoutes';
-import { useZNavigate } from '@/hook/navigation.hook';
+import { useZNavigate } from '@/hooks/navigation.hook';
 import ProfileForm from '@/components/inpage/ProfileForm';
 
 // #endregion

@@ -10,7 +10,7 @@ import { ZClassNames } from '@/Packages/ClassNames';
 // #endregion
 
 // #region ---- Custom Imports ----
-import { isZNonEmptyString } from '@/utils/helpers123';
+import { isZNonEmptyString } from '@/utils/helpers';
 
 // #endregion
 
@@ -20,7 +20,7 @@ import { isZNonEmptyString } from '@/utils/helpers123';
 
 // #region ---- Store Imports ----
 import { ZModalRStateAtom } from '@/store/global/index.recoil';
-import { ZColorEnum } from '@/utils/enums/Elements.enum';
+import { ZColorEnum } from '@/utils/enums/elements.enum';
 
 // #endregion
 

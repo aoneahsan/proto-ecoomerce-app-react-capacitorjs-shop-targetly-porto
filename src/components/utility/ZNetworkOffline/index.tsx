@@ -10,7 +10,7 @@ import { useRecoilState } from 'recoil';
 // #endregion
 
 // #region ---- Custom Imports ----
-import { messages } from '@/utils/messages123';
+import { messages } from '@/utils/messages';
 import { ZRUText } from '@/components/RadixUI';
 import { ZNetworkRStateAtom } from '@/store/global/index.recoil';
 

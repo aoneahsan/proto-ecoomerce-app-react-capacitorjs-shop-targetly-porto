@@ -17,9 +17,9 @@ import {
 import { AppRoutes } from '@/Routes/AppRoutes';
 import { useMatchRoute } from '@tanstack/react-router';
 import { ZClassNames } from '@/Packages/ClassNames';
-import { useZNavigate } from '@/hook/navigation.hook';
-import { reportCustomError } from '@/utils/helpers123';
-import { useZMediaQueryScale } from '@/hook/helpers.hook';
+import { useZNavigate } from '@/hooks/navigation.hook';
+import { reportCustomError } from '@/utils/helpers';
+import { useZMediaQueryScale } from '@/hooks/helpers.hook';
 
 // #endregion
 

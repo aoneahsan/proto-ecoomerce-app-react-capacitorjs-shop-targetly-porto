@@ -1,6 +1,6 @@
 import { atom } from 'recoil';
 import { type ZAppViseBlockerI } from '@/types/global/index.type';
-import { messages } from '@/utils/messages123';
+import { messages } from '@/utils/messages';
 
 export const zAppViseBlockerRStateAtom = atom<ZAppViseBlockerI>({
   key: 'zAppViseBlockerRStateAtom_key',
