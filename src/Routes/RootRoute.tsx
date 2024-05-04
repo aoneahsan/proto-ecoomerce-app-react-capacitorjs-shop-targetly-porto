@@ -3,8 +3,8 @@ import ZGlobalComponents from '@/HOCs/ZGlobalComponents';
 import { createRootRoute, Outlet } from '@tanstack/react-router';
 import { ToastContainer } from 'react-toastify';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import NotFound404Page from '@/pages123/common123/404';
-import ZFullPageFallbackLoader from '@/components123/Elements/FallbackLoader';
+import NotFound404Page from '@/pages/common/404';
+import ZFullPageFallbackLoader from '@/components/Elements/FallbackLoader';
 
 // Radix UI
 import { Theme } from '@radix-ui/themes';

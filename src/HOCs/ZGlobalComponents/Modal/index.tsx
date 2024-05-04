@@ -19,8 +19,8 @@ import { isZNonEmptyString } from '@/utils/helpers123';
 // #endregion
 
 // #region ---- Store Imports ----
-import { ZModalRStateAtom } from '@/store123/global123/index.recoil';
-import { ZColorEnum } from '@/utils/enums123/Elements.enum';
+import { ZModalRStateAtom } from '@/store/global/index.recoil';
+import { ZColorEnum } from '@/utils/enums/Elements.enum';
 
 // #endregion
 

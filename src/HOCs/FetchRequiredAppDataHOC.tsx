@@ -16,18 +16,18 @@ import {
 // #region ---- Custom Imports ----
 import constants from '@/utils/constants';
 import { Storage, isZNonEmptyString } from '@/utils/helpers123';
-import { zAxiosApiRequest } from '@/utils/helpers123/APIS';
+import { zAxiosApiRequest } from '@/utils/helpers/APIS';
 
 // #endregion
 
 // #region ---- Types Imports ----
-import { ApiUrlEnum } from '@/utils/enums123/apis.enum';
+import { ApiUrlEnum } from '@/utils/enums/apis.enum';
 
 // #endregion
 
 // #region ---- Store Imports ----
-import { ZUserRStateAtom } from '@/store123/auth123/user123/index.recoil.ts';
-import { ZAuthTokenData } from '@/store123/auth123/index.recoil';
+import { ZUserRStateAtom } from '@/store/auth/user/index.recoil.ts';
+import { ZAuthTokenData } from '@/store/auth/index.recoil';
 
 // #endregion
 

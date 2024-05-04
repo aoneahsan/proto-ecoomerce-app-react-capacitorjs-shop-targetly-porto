@@ -18,7 +18,7 @@ import { ZClassNames } from '@/Packages/ClassNames';
 // #endregion
 
 // #region ---- Store Imports ----
-import { ZLoaderRStateAtom } from '@/store123/global123/index.recoil';
+import { ZLoaderRStateAtom } from '@/store/global/index.recoil';
 
 // #endregion
 

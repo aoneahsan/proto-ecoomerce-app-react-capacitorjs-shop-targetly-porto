@@ -10,18 +10,18 @@ import { ZClassNames } from '@/Packages/ClassNames';
 // #endregion
 
 // #region ---- Custom Imports ----
-import { ZRUScrollArea } from '@/components123/RadixUI';
+import { ZRUScrollArea } from '@/components/RadixUI';
 import { isZNonEmptyString } from '@/utils/helpers123';
 
 // #endregion
 
 // #region ---- Types Imports ----
-import { ZRUScrollbarsE } from '@/types123/radixUI/index.type';
+import { ZRUScrollbarsE } from '@/types/radixUI/index.type';
 
 // #endregion
 
 // #region ---- Store Imports ----
-import { ZSidebarRStateAtom } from '@/store123/global123/index.recoil';
+import { ZSidebarRStateAtom } from '@/store/global/index.recoil';
 
 // #endregion
 
