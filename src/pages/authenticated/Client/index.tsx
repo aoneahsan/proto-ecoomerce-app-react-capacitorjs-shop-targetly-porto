@@ -47,7 +47,7 @@ import {
   RouteParams,
   ZRQUpdaterAction
 } from '@/utils/enums/apis.enum';
-import { type ZClientI } from '@/types/auth/clients123/index.type';
+import { type ZClientI } from '@/types/auth/clients/index.type';
 import { extractInnerDataOptionsEnum } from '@/types/apis/index.type';
 
 // #endregion

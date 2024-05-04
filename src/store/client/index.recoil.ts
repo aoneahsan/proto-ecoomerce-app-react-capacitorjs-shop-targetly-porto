@@ -2,7 +2,7 @@ import { atom, selector } from 'recoil';
 import {
   ZClientSearchKeyE,
   type ZClientI
-} from '@/types/auth/clients123/index.type';
+} from '@/types/auth/clients/index.type';
 import {
   type ZPaginationInfoI,
   type ZFilterOptions

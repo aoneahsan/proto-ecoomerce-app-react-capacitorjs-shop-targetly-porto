@@ -66,7 +66,7 @@ import {
   ZRQGetRequestExtractEnum,
   ZRQUpdaterAction
 } from '@/utils/enums/apis.enum';
-import { type ZClientI } from '@/types/auth/clients123/index.type';
+import { type ZClientI } from '@/types/auth/clients/index.type';
 import { type ZGenericObject } from '@/types/global/index.type';
 import { zValidationRuleE } from '@/utils/enums/index.enum';
 import {
