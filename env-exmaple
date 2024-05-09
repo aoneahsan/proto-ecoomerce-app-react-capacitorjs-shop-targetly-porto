@@ -1,5 +1,5 @@
 GENERATE_SOURCEMAP=false
-VITE_CRYPTO_SECRET=''
+VITE_CRYPTO_SECRET='47fg84g8g28gv87v2g87v2gg8732-change in production :)'
 
 # Frontend configuration
 
