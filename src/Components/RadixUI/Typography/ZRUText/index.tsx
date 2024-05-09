@@ -37,6 +37,7 @@ interface ZRUTextI {
   wrap?: Responsive<ZRUWrapE>;
   color?: ZRUColorE;
   highContrast?: boolean;
+  onClick?: React.MouseEventHandler<HTMLElement>;
 }
 // #endregion
 

@@ -27,7 +27,7 @@ import {
   useZRQUpdateRequest,
   useZUpdateRQCacheData
 } from '@/ZHooks/zreactquery.hooks';
-import { queryKeys } from '@/utils/Constants/Query';
+import { queryKeys } from '@/utils/constants/query';
 import {
   isZNonEmptyString,
   reportCustomError,

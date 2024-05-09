@@ -5,7 +5,7 @@ import React from 'react';
 
 // #region ---- Packages Imports ----
 import classNames from 'classnames';
-import constants from '@/utils/Constants';
+import constants from '@/utils/constants';
 
 // #endregion
 

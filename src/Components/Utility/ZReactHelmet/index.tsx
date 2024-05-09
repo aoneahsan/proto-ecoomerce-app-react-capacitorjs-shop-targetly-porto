@@ -9,7 +9,7 @@ import { Helmet } from 'react-helmet';
 // #endregion
 
 // #region ---- Custom Imports ----
-import constants from '@/utils/Constants';
+import constants from '@/utils/constants';
 
 // #endregion
 

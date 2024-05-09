@@ -29,7 +29,7 @@ import {
 } from '@/ZHooks/zreactquery.hooks';
 import { AppRoutes } from '@/Routes/AppRoutes';
 import { useZNavigate } from '@/ZHooks/Navigation.hook';
-import constants from '@/utils/Constants';
+import constants from '@/utils/constants';
 import { extractInnerData } from '@/utils/Helpers/APIS';
 import {
   showErrorNotification,

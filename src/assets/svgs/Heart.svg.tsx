@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ZHeartSvg: React.FC<{
+const ZHeartIcon: React.FC<{
   color?: string;
   className?: string;
   onClick?: React.MouseEventHandler<SVGSVGElement>;
@@ -30,4 +30,4 @@ const ZHeartSvg: React.FC<{
   );
 };
 
-export default ZHeartSvg;
+export default ZHeartIcon;

@@ -30,14 +30,14 @@ interface ZRUFlexI extends ZRUStyleI {
   className?: string;
   style?: Record<string, unknown>;
   as?: ZRUAsE;
-  direction: Responsive<ZRUDirectionE>;
-  display: Responsive<ZRUDisplayE>;
-  align: Responsive<ZRUAlignE>;
-  justify: Responsive<ZRUJustifyE>;
-  wrap: Responsive<ZRUWrapFlexE>;
-  gap: Responsive<string>;
-  gapX: Responsive<string>;
-  gapY: Responsive<string>;
+  direction?: Responsive<ZRUDirectionE>;
+  display?: Responsive<ZRUDisplayE>;
+  align?: Responsive<ZRUAlignE>;
+  justify?: Responsive<ZRUJustifyE>;
+  wrap?: Responsive<ZRUWrapFlexE>;
+  gap?: Responsive<string>;
+  gapX?: Responsive<string>;
+  gapY?: Responsive<string>;
 }
 // #endregion
 

@@ -2,8 +2,8 @@ import { atom, selector } from 'recoil';
 
 //
 import { type UserAuthTokenI } from '@/Types/Auth/index.type';
-import constants from '@/utils/Constants';
-import { Storage } from '@/utils/Helpers';
+import constants from '@/utils/constants';
+import { Storage, isZNonEmptyString } from '@/utils/Helpers';
 import { ZUserRStateAtom } from './User';
 
 export const ZAuthTokenData = atom<UserAuthTokenI | null>({
@@ -14,14 +14,11 @@ export const ZAuthTokenData = atom<UserAuthTokenI | null>({
 export const IsAuthenticatedRStateSelector = selector({
   key: 'IsAuthenticatedRStateSelector_key',
   get: async ({ get }) => {
-    const authToken = (await Storage.get(
-      constants.localstorageKeys.authToken
-    )) as string | null;
+    const authToken = get(ZAuthTokenData);
     const currentUser = get(ZUserRStateAtom);
     return (
-      authToken !== null &&
-      authToken?.trim()?.length > 0 &&
-      currentUser?.email !== null
+      isZNonEmptyString(authToken?.token) &&
+      isZNonEmptyString(currentUser?.email)
     );
   }
 });

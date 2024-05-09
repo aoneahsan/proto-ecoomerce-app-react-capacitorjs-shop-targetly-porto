@@ -5,6 +5,7 @@ import React from 'react';
 
 // #region ---- Packages Imports ----
 import { Box } from '@radix-ui/themes';
+import * as Accordion from '@radix-ui/react-accordion';
 
 // #endregion
 

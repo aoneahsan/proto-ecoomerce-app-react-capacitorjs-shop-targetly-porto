@@ -5,7 +5,7 @@ import {
   type ZFilterOptions
 } from '@/Types/Auth/index.type';
 import { ZFilterAndPaginateData, isZNonEmptyString } from '@/utils/Helpers';
-import constants from '@/utils/Constants';
+import constants from '@/utils/constants';
 
 export const ZInvoiceRStateAtom = atom<ZInvoiceI[]>({
   key: 'ZInvoiceRStateAtom_key',

@@ -8,6 +8,8 @@ const routeParams = {
 
 const AppRoutesCommonPath = {
   onBoarding: '/onboarding',
+  purchase: '/purchase',
+  myAccount: '/my-account',
 
   auth: {
     profileSetting: `${authUrlCommonPath}/profile-setting`,
@@ -18,9 +20,27 @@ const AppRoutesCommonPath = {
 
 const AppRoutesE = {
   home: '/',
-  login: '/sign-in',
-  register: '/sign-up',
+  login: '/login',
+  register: '/register',
   forgotPassword: '/forgot-password',
+  category: '/category',
+  product: '/product',
+  wishlist: '/wishlist',
+
+  purchaseSub: {
+    cart: {
+      path: '/cart',
+      completePath: `${AppRoutesCommonPath.purchase}/cart`
+    },
+    checkout: {
+      path: '/checkout',
+      completePath: `${AppRoutesCommonPath.purchase}/checkout`
+    },
+    completed: {
+      path: '/completed',
+      completePath: `${AppRoutesCommonPath.purchase}/completed`
+    }
+  },
 
   onBoardingSub: {
     profileDetailsStep: {
@@ -80,6 +100,41 @@ const AppRoutesE = {
         path: `/update/${routeParams.invoiceId}`,
         completePath: `${AppRoutesCommonPath.auth.invoiceForm}/update/${routeParams.invoiceId}`
       }
+    }
+  },
+
+  myAccountSub: {
+    dashboard: {
+      path: '/dashboard',
+      completePath: `${AppRoutesCommonPath.myAccount}/dashboard`
+    },
+    orders: {
+      path: '/orders',
+      completePath: `${AppRoutesCommonPath.myAccount}/orders`
+    },
+    downloads: {
+      path: '/downloads',
+      completePath: `${AppRoutesCommonPath.myAccount}/downloads`
+    },
+    addresses: {
+      path: '/addresses',
+      completePath: `${AppRoutesCommonPath.myAccount}/addresses`
+    },
+    accountDetails: {
+      path: '/account-details',
+      completePath: `${AppRoutesCommonPath.myAccount}/account-details`
+    },
+    shoppingAddress: {
+      path: '/shopping-address',
+      completePath: `${AppRoutesCommonPath.myAccount}/shopping-address`
+    },
+    wishlist: {
+      path: '/wishlist',
+      completePath: `${AppRoutesCommonPath.myAccount}/wishlist`
+    },
+    logout: {
+      path: '/logout',
+      completePath: `${AppRoutesCommonPath.myAccount}/logout`
     }
   },
 

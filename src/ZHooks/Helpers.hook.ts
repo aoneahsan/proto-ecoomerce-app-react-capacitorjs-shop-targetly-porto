@@ -1,5 +1,5 @@
 import { useMediaQuery } from 'react-responsive';
-import constants from '@/utils/Constants';
+import constants from '@/utils/constants';
 import { type useZMediaQueryScaleReturnInterface } from '@/Types/Global/index.type';
 
 /**
@@ -46,6 +46,16 @@ export const useZMediaQueryScale = (): useZMediaQueryScaleReturnInterface => {
     query: '(min-width: 1100px)'
   });
 
+  // Check if the screen width is at 900px scale
+  const is900pxScale = useMediaQuery({
+    query: '(min-width: 900px)'
+  });
+
+  // Check if the screen width is at 900px scale
+  const isBelow900pxScale = useMediaQuery({
+    query: '(max-width: 900px)'
+  });
+
   // Check if the screen width is at large (lg) scale
   const isLgScale = useMediaQuery({
     query: `(min-width: ${constants.mediaScales.brackpoint_lg})`
@@ -78,6 +88,8 @@ export const useZMediaQueryScale = (): useZMediaQueryScaleReturnInterface => {
     is1200pxScale,
     is1250pxScale,
     is1150pxScale,
-    is1100pxScale
+    is1100pxScale,
+    is900pxScale,
+    isBelow900pxScale
   };
 };

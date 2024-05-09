@@ -1,6 +1,6 @@
 import { ZErrorCodeEnum } from '@/Types/Auth/index.type';
 import { zAxiosApiRequestContentType } from '@/Types/Global/zapi-hooks.type';
-import constants from '@/utils/Constants';
+import constants from '@/utils/constants';
 import { AppRoutes } from '@/Routes/AppRoutes';
 import {
   type ApiUrlEnum,

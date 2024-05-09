@@ -20,7 +20,7 @@ import {
 } from '@/ZHooks/ZGlobalComponents.hook';
 import { AppRoutes } from '@/Routes/AppRoutes';
 import { messages } from '@/utils/Messages';
-import constants from '@/utils/Constants';
+import constants from '@/utils/constants';
 import { Storage, reportCustomError } from '@/utils/Helpers';
 import { useZRQCreateRequest } from '@/ZHooks/zreactquery.hooks';
 import { extractInnerData } from '@/utils/Helpers/APIS';
@@ -166,7 +166,9 @@ const LogoutModal: React.FC<{
 
 const ZAuthNavigation: React.FC = () => {
   // #region Custom Hooks
-  const { openSidebar } = useZSideBar(ZNavSidebarContent);
+  const { openSidebar } = useZSideBar({
+    component: ZNavSidebarContent
+  });
   const navigate = useZNavigate();
   const matchRoute = useMatchRoute();
 

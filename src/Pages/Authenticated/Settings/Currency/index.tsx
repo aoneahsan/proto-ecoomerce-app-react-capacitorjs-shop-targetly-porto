@@ -29,7 +29,7 @@ import {
   zStringify
 } from '@/utils/Helpers';
 import { extractInnerData } from '@/utils/Helpers/APIS';
-import constants from '@/utils/Constants';
+import constants from '@/utils/constants';
 import {
   showErrorNotification,
   showSuccessNotification

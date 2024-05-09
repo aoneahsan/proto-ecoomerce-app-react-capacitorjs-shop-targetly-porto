@@ -1,36 +1,42 @@
 // #region ---- Core Imports ----
-import React from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 
 // #endregion
 
 // #region ---- Packages Imports ----
-import { useSetRecoilState } from 'recoil';
-import { AxiosError } from 'axios';
 import {
-  ZFormik,
-  ZFormikForm,
-  type zSetFieldErrorType,
-  type zSetFieldValueType
-} from '@/Packages/Formik';
-import { ZClassNames } from '@/Packages/ClassNames';
-import { useZNavigate } from '@/ZHooks/Navigation.hook';
+  signIn,
+  getCurrentUser,
+  fetchUserAttributes,
+  AuthError,
+  fetchAuthSession
+} from 'aws-amplify/auth';
+import { useSetRecoilState } from 'recoil';
 
 // #endregion
 
 // #region ---- Custom Imports ----
 import {
-  Storage,
+  ZRUBox,
+  ZRUButton,
+  ZRUHeading,
+  ZRUInput,
+  ZRUText
+} from '@/Components/RadixUI';
+import { ZPage } from '@/Components/Elements';
+import ZPublicNavTopBar from '@/Components/Common/Navigation/TopBar';
+import {
+  ZFormik,
+  ZFormikForm,
+  type zSetFieldErrorType
+} from '@/Packages/Formik';
+import {
   isZNonEmptyString,
   reportCustomError,
-  validateField,
-  zStringify
+  validateField
 } from '@/utils/Helpers';
-import ZInput from '@/Components/Elements/Input';
-import ZButton from '@/Components/Elements/Button';
-import Copyright from '@/Components/Inpage/Copyright';
-import { useZRQCreateRequest } from '@/ZHooks/zreactquery.hooks';
-import { extractInnerData } from '@/utils/Helpers/APIS';
-import constants from '@/utils/Constants';
+import { useZNavigate } from '@/ZHooks/Navigation.hook';
+import constants from '@/utils/constants';
 import { showSuccessNotification } from '@/utils/Helpers/Notification';
 import { messages } from '@/utils/Messages';
 
@@ -38,14 +44,10 @@ import { messages } from '@/utils/Messages';
 
 // #region ---- Types Imports ----
 import { zValidationRuleE } from '@/utils/Enums/index.enum';
-import { ApiUrlEnum } from '@/utils/Enums/apis.enum';
-import { ZFill } from '@/utils/Enums/Elements.enum';
 import { AppRoutes } from '@/Routes/AppRoutes';
-import {
-  extractInnerDataObjectEnum,
-  extractInnerDataOptionsEnum
-} from '@/Types/APIs/index.type';
-import { type ZAuthI } from '@/Types/Auth/index.type';
+import { ZUserI, type ZAuthI } from '@/Types/Auth/index.type';
+import { ZRUHeadingAsE, ZRUTextAsE } from '@/Types/radixUI/index.type';
+import { ZErrorException } from '@/Types/APIs/AWS/index.type';
 
 // #endregion
 
@@ -55,124 +57,140 @@ import { ZAuthTokenData } from '@/Store/Auth/index.recoil';
 
 // #endregion
 
-// #region ---- Images Imports ----
-import { productLogo, productVector, SpinSvg } from '@/assets';
-import { ZInvoiceTypeE } from '@/Types/Auth/Invoice';
-
-// #endregion
-
 const Login: React.FC = () => {
-  const formikInitialValues = {
-    email: '',
-    password: '',
-
-    // Just for frontend
-    isApiError: false
-  };
+  const [compState, setCompState] = useState({ isProcessing: false });
 
   // #region custom hooks
   const navigate = useZNavigate();
   // #endregion
 
-  // #region APIs
-  const { mutateAsync: LoginMutateAsync, isPending: isLoginPending } =
-    useZRQCreateRequest({
-      _url: ApiUrlEnum.login,
-      _authenticated: false
-    });
-
-  // #endregion
-
   // #region Recoil
-  const setZUserRStateAtom = useSetRecoilState(ZUserRStateAtom);
+  const setZUserRState = useSetRecoilState(ZUserRStateAtom);
 
   const setZAuthTokenRStateAtom = useSetRecoilState(ZAuthTokenData);
   // #endregion
 
   // #region Functions
-  const signUpBtnClickHandler = (): void => {
+  const processing = useCallback(() => {
+    setCompState((prevState) => ({
+      ...prevState,
+      isProcessing: true
+    }));
+  }, []);
+
+  const finishedProcessing = useCallback(() => {
+    setCompState((prevState) => ({
+      ...prevState,
+      isProcessing: false
+    }));
+  }, []);
+
+  const registerBtnClickHandler = useCallback((): void => {
     try {
       void navigate({ to: AppRoutes.register });
     } catch (error) {
       reportCustomError(error);
     }
-  };
+  }, []);
 
-  const formikSubmitHandler = async (
-    value: string,
-    setFieldError: zSetFieldErrorType,
-    setFieldValue: zSetFieldValueType
-  ): Promise<void> => {
+  const forgotBtnClickHandler = useCallback((): void => {
     try {
-      const _response = await LoginMutateAsync(value);
-
-      if (_response !== undefined && _response !== null) {
-        const _data = extractInnerData<{
-          user: ZAuthI;
-          token: string;
-        }>(_response, extractInnerDataOptionsEnum.createRequestResponseData);
-
-        if (_data !== null && _data !== undefined) {
-          // store User token.
-          void Storage.set(constants.localstorageKeys.userData, _data?.user);
-
-          // store auth token.
-          void Storage.set(constants.localstorageKeys.authToken, _data?.token);
-
-          // Storing user data in user Recoil State.
-          setZUserRStateAtom((oldValues) => ({
-            ...oldValues,
-            ..._data?.user
-          }));
-
-          // Storing token data in token Recoil State.
-          setZAuthTokenRStateAtom((oldValues) => ({
-            ...oldValues,
-            token: _data?.token
-          }));
-
-          showSuccessNotification(messages.auth.loginSuccess);
-
-          void navigate({
-            to: AppRoutes.authRoutes.invoices,
-            params: {
-              invoiceType: ZInvoiceTypeE.inv
-            }
-          });
-        }
-      }
+      void navigate({ to: AppRoutes.forgotPassword });
     } catch (error) {
       reportCustomError(error);
-      if (error instanceof AxiosError) {
-        const _data = extractInnerData<{
-          item: string[];
-        }>(
-          error?.response?.data,
-          extractInnerDataOptionsEnum.createRequestResponseData,
-          extractInnerDataObjectEnum.error
-        );
-        if (Array.isArray(_data?.item) && isZNonEmptyString(_data?.item[0])) {
-          setFieldError('password', _data?.item[0]);
-          void setFieldValue('isApiError', true, false);
-        }
-      }
     }
-  };
+  }, []);
+
+  const formikSubmitHandler = useCallback(
+    async (values: ZUserI, setFieldError: zSetFieldErrorType) => {
+      try {
+        processing();
+        const _response = await signIn({
+          username: values?.email ?? '',
+          password: values?.password
+        });
+
+        if (
+          _response !== undefined &&
+          _response !== null &&
+          typeof _response === 'object'
+        ) {
+          const _user = await getCurrentUser();
+          const _userAttribute = await fetchUserAttributes();
+          const { accessToken, idToken } =
+            (await fetchAuthSession()).tokens ?? {};
+
+          setZAuthTokenRStateAtom((oldValues) => ({
+            ...oldValues,
+            token: idToken?.toString(),
+            accessToken: accessToken?.toString()
+          }));
+
+          setZUserRState((oldValues) => ({
+            ...oldValues,
+            username: _user?.username,
+            id: _user?.userId,
+            ..._userAttribute
+          }));
+
+          showSuccessNotification(messages.login.loggedIn);
+
+          finishedProcessing();
+
+          // void navigate({
+          //   to: AppRoutes.profile
+          // });
+        }
+
+        if (compState?.isProcessing) {
+          finishedProcessing();
+        }
+      } catch (error) {
+        finishedProcessing();
+        if (error instanceof AuthError) {
+          if (error?.name === ZErrorException.NotAuthorizedException) {
+            setFieldError('password', error.message);
+          }
+        }
+
+        reportCustomError(error);
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
+  // #endregion
+
+  // #region constants
+  const pageHelmet = useMemo(
+    () => ({
+      title: `${constants.productInfo.name} - Login page - Zaions`
+    }),
+    []
+  );
+
+  const formikInitialValues = useMemo(
+    () => ({
+      email: '',
+      password: '',
+
+      // Just for frontend
+      isApiError: false
+    }),
+    []
+  );
   // #endregion
 
   return (
-    <div className='relative flex flex-col items-center justify-between w-full min-h-screen pt-10 bg-secondary h max-h-max pe-8'>
-      <div className='flex flex-col items-center w-[25.5625rem] max-w-full h-full mt-6'>
-        <img
-          className='w-[4.8rem] cursor-pointer h-[4.8rem] maxSm:mx-auto relative'
-          alt='Logo'
-          src={productLogo}
-          onClick={() => {
-            void navigate({ to: AppRoutes.home });
-          }}
-        />
+    <ZPage
+      className='relative flex-col w-full min-h-screen bg-light h max-h-max'
+      helmet={pageHelmet}
+    >
+      {/* Navigation */}
+      <ZPublicNavTopBar />
 
-        <div className='w-full pt-3 mt-10 text-start ps-4'>
+      <ZRUBox className='flex flex-col items-center w-full h-full max-w-full mt-6'>
+        <ZRUBox className='pt-3 mt-10 w-full sm:w-[25.5625rem] text-start px-1 sm:ps-4'>
           <ZFormik
             initialValues={formikInitialValues}
             validate={(values) => {
@@ -188,16 +206,7 @@ const Login: React.FC = () => {
               return errors;
             }}
             onSubmit={(values, { setFieldError, setFieldValue }) => {
-              const zStringifyData = zStringify({
-                email: values?.email,
-                password: values?.password
-              });
-
-              void formikSubmitHandler(
-                zStringifyData,
-                setFieldError,
-                setFieldValue
-              );
+              void formikSubmitHandler(values, setFieldError);
             }}
           >
             {({
@@ -208,34 +217,32 @@ const Login: React.FC = () => {
               handleSubmit,
               handleChange,
               handleBlur,
-              setFieldValue,
               submitForm
             }) => {
               return (
                 <ZFormikForm onSubmit={handleSubmit}>
-                  <h2
-                    className={ZClassNames({
-                      'text-primary text-start text-[2.25rem] font-black uppercase font-mont-heavy maxMd:text-center mb-9':
-                        true
-                    })}
+                  <ZRUHeading
+                    as={ZRUHeadingAsE.h2}
+                    className='text-tertiary text-start text-[2.25rem] font-semibold normal-case maxMd:text-center mb-4'
                   >
-                    Sign in
-                  </h2>
+                    Login
+                  </ZRUHeading>
 
-                  <div className='mt-6'>
-                    {/* Name filed */}
-                    <ZInput
-                      label='Email*'
+                  <ZRUBox className='mt-5'>
+                    {/* Email filed */}
+                    <ZRUInput
+                      size='3'
+                      required
                       name='email'
+                      inputClassName='w-full'
+                      label='Username or email address'
                       value={values?.email}
-                      touched={touched?.email}
-                      className='w-full max-w-[23.438rem]'
+                      errorNode={errors?.email}
                       isValid={
                         touched.email !== undefined
                           ? touched.email && !isZNonEmptyString(errors?.email)
                           : true
                       }
-                      errorNode={errors?.email}
                       onChange={(e) => {
                         handleChange(e);
                       }}
@@ -245,94 +252,78 @@ const Login: React.FC = () => {
                     />
 
                     {/* Password filed */}
-                    <ZInput
+                    <ZRUInput
+                      size='3'
+                      required
                       name='password'
-                      label='Password*'
-                      type='password'
-                      className='w-full max-w-[23.438rem] mt-4'
+                      className='mt-5'
+                      label='Password'
+                      inputClassName='w-full'
                       value={values?.password}
+                      errorNode={errors?.password}
                       isValid={
                         touched.password !== undefined
                           ? touched.password &&
                             !isZNonEmptyString(errors?.password)
                           : true
                       }
-                      touched={touched?.password}
-                      errorNode={
-                        values?.isApiError ? (
-                          <div className='mt-4'>
-                            {errors?.password}
-                            <button
-                              className='inline-block underline ms-1 text-primary text-[0.75rem] font-bold leading-[1rem] cursor-pointer'
-                              onClick={() => {
-                                void navigate({ to: AppRoutes.forgotPassword });
-                              }}
-                            >
-                              Forgot your password?
-                            </button>
-                          </div>
-                        ) : (
-                          errors?.password
-                        )
-                      }
                       onChange={(e) => {
-                        if (values?.isApiError) {
-                          void setFieldValue('isApiError', false, false);
-                        }
                         handleChange(e);
                       }}
                       onBlur={(e) => {
                         handleBlur(e);
                       }}
                     />
-                  </div>
+                    <ZRUBox className='text-end'>
+                      <ZRUText
+                        as={ZRUTextAsE.span}
+                        className='cursor-pointer text-primary hover:underline'
+                        onClick={forgotBtnClickHandler}
+                      >
+                        Forgot your password?
+                      </ZRUText>
+                    </ZRUBox>
+                  </ZRUBox>
 
-                  <div className='flex gap-1 pt-6 mt-6 maxSm:flex-col'>
-                    <ZButton
+                  <ZRUBox className='mt-6'>
+                    <ZRUButton
                       type='button'
-                      className={ZClassNames({
-                        'flex items-center justify-center uppercase': true,
-                        'cursor-not-allowed': isLoginPending
-                      })}
+                      size='3'
+                      loading={compState?.isProcessing}
+                      className='flex items-center justify-center w-full normal-case'
                       disabled={
-                        (!isValid && !values?.isApiError) || isLoginPending
+                        (!isValid && !values?.isApiError) ||
+                        compState?.isProcessing
                       }
                       onClick={() => {
                         void submitForm();
                       }}
                     >
-                      {isLoginPending ? (
-                        <SpinSvg className='me-2 text-secondary' />
-                      ) : (
-                        ''
-                      )}
                       Log in
-                    </ZButton>
-                    <ZButton
-                      fill={ZFill.clear}
-                      type='button'
-                      onClick={signUpBtnClickHandler}
+                    </ZRUButton>
+
+                    <ZRUText
+                      as={ZRUTextAsE.p}
+                      className='mt-2 maxSm:text-center'
                     >
-                      <span className='me-2 pe-1 text-tertiary'>OR</span>
-                      <span>SIGN UP</span>
-                    </ZButton>
-                  </div>
+                      New here?{' '}
+                      <ZRUText
+                        as={ZRUTextAsE.span}
+                        className='cursor-pointer text-primary hover:underline'
+                        onClick={registerBtnClickHandler}
+                      >
+                        Register now
+                      </ZRUText>{' '}
+                      to unlock exclusive features and benefits!
+                    </ZRUText>
+                  </ZRUBox>
                 </ZFormikForm>
               );
             }}
           </ZFormik>
-        </div>
-      </div>
-
-      <img
-        src={productVector}
-        alt='product vector'
-        className='maxMd:hidden absolute bottom-0 left-0 maxMd:w-[16rem] maxLg:w-[17rem] w-[19.5rem]'
-      />
-      <div className='flex items-end w-full text-center'>
-        <Copyright className='pb-[1.2rem] pt-[2.5rem] w-full' />
-      </div>
-    </div>
+        </ZRUBox>
+      </ZRUBox>
+    </ZPage>
   );
 };
 

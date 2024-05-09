@@ -21,8 +21,9 @@ import { type Responsive } from '@radix-ui/themes/dist/cjs/props';
 
 interface ZRUButtonI extends ZRUMarginI {
   children?: React.ReactNode;
-  asChild?: boolean;
   className?: string;
+  style?: Record<string, unknown>;
+  asChild?: boolean;
   size?: Responsive<ZRUSizeT>;
   variant?: ZRUVariantE;
   color?: ZRUColorE;
@@ -30,7 +31,7 @@ interface ZRUButtonI extends ZRUMarginI {
   radius?: ZRURadiusE;
   loading?: boolean;
   disabled?: boolean;
-  style?: Record<string, unknown>;
+  type?: 'button' | 'submit' | 'reset';
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 // #endregion
@@ -38,52 +39,17 @@ interface ZRUButtonI extends ZRUMarginI {
 /**
  * A customized Radix Button component.
  */
-const ZRUButton: React.FC<ZRUButtonI> = ({
-  m,
-  mx,
-  my,
-  mt,
-  mr,
-  mb,
-  ml,
-  style,
-  asChild,
-  children,
-  className,
-  size = '2',
-  variant = ZRUVariantE.solid,
-  color,
-  highContrast,
-  radius,
-  loading = false,
-  disabled = false,
-  onClick
-}) => {
+const ZRUButton: React.FC<ZRUButtonI> = (props) => {
   return (
     <Button
-      m={m}
-      mx={mx}
-      my={my}
-      mt={mt}
-      mr={mr}
-      mb={mb}
-      ml={ml}
-      size={size}
-      color={color}
-      style={style}
-      radius={radius}
-      variant={variant}
-      loading={loading}
-      asChild={asChild}
-      highContrast={highContrast}
-      disabled={disabled || loading}
-      className={ZClassNames(className, {
-        '!cursor-pointer': !loading,
-        '!cursor-not-allowed': loading
+      {...props}
+      disabled={props?.disabled || props?.loading}
+      className={ZClassNames(props?.className, {
+        '!cursor-pointer': !props?.disabled,
+        '!cursor-not-allowed': props?.disabled
       })}
-      onClick={onClick}
     >
-      {children}
+      {props?.children}
     </Button>
   );
 };

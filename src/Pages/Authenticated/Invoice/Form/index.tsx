@@ -26,7 +26,7 @@ import {
   useZRQUpdateRequest,
   useZUpdateRQCacheData
 } from '@/ZHooks/zreactquery.hooks';
-import { queryKeys } from '@/utils/Constants/Query';
+import { queryKeys } from '@/utils/constants/query';
 import ZInput from '@/Components/Elements/Input';
 import {
   generateInvoiceNo,
@@ -93,8 +93,8 @@ import {
   ImageSvg,
   SpinSvg
 } from '@/assets';
-import constants from '@/utils/Constants';
-import { ENVS } from '@/utils/EnvKeys';
+import constants from '@/utils/constants';
+import ENVS from '@/utils/EnvKeys';
 // #endregion
 
 // #region ---- Types Imports ----

@@ -40,7 +40,7 @@ import {
   extractInnerDataOptionsEnum
 } from '@/Types/APIs/index.type';
 import { type ZAuthI } from '@/Types/Auth/index.type';
-import constants from '@/utils/Constants';
+import constants from '@/utils/constants';
 import { useSetRecoilState } from 'recoil';
 import { ZUserRStateAtom } from '@/Store/Auth/User';
 import {
