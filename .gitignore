@@ -170,3 +170,4 @@ Carthage
 *.xcframework.zip
 
 .history
+ignore

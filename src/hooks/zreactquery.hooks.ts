@@ -27,7 +27,7 @@ import {
 } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useRecoilValue } from 'recoil';
-import { ZUserRStateAtom } from '@/store/auth/user/index.recoil.ts';
+import { ZUserRStateAtom } from '@/store/auth/user/index.recoil';
 
 /**
  * The custom hook for getting data from an API using useQuery hook from react-query package.
@@ -74,8 +74,8 @@ export const useZRQGetRequest = <T>({
     retry?: number;
   };
   _placeholderData?:
-  | UseQueryOptions<T | null | undefined>['placeholderData']
-  | null;
+    | UseQueryOptions<T | null | undefined>['placeholderData']
+    | null;
 }): UseQueryResult<T | null | undefined, Error> => {
   const ZUserRState = useRecoilValue(ZUserRStateAtom);
   const _response = useQuery({
@@ -691,13 +691,13 @@ export const useZUpdateRQCacheData = (): {
  */
 export const useZInvalidateReactQueries = ():
   | {
-    zInvalidateReactQueries: (
-      _queriesKeysToInvalidate?: string[]
-    ) => Promise<void>;
-  }
+      zInvalidateReactQueries: (
+        _queriesKeysToInvalidate?: string[]
+      ) => Promise<void>;
+    }
   | {
-    zInvalidateReactQueries: () => void;
-  } => {
+      zInvalidateReactQueries: () => void;
+    } => {
   const queryClient = useQueryClient();
   const ZUserRState = useRecoilValue(ZUserRStateAtom);
   try {

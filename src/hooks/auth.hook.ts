@@ -1,9 +1,7 @@
-import { fetchAuthSession } from 'aws-amplify/auth';
 import { isZNonEmptyString } from '@/utils/helpers';
-import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { ZAuthTokenData } from '@/store/auth/index.recoil';
-import { ZUserRStateAtom } from '@/store/auth/user/index.recoil.ts';
+import { ZUserRStateAtom } from '@/store/auth/user/index.recoil';
 
 /**
  * Hook to check if the user is authenticated based on Recoil state.

@@ -47,7 +47,7 @@ import {
 // #endregion
 
 // #region ---- Store Imports ----
-import { ZUserRStateAtom } from '@/store/auth/user/index.recoil.ts';
+import { ZUserRStateAtom } from '@/store/auth/user/index.recoil';
 import { SpinSvg } from '@/assets';
 import { ZClassNames } from '@/Packages/ClassNames';
 

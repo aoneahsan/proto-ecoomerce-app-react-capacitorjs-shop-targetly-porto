@@ -79,7 +79,7 @@ import { zAxiosApiRequestContentType } from '@/types/global/zapi-hooks.type';
 
 // #region ---- Store Imports ----
 import { ZCountryData } from '@/data/Countries.data';
-import { ZUserRStateAtom } from '@/store/auth/user/index.recoil.ts';
+import { ZUserRStateAtom } from '@/store/auth/user/index.recoil';
 import { ZCurrenciesData } from '@/data/currencies.data';
 
 // #endregion

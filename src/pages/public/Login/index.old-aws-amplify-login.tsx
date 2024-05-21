@@ -4,6 +4,13 @@ import React, { useCallback, useMemo, useState } from 'react';
 // #endregion
 
 // #region ---- Packages Imports ----
+import {
+  signIn,
+  getCurrentUser,
+  fetchUserAttributes,
+  AuthError,
+  fetchAuthSession
+} from 'aws-amplify/auth';
 import { useSetRecoilState } from 'recoil';
 
 // #endregion
@@ -47,11 +54,10 @@ import { ZErrorException } from '@/types/apis/aws/index.type';
 // #region ---- Store Imports ----
 import { ZUserRStateAtom } from '@/store/auth/user/index.recoil';
 import { ZAuthTokenData } from '@/store/auth/index.recoil';
-import { _createUserWithEmailAndPassword } from '@/configs/firebase/frbAuth';
 
 // #endregion
 
-const Login: React.FC = () => {
+const _OldAWSAmplifyLogin: React.FC = () => {
   const [compState, setCompState] = useState({ isProcessing: false });
 
   // #region custom hooks
@@ -99,12 +105,55 @@ const Login: React.FC = () => {
     async (values: ZUserI, setFieldError: zSetFieldErrorType) => {
       try {
         processing();
+        const _response = await signIn({
+          username: values?.email ?? '',
+          password: values?.password
+        });
+
+        if (
+          _response !== undefined &&
+          _response !== null &&
+          typeof _response === 'object'
+        ) {
+          const _user = await getCurrentUser();
+          const _userAttribute = await fetchUserAttributes();
+          const { accessToken, idToken } =
+            (await fetchAuthSession()).tokens ?? {};
+
+          setZAuthTokenRStateAtom((oldValues) => ({
+            ...oldValues,
+            token: idToken?.toString(),
+            accessToken: accessToken?.toString()
+          }));
+
+          setZUserRState((oldValues) => ({
+            ...oldValues,
+            username: _user?.username,
+            id: _user?.userId,
+            ..._userAttribute
+          }));
+
+          showSuccessNotification(messages.login.loggedIn);
+
+          finishedProcessing();
+
+          // void navigate({
+          //   to: AppRoutes.profile
+          // });
+        }
+
+        if (compState?.isProcessing) {
+          finishedProcessing();
+        }
       } catch (error) {
-        alert('error occured while form submit');
+        finishedProcessing();
+        if (error instanceof AuthError) {
+          if (error?.name === ZErrorException.NotAuthorizedException) {
+            setFieldError('password', error.message);
+          }
+        }
 
         reportCustomError(error);
-      } finally {
-        finishedProcessing();
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -132,14 +181,6 @@ const Login: React.FC = () => {
   );
   // #endregion
 
-  const testSignUp = async () => {
-    const res = await _createUserWithEmailAndPassword(
-      'aoneahsan@gmail.com',
-      'Asd123!@#'
-    );
-    console.log({ res });
-  };
-
   return (
     <ZPage
       className='relative flex-col w-full min-h-screen bg-light h max-h-max'
@@ -150,8 +191,6 @@ const Login: React.FC = () => {
 
       <ZRUBox className='flex flex-col items-center w-full h-full max-w-full mt-6'>
         <ZRUBox className='pt-3 mt-10 w-full sm:w-[25.5625rem] text-start px-1 sm:ps-4'>
-          <button onClick={testSignUp}>testSignUp</button>
-          <br />
           <ZFormik
             initialValues={formikInitialValues}
             validate={(values) => {
@@ -166,7 +205,7 @@ const Login: React.FC = () => {
 
               return errors;
             }}
-            onSubmit={(values, { setFieldError }) => {
+            onSubmit={(values, { setFieldError, setFieldValue }) => {
               void formikSubmitHandler(values, setFieldError);
             }}
           >
@@ -288,4 +327,4 @@ const Login: React.FC = () => {
   );
 };
 
-export default Login;
+export default _OldAWSAmplifyLogin;

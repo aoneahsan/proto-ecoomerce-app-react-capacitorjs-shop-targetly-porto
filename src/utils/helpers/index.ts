@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { type ZFilterOptions } from './../../Types/Auth/index.type';
+import { type ZFilterOptions } from './../../types/auth/index.type';
 import { messages } from '@/utils/messages';
 import { ZValidator } from '@/Packages/Validator';
 import constants from '@/utils/constants';

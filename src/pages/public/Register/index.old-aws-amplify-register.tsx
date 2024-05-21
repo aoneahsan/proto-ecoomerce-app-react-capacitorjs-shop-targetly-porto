@@ -77,7 +77,7 @@ import { ZAuthTokenData } from '@/store/auth/index.recoil';
 
 // #endregion
 
-const Register: React.FC = () => {
+const _OldAWSAmplifyRegister: React.FC = () => {
   const [compState, setCompState] = useState<{
     isProcessing: boolean;
     currentStep: ZAwsSignUpStep | string;
@@ -703,4 +703,4 @@ const Register: React.FC = () => {
   );
 };
 
-export default Register;
+export default _OldAWSAmplifyRegister;

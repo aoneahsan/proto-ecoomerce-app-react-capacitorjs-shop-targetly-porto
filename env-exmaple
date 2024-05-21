@@ -1,18 +1,11 @@
-GENERATE_SOURCEMAP=false
 VITE_CRYPTO_SECRET='47fg84g8g28gv87v2g87v2gg8732-change in production :)'
 
 # Frontend configuration
+VITE_TITLE="Targetly - Drop hunt hub"
 
-VITE_TITLE="Drop hunt hub"
-VITE_API_URL='http://localhost:8000/api'
-VITE_API_URL_PROD='We need to provide the backend API url of the production app, "{domain}/api" and the rest will get handled by the frontend app.'
-
-# Backend configuration
-
-VITE_BACKEND_URL='http://localhost:8000'
-VITE_BACKEND_URL_PROD='We need to provide the backend app url of the production app, "{domain}", without the ending "/" and the rest will get handled by the frontend app.'
-
-# AWS configuration and details
-
-VITE_AWS_COGNITO_POOL_ID=''
-VITE_AWS_COGNITO_CLIENT_ID=''
+# Firebase Config ENV
+VITE_FRB_API_KEY=''
+VITE_FRB_PROJECT_ID=''
+VITE_FRB_MESSAGING_SENDING_ID=''
+VITE_FRB_APP_ID=''
+VITE_FRB_MEASUREMENT_ID=''

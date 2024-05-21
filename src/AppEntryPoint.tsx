@@ -4,13 +4,11 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { RouterProvider } from '@tanstack/react-router';
 import AppRouter from './Routes';
 import FetchRequiredAppDataHOC from './HOCs/FetchRequiredAppDataHOC';
-import ZNetworkOffline from './Components/Utility/ZNetworkOffline';
-
-// AWS Amplify
-import '@/configs/aws-amplify.config';
+import ZNetworkOffline from './components/utility/ZNetworkOffline';
 
 // React-toastify package css
 import 'react-toastify/dist/ReactToastify.css';
+import PackagesImportHOC from './HOCs/PackagesImport.hoc';
 
 // QueryClient From tanstack/react-query
 const queryClientObj = new QueryClient();
@@ -25,10 +23,11 @@ const AppEntryPoint: React.FC = () => {
         <RecoilRoot>
           {/* HOC to fetch required data from api or local storage for app */}
           <FetchRequiredAppDataHOC>
-            {/* <ZNetworkOffline /> */}
-
+            <PackagesImportHOC>
+              <RouterProvider router={AppRouter} />
+              <ZNetworkOffline />
+            </PackagesImportHOC>
             {/* Tanstack router */}
-            <RouterProvider router={AppRouter} />
           </FetchRequiredAppDataHOC>
         </RecoilRoot>
       </QueryClientProvider>

@@ -35,7 +35,7 @@ import { messages } from '@/utils/messages';
 // #region ---- Types Imports ----
 import { ZFill } from '@/utils/enums/elements.enum';
 import { zValidationRuleE } from '@/utils/enums/index.enum';
-import { ZUserRStateAtom } from '@/store/auth/user/index.recoil.ts';
+import { ZUserRStateAtom } from '@/store/auth/user/index.recoil';
 import { useZRQUpdateRequest } from '@/hooks/zreactquery.hooks';
 import { ApiUrlEnum } from '@/utils/enums/apis.enum';
 import { extractInnerData } from '@/utils/helpers/APIS';

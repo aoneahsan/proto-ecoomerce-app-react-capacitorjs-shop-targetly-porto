@@ -1,5 +1,5 @@
 import { type FetchUserAttributesOutput } from 'aws-amplify/auth';
-import { type ZRSelectOptions } from '../Elements/Select.type';
+import { type ZRSelectOptions } from './../elements/select.type';
 
 // Enums
 export enum RegisterStepEnum {

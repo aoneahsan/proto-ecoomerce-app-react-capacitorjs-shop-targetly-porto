@@ -42,7 +42,7 @@ import {
 import { type ZAuthI } from '@/types/auth/index.type';
 import constants from '@/utils/constants';
 import { useSetRecoilState } from 'recoil';
-import { ZUserRStateAtom } from '@/store/auth/user/index.recoil.ts';
+import { ZUserRStateAtom } from '@/store/auth/user/index.recoil';
 import {
   showErrorNotification,
   showSuccessNotification
