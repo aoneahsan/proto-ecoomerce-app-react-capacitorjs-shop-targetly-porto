@@ -14,5 +14,11 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, 'src')
     }
+  },
+  server: {
+    port: 5810
+  },
+  build: {
+    sourcemap: false
   }
 });
