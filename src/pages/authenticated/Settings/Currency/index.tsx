@@ -33,7 +33,7 @@ import constants from '@/utils/constants';
 import {
   showErrorNotification,
   showSuccessNotification
-} from '@/utils/helpers/Notification';
+} from '@/utils/helpers/notification';
 import { messages } from '@/utils/messages';
 
 // #endregion

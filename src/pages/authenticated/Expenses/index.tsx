@@ -26,7 +26,7 @@ import { ZInvoiceTypeE, type ZInvoiceI } from '@/types/auth/invoice';
 import { useZLoader } from '@/hooks/globalComponents.hook';
 import { messages } from '@/utils/messages';
 import { extractInnerData } from '@/utils/helpers/APIS';
-import { showSuccessNotification } from '@/utils/helpers/Notification';
+import { showSuccessNotification } from '@/utils/helpers/notification';
 import { reportCustomError, showZConfirm } from '@/utils/helpers';
 
 // #endregion

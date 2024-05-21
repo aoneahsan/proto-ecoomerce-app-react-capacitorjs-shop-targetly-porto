@@ -45,7 +45,7 @@ import {
   showErrorNotification,
   showSuccessNotification,
   showWarningNotification
-} from '@/utils/helpers/Notification';
+} from '@/utils/helpers/notification';
 import { messages } from '@/utils/messages';
 import { useZNavigate } from '@/hooks/navigation.hook';
 import { AppRoutes } from '@/Routes/AppRoutes';

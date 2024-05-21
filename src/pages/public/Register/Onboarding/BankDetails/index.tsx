@@ -30,7 +30,7 @@ import constants from '@/utils/constants';
 import {
   showErrorNotification,
   showSuccessNotification
-} from '@/utils/helpers/Notification';
+} from '@/utils/helpers/notification';
 import { messages } from '@/utils/messages';
 import BackDetailsForm from '@/components/inpage/BankDetailsForm';
 import { useZNavigate } from '@/hooks/navigation.hook';

@@ -53,7 +53,7 @@ import constants from '@/utils/constants';
 import {
   showErrorNotification,
   showSuccessNotification
-} from '@/utils/helpers/Notification';
+} from '@/utils/helpers/notification';
 import { messages } from '@/utils/messages';
 
 // #endregion
@@ -68,7 +68,7 @@ import {
 import {
   ZAwsResetPasswordStep,
   ZErrorException
-} from '@/types/apis/AWS/index.type';
+} from '@/types/apis/aws/index.type';
 
 // #endregion
 

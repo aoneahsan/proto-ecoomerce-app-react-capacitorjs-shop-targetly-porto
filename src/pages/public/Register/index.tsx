@@ -53,7 +53,7 @@ import constants from '@/utils/constants';
 import {
   showErrorNotification,
   showSuccessNotification
-} from '@/utils/helpers/Notification';
+} from '@/utils/helpers/notification';
 import { messages } from '@/utils/messages';
 import { AppRoutes } from '@/Routes/AppRoutes';
 
@@ -67,7 +67,7 @@ import {
   ZRUTextAsE,
   ZRUVariantE
 } from '@/types/radixUI/index.type';
-import { ZAwsSignUpStep, ZErrorException } from '@/types/apis/AWS/index.type';
+import { ZAwsSignUpStep, ZErrorException } from '@/types/apis/aws/index.type';
 
 // #endregion
 

@@ -37,7 +37,7 @@ import {
 } from '@/utils/helpers';
 import { useZNavigate } from '@/hooks/navigation.hook';
 import constants from '@/utils/constants';
-import { showSuccessNotification } from '@/utils/helpers/Notification';
+import { showSuccessNotification } from '@/utils/helpers/notification';
 import { messages } from '@/utils/messages';
 
 // #endregion
@@ -47,7 +47,7 @@ import { zValidationRuleE } from '@/utils/enums/index.enum';
 import { AppRoutes } from '@/Routes/AppRoutes';
 import { ZUserI, type ZAuthI } from '@/types/auth/index.type';
 import { ZRUHeadingAsE, ZRUTextAsE } from '@/types/radixUI/index.type';
-import { ZErrorException } from '@/types/apis/AWS/index.type';
+import { ZErrorException } from '@/types/apis/aws/index.type';
 
 // #endregion
 

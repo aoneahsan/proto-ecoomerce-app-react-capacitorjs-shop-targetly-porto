@@ -46,7 +46,7 @@ import { ZUserRStateAtom } from '@/store/auth/user/index.recoil.ts';
 import {
   showErrorNotification,
   showSuccessNotification
-} from '@/utils/helpers/Notification';
+} from '@/utils/helpers/notification';
 import { messages } from '@/utils/messages';
 import { AxiosError } from 'axios';
 import { SpinSvg } from '@/assets';

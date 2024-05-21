@@ -30,7 +30,7 @@ import { extractInnerData } from '@/utils/helpers/APIS';
 import {
   showSuccessNotification,
   showWarningNotification
-} from '@/utils/helpers/Notification';
+} from '@/utils/helpers/notification';
 import { useZNavigate } from '@/hooks/navigation.hook';
 import { AppRoutes } from '@/Routes/AppRoutes';
 import { queryKeys } from '@/utils/constants/query';

@@ -31,7 +31,7 @@ import { extractInnerData } from '@/utils/helpers/APIS';
 import {
   showSuccessNotification,
   showWarningNotification
-} from '@/utils/helpers/Notification';
+} from '@/utils/helpers/notification';
 import {
   isZNonEmptyString,
   reportCustomError,
