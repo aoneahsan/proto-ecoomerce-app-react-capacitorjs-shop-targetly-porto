@@ -7,12 +7,12 @@ import {
 // #endregion
 
 // #region Custom imports
-import { Storage } from '@/utils/Helpers';
+import { Storage } from '@/utils/helpers';
 import constants from '@/utils/constants';
 import tanstackRootRoute from './RootRoute';
 import { AppRoutes } from '@/Routes/AppRoutes';
-import { type ZAuthI } from '@/Types/Auth/index.type';
-import { ZInvoiceTypeE } from '@/Types/Auth/Invoice';
+import { type ZAuthI } from '@/types/auth/index.type';
+import { ZInvoiceTypeE } from '@/types/auth/invoice';
 // #endregion
 
 // on window refresh
@@ -63,7 +63,7 @@ export const homeRoute = createRoute({
   path: AppRoutes.home,
   component: lazyRouteComponent(
     async (): Promise<Record<string, unknown>> =>
-      await import('@/Pages/Common/Home')
+      await import('@/pages/common/Home')
   )
   // beforeLoad: async ({ location }) => {},
 });
@@ -74,7 +74,7 @@ export const loginRoute = createRoute({
   path: AppRoutes.login,
   component: lazyRouteComponent(
     async (): Promise<Record<string, unknown>> =>
-      await import('@/Pages/Public/Login')
+      await import('@/pages/public/Login')
   ),
   beforeLoad: publicRouteHandler
 });
@@ -85,7 +85,7 @@ export const registerRoute = createRoute({
   path: AppRoutes.register,
   component: lazyRouteComponent(
     async (): Promise<Record<string, unknown>> =>
-      await import('@/Pages/Public/Register')
+      await import('@/pages/public/Register')
   ),
   beforeLoad: publicRouteHandler
 });
@@ -95,7 +95,7 @@ export const forgotRoute = createRoute({
   path: AppRoutes.forgotPassword,
   component: lazyRouteComponent(
     async (): Promise<Record<string, unknown>> =>
-      await import('@/Pages/Public/ForgotPassword')
+      await import('@/pages/public/ForgotPassword')
   ),
   beforeLoad: publicRouteHandler
 });
@@ -106,7 +106,7 @@ const onboardingRoute = createRoute({
   path: AppRoutes.onBoarding,
   component: lazyRouteComponent(
     async (): Promise<Record<string, unknown>> =>
-      await import('@/Pages/Public/Register/Onboarding')
+      await import('@/pages/public/Register/Onboarding')
   ),
   beforeLoad: privateRouteHandler
 });
@@ -118,7 +118,7 @@ const onboardingProfileRoute = createRoute({
   path: AppRoutes.onBoardingSub.profileDetailsStep.path,
   component: lazyRouteComponent(
     async (): Promise<Record<string, unknown>> =>
-      await import('@/Pages/Public/Register/Onboarding/Profile')
+      await import('@/pages/public/Register/Onboarding/Profile')
   ),
   beforeLoad: async () => {
     await privateRouteHandler();
@@ -145,7 +145,7 @@ const onboardingCurrencyRoute = createRoute({
   path: AppRoutes.onBoardingSub.currencyDetailsStep.path,
   component: lazyRouteComponent(
     async (): Promise<Record<string, unknown>> =>
-      await import('@/Pages/Public/Register/Onboarding/Currency')
+      await import('@/pages/public/Register/Onboarding/Currency')
   ),
   beforeLoad: async () => {
     await privateRouteHandler();
@@ -172,7 +172,7 @@ const onboardingBankRoute = createRoute({
   path: AppRoutes.onBoardingSub.bankDetailsStep.path,
   component: lazyRouteComponent(
     async (): Promise<Record<string, unknown>> =>
-      await import('@/Pages/Public/Register/Onboarding/BankDetails')
+      await import('@/pages/public/Register/Onboarding/BankDetails')
   ),
   beforeLoad: async () => {
     await privateRouteHandler();
@@ -209,7 +209,7 @@ const profileSettingsRoute = createRoute({
   path: AppRoutes.auth.profileSetting,
   component: lazyRouteComponent(
     async (): Promise<Record<string, unknown>> =>
-      await import('@/Pages/Authenticated/Settings')
+      await import('@/pages/authenticated/Settings')
   ),
   beforeLoad: privateRouteHandler
   // pendingComponent: () => {
@@ -223,7 +223,7 @@ const authProfileDetails = createRoute({
   path: AppRoutes.authRoutes.profileSettingSub.profileDetails.path,
   component: lazyRouteComponent(
     async (): Promise<Record<string, unknown>> =>
-      await import('@/Pages/Authenticated/Settings/Profile')
+      await import('@/pages/authenticated/Settings/Profile')
   ),
   beforeLoad: privateRouteHandler
 });
@@ -233,7 +233,7 @@ const authCredentialsDetails = createRoute({
   path: AppRoutes.authRoutes.profileSettingSub.credentials.path,
   component: lazyRouteComponent(
     async (): Promise<Record<string, unknown>> =>
-      await import('@/Pages/Authenticated/Settings/Credentials')
+      await import('@/pages/authenticated/Settings/Credentials')
   ),
   beforeLoad: privateRouteHandler
 });
@@ -243,7 +243,7 @@ const authCurrencyDetails = createRoute({
   path: AppRoutes.authRoutes.profileSettingSub.currencyDetails.path,
   component: lazyRouteComponent(
     async (): Promise<Record<string, unknown>> =>
-      await import('@/Pages/Authenticated/Settings/Currency')
+      await import('@/pages/authenticated/Settings/Currency')
   ),
   beforeLoad: privateRouteHandler
 });
@@ -253,7 +253,7 @@ const authBankDetailsDetails = createRoute({
   path: AppRoutes.authRoutes.profileSettingSub.bankDetails.path,
   component: lazyRouteComponent(
     async (): Promise<Record<string, unknown>> =>
-      await import('@/Pages/Authenticated/Settings/BankDetails')
+      await import('@/pages/authenticated/Settings/BankDetails')
   ),
   beforeLoad: privateRouteHandler
 });
@@ -272,7 +272,7 @@ export const clientRoute = createRoute({
   path: AppRoutes.authRoutes.client,
   component: lazyRouteComponent(
     async (): Promise<Record<string, unknown>> =>
-      await import('@/Pages/Authenticated/Client')
+      await import('@/pages/authenticated/Client')
   ),
   beforeLoad: privateRouteHandler
 });
@@ -283,7 +283,7 @@ export const clientFormRoute = createRoute({
   path: AppRoutes.auth.clientForm,
   component: lazyRouteComponent(
     async (): Promise<Record<string, unknown>> =>
-      await import('@/Pages/Authenticated/Client/From')
+      await import('@/pages/authenticated/Client/From')
   ),
   beforeLoad: privateRouteHandler
 });
@@ -314,7 +314,7 @@ export const invoiceRoute = createRoute({
   path: AppRoutes.authRoutes.invoices,
   component: lazyRouteComponent(
     async (): Promise<Record<string, unknown>> =>
-      await import('@/Pages/Authenticated/Invoice')
+      await import('@/pages/authenticated/Invoice')
   ),
   beforeLoad: privateRouteHandler
 });
@@ -325,7 +325,7 @@ export const invoiceFormRoute = createRoute({
   path: AppRoutes.auth.invoiceForm,
   component: lazyRouteComponent(
     async (): Promise<Record<string, unknown>> =>
-      await import('@/Pages/Authenticated/Invoice/Form')
+      await import('@/pages/authenticated/Invoice/Form')
   ),
   beforeLoad: privateRouteHandler
 });
@@ -356,7 +356,7 @@ export const purchaseRoute = createRoute({
   path: AppRoutes.purchase,
   component: lazyRouteComponent(
     async (): Promise<Record<string, unknown>> =>
-      await import('@/Pages/Authenticated/Purchase')
+      await import('@/pages/authenticated/Purchase')
   )
   // beforeLoad: async ({ location }) => {},
 });
@@ -367,7 +367,7 @@ const purchaseCartRoute = createRoute({
   path: AppRoutes.purchaseSub.cart.path,
   component: lazyRouteComponent(
     async (): Promise<Record<string, unknown>> =>
-      await import('@/Components/Auth/Purchase/Cart')
+      await import('@/components/auth/purchase/Cart')
   )
   // beforeLoad: privateRouteHandler
 });
@@ -378,7 +378,7 @@ const purchaseCheckoutRoute = createRoute({
   path: AppRoutes.purchaseSub.checkout.path,
   component: lazyRouteComponent(
     async (): Promise<Record<string, unknown>> =>
-      await import('@/Components/Auth/Purchase/Checkout')
+      await import('@/components/auth/purchase/Checkout')
   )
   // beforeLoad: privateRouteHandler
 });
@@ -389,7 +389,7 @@ const purchaseCompletedRoute = createRoute({
   path: AppRoutes.purchaseSub.completed.path,
   component: lazyRouteComponent(
     async (): Promise<Record<string, unknown>> =>
-      await import('@/Components/Auth/Purchase/Completed')
+      await import('@/components/auth/purchase/Completed')
   )
   // beforeLoad: privateRouteHandler
 });
@@ -407,7 +407,7 @@ const myAccountRoute = createRoute({
   path: AppRoutes.myAccount,
   component: lazyRouteComponent(
     async (): Promise<Record<string, unknown>> =>
-      await import('@/Pages/Authenticated/MyAccount')
+      await import('@/pages/authenticated/MyAccount')
   )
   // beforeLoad: privateRouteHandler
 });
@@ -418,7 +418,7 @@ const myAccountDashboardRoute = createRoute({
   path: AppRoutes.myAccountSub.dashboard.path,
   component: lazyRouteComponent(
     async (): Promise<Record<string, unknown>> =>
-      await import('@/Components/Auth/MyAccount/Dashboard')
+      await import('@/components/auth/myAccount/Dashboard')
   )
   // beforeLoad: privateRouteHandler
 });
@@ -429,7 +429,7 @@ const myAccountOrdersRoute = createRoute({
   path: AppRoutes.myAccountSub.orders.path,
   component: lazyRouteComponent(
     async (): Promise<Record<string, unknown>> =>
-      await import('@/Components/Auth/MyAccount/Orders')
+      await import('@/components/auth/myAccount/Orders')
   )
   // beforeLoad: privateRouteHandler
 });
@@ -440,7 +440,7 @@ const myAccountDownloadsRoute = createRoute({
   path: AppRoutes.myAccountSub.downloads.path,
   component: lazyRouteComponent(
     async (): Promise<Record<string, unknown>> =>
-      await import('@/Components/Auth/MyAccount/Downloads')
+      await import('@/components/auth/myAccount/Downloads')
   )
   // beforeLoad: privateRouteHandler
 });
@@ -451,7 +451,7 @@ const myAccountAddressesRoute = createRoute({
   path: AppRoutes.myAccountSub.addresses.path,
   component: lazyRouteComponent(
     async (): Promise<Record<string, unknown>> =>
-      await import('@/Components/Auth/MyAccount/Addresses')
+      await import('@/components/auth/myAccount/Addresses')
   )
   // beforeLoad: privateRouteHandler
 });
@@ -462,7 +462,7 @@ const myAccountDetailsRoute = createRoute({
   path: AppRoutes.myAccountSub.accountDetails.path,
   component: lazyRouteComponent(
     async (): Promise<Record<string, unknown>> =>
-      await import('@/Components/Auth/MyAccount/AccountDetails')
+      await import('@/components/auth/myAccount/AccountDetails')
   )
   // beforeLoad: privateRouteHandler
 });
@@ -473,7 +473,7 @@ const myAccountShoppingAddressRoute = createRoute({
   path: AppRoutes.myAccountSub.shoppingAddress.path,
   component: lazyRouteComponent(
     async (): Promise<Record<string, unknown>> =>
-      await import('@/Components/Auth/MyAccount/ShoppingAddress')
+      await import('@/components/auth/myAccount/ShoppingAddress')
   )
   // beforeLoad: privateRouteHandler
 });
@@ -484,7 +484,7 @@ const myAccountLogoutRoute = createRoute({
   path: AppRoutes.myAccountSub.logout.path,
   component: lazyRouteComponent(
     async (): Promise<Record<string, unknown>> =>
-      await import('@/Components/Auth/MyAccount/Logout')
+      await import('@/components/auth/myAccount/Logout')
   )
   // beforeLoad: privateRouteHandler
 });
@@ -508,7 +508,7 @@ export const categoryRoute = createRoute({
   path: AppRoutes.category,
   component: lazyRouteComponent(
     async (): Promise<Record<string, unknown>> =>
-      await import('@/Pages/Common/Category')
+      await import('@/pages/common/Category')
   )
   // beforeLoad: async ({ location }) => {},
 });
@@ -519,7 +519,7 @@ export const productRoute = createRoute({
   path: AppRoutes.product,
   component: lazyRouteComponent(
     async (): Promise<Record<string, unknown>> =>
-      await import('@/Pages/Common/Product')
+      await import('@/pages/common/Product')
   )
   // beforeLoad: async ({ location }) => {},
 });
@@ -529,7 +529,7 @@ export const wishlistRoute = createRoute({
   path: AppRoutes.wishlist,
   component: lazyRouteComponent(
     async (): Promise<Record<string, unknown>> =>
-      await import('@/Pages/Common/Wishlist')
+      await import('@/pages/common/Wishlist')
   )
 });
 // #endregion
@@ -540,7 +540,7 @@ export const testingRoute = createRoute({
   path: AppRoutes.Testing,
   component: lazyRouteComponent(
     async (): Promise<Record<string, unknown>> =>
-      await import('@/Pages/TestingPage')
+      await import('@/pages/TestingPage')
   )
   // beforeLoad: privateRouteHandler
 });
