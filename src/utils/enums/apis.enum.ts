@@ -43,7 +43,10 @@ export enum ApiUrlEnum {
   uploadSingleFile = '/file-upload/uploadSingleFile',
   deleteSingleFile = '/file-upload/deleteSingleFile',
   checkIfSingleFileExists = '/file-upload/checkIfSingleFileExists',
-  uploadFiles = '/file-upload/uploadFiles'
+  uploadFiles = '/file-upload/uploadFiles',
+
+  // Ahsan Testing
+  testPost = '/testPost'
 }
 
 export enum ZRQGetRequestExtractEnum {

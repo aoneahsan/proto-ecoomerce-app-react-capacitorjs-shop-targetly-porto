@@ -13,7 +13,7 @@ import {
   reportCustomError,
   showZAlert
 } from '@/utils/helpers';
-import { zAxiosApiRequest } from '@/utils/helpers/APIS';
+import { zAxiosApiRequest } from '@/utils/helpers/apis';
 
 import {
   type QueryFilters,

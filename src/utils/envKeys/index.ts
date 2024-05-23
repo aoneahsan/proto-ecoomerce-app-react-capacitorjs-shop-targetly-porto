@@ -35,9 +35,20 @@ firebase.databaseURL = `https://${firebase.projectId}-default-rtdb.asia-southeas
 firebase.storageBucket = `${firebase.projectId}.appspot.com`;
 firebase.appId = `1:${firebase.messagingSenderId}:web:${firebase.appId}`;
 
+const isProduction = _env.PROD;
+const isDevelopment = _env.DEV;
+const apiUrl = isProduction ? _env.VITE_API_URL_PROD : _env.VITE_API_URL;
+
+if (!apiUrl) {
+  throw new Error('API URL is not defined in .env file');
+}
+
 const ENVS = {
+  apiUrl,
   cryptoSecret: _env.VITE_CRYPTO_SECRET ?? 'invoice-app-secret',
-  firebase
+  firebase,
+  isProduction,
+  isDevelopment
 };
 
 export default ENVS;

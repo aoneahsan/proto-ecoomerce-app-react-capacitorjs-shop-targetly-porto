@@ -1,5 +1,6 @@
 import React from 'react';
 import { ZClassNames } from '@/Packages/ClassNames';
+import { FaSpinner } from 'react-icons/fa';
 
 const SpinSvg: React.FC<{
   color?: string;
@@ -7,7 +8,8 @@ const SpinSvg: React.FC<{
 }> = ({ color = 'currentColor', className }) => {
   return (
     <>
-      <svg
+      {/* TODO: Need to add a simple spin icon here */}
+      {/* <svg
         className={ZClassNames(className, {
           'w-5 h-5 mr-3 -ml-1 animate-spin': true
         })}
@@ -28,7 +30,8 @@ const SpinSvg: React.FC<{
           fill={color}
           d='M 4 12 a 8 8 0 018-8 V 0 C 5.373 0 0 5.373 0 12 h 4 zm 2 5.291 A 7.962 7.962 0 014 12 H 0 c 0 3.042 1.135 5.824 7.938l3-2.647 z'
         />
-      </svg>
+      </svg> */}
+      <FaSpinner />
     </>
   );
 };

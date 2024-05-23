@@ -67,19 +67,17 @@ export const zAxiosApiRequest = async <T>({
 
     // else if this is an authenticatedRequest and authToken is not fount then
   } else if (_isAuthenticatedRequest && _authToken === undefined) {
-    // Remove data from Storage.
-    await Promise.all([
-      Storage.remove(constants.localstorageKeys.userData),
-      Storage.remove(constants.localstorageKeys.authToken)
-    ]);
+    // // Remove data from Storage.
+    // await Promise.all([
+    //   Storage.remove(constants.localstorageKeys.userData),
+    //   Storage.remove(constants.localstorageKeys.authToken)
+    // ]);
 
-    // Redirect to login.
-    // eslint-disable-next-line
-    // redirect({
-    //   to: AppRoutes.login
-    // });
+    // window.location.href = AppRoutes.login;
 
-    window.location.href = AppRoutes.login;
+    throw new Error(
+      'User not authenticated - _authToken is undefined and _isAuthenticatedRequest is true - zAxiosApiRequest'
+    );
   } else {
     throw new Error(messages.general.failed);
   }

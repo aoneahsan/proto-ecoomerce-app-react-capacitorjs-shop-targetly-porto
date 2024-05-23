@@ -19,6 +19,6 @@ export default defineConfig({
     port: 5810
   },
   build: {
-    sourcemap: false
+    sourcemap: true
   }
 });

@@ -1,287 +1,122 @@
 // #region ---- Core Imports ----
-import React, { useCallback, useMemo, useState } from 'react';
-
-// #endregion
-
-// #region ---- Packages Imports ----
-import { useSetRecoilState } from 'recoil';
-
+import React, { useState } from 'react';
 // #endregion
 
 // #region ---- Custom Imports ----
-import {
-  ZRUBox,
-  ZRUButton,
-  ZRUHeading,
-  ZRUInput,
-  ZRUText
-} from '@/components/RadixUI';
+import { ZRUBox } from '@/components/RadixUI';
 import { ZPage } from '@/components/Elements';
 import ZPublicNavTopBar from '@/components/common/Navigation/TopBar';
-import {
-  ZFormik,
-  ZFormikForm,
-  type zSetFieldErrorType
-} from '@/Packages/Formik';
-import {
-  isZNonEmptyString,
-  reportCustomError,
-  validateField
-} from '@/utils/helpers';
-import { useZNavigate } from '@/hooks/navigation.hook';
-import constants from '@/utils/constants';
-import { showSuccessNotification } from '@/utils/helpers/notification';
-import { messages } from '@/utils/messages';
-
-// #endregion
-
-// #region ---- Types Imports ----
-import { zValidationRuleE } from '@/utils/enums/index.enum';
-import { AppRoutes } from '@/Routes/AppRoutes';
-import { ZUserI, type ZAuthI } from '@/types/auth/index.type';
-import { ZRUHeadingAsE, ZRUTextAsE } from '@/types/radixUI/index.type';
-import { ZErrorException } from '@/types/apis/aws/index.type';
-
+import { reportCustomError } from '@/utils/helpers';
 // #endregion
 
 // #region ---- Store Imports ----
-import { ZUserRStateAtom } from '@/store/auth/user/index.recoil';
-import { ZAuthTokenData } from '@/store/auth/index.recoil';
-import { _createUserWithEmailAndPassword } from '@/configs/firebase/frbAuth';
+import {
+  _createUserWithEmailAndPassword,
+  _firebaseAuth
+} from '@/configs/firebase/frbAuth';
+import {
+  UserCredential,
+  getIdToken,
+  signInWithEmailAndPassword
+} from 'firebase/auth';
+import { useZRQCreateRequest } from '@/hooks/zreactquery.hooks';
+import { ApiUrlEnum } from '@/utils/enums/apis.enum';
 
 // #endregion
 
 const Login: React.FC = () => {
-  const [compState, setCompState] = useState({ isProcessing: false });
+  const [compState, setCompState] = useState<{
+    currentUser: UserCredential | null;
+    currentUserIdTokenJWT: string | null;
+  }>({
+    currentUser: null,
+    currentUserIdTokenJWT: null
+  });
 
-  // #region custom hooks
-  const navigate = useZNavigate();
-  // #endregion
-
-  // #region Recoil
-  const setZUserRState = useSetRecoilState(ZUserRStateAtom);
-
-  const setZAuthTokenRStateAtom = useSetRecoilState(ZAuthTokenData);
-  // #endregion
-
-  // #region Functions
-  const processing = useCallback(() => {
-    setCompState((prevState) => ({
-      ...prevState,
-      isProcessing: true
-    }));
-  }, []);
-
-  const finishedProcessing = useCallback(() => {
-    setCompState((prevState) => ({
-      ...prevState,
-      isProcessing: false
-    }));
-  }, []);
-
-  const registerBtnClickHandler = useCallback((): void => {
-    try {
-      void navigate({ to: AppRoutes.register });
-    } catch (error) {
-      reportCustomError(error);
-    }
-  }, []);
-
-  const forgotBtnClickHandler = useCallback((): void => {
-    try {
-      void navigate({ to: AppRoutes.forgotPassword });
-    } catch (error) {
-      reportCustomError(error);
-    }
-  }, []);
-
-  const formikSubmitHandler = useCallback(
-    async (values: ZUserI, setFieldError: zSetFieldErrorType) => {
-      try {
-        processing();
-      } catch (error) {
-        alert('error occured while form submit');
-
-        reportCustomError(error);
-      } finally {
-        finishedProcessing();
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  );
-  // #endregion
-
-  // #region constants
-  const pageHelmet = useMemo(
-    () => ({
-      title: `${constants.productInfo.name} - Login page - Zaions`
-    }),
-    []
-  );
-
-  const formikInitialValues = useMemo(
-    () => ({
-      email: '',
-      password: '',
-
-      // Just for frontend
-      isApiError: false
-    }),
-    []
-  );
-  // #endregion
+  const { mutateAsync: mutateTestPostRequest } = useZRQCreateRequest({
+    _url: ApiUrlEnum.testPost
+  });
 
   const testSignUp = async () => {
-    const res = await _createUserWithEmailAndPassword(
+    const _createUserWithEmailAndPasswordRes =
+      await _createUserWithEmailAndPassword('aoneahsan@gmail.com', 'Asd123!@#');
+    console.log({
+      ml: 'testSignUp called',
+      _createUserWithEmailAndPasswordRes
+    });
+
+    setCompState((oldState) => ({
+      ...oldState,
+      currentUser: _createUserWithEmailAndPasswordRes
+    }));
+  };
+
+  const textGetUserAuthTokenAndHitAPI = async () => {
+    try {
+      if (!compState?.currentUser || !compState?.currentUser?.user) {
+        throw new Error('User not found');
+      } else {
+        const getIdTokenRes = await getIdToken(compState?.currentUser?.user);
+
+        const mutateTestPostRequestRes = await mutateTestPostRequest(
+          JSON.stringify({
+            data: 'okay from frontend'
+          })
+        );
+
+        console.log({
+          ml: 'textGetUserAuthTokenAndHitAPI called',
+          getIdTokenRes,
+          mutateTestPostRequestRes
+        });
+      }
+    } catch (error) {
+      reportCustomError(error);
+    }
+  };
+
+  const textSignInWithEmailAndPassword = async () => {
+    const signInWithEmailAndPasswordRes = await signInWithEmailAndPassword(
+      _firebaseAuth,
       'aoneahsan@gmail.com',
       'Asd123!@#'
     );
-    console.log({ res });
+    console.log({
+      ml: 'textSignInWithEmailAndPassword called',
+      signInWithEmailAndPasswordRes
+    });
+
+    setCompState((oldState) => ({
+      ...oldState,
+      currentUser: signInWithEmailAndPasswordRes
+    }));
   };
 
   return (
-    <ZPage
-      className='relative flex-col w-full min-h-screen bg-light h max-h-max'
-      helmet={pageHelmet}
-    >
+    <ZPage className='relative flex-col w-full min-h-screen bg-light h max-h-max'>
       {/* Navigation */}
       <ZPublicNavTopBar />
 
       <ZRUBox className='flex flex-col items-center w-full h-full max-w-full mt-6'>
         <ZRUBox className='pt-3 mt-10 w-full sm:w-[25.5625rem] text-start px-1 sm:ps-4'>
-          <button onClick={testSignUp}>testSignUp</button>
-          <br />
-          <ZFormik
-            initialValues={formikInitialValues}
-            validate={(values) => {
-              const errors = {};
-              validateField('email', values, errors, zValidationRuleE.email);
-              validateField(
-                'password',
-                values,
-                errors,
-                zValidationRuleE.password
-              );
-
-              return errors;
-            }}
-            onSubmit={(values, { setFieldError }) => {
-              void formikSubmitHandler(values, setFieldError);
-            }}
+          <button
+            onClick={testSignUp}
+            className='px-4 py-3 mb-4 mr-4 text-white bg-primary'
           >
-            {({
-              values,
-              touched,
-              errors,
-              isValid,
-              handleSubmit,
-              handleChange,
-              handleBlur,
-              submitForm
-            }) => {
-              return (
-                <ZFormikForm onSubmit={handleSubmit}>
-                  <ZRUHeading
-                    as={ZRUHeadingAsE.h2}
-                    className='text-tertiary text-start text-[2.25rem] font-semibold normal-case maxMd:text-center mb-4'
-                  >
-                    Login
-                  </ZRUHeading>
-
-                  <ZRUBox className='mt-5'>
-                    {/* Email filed */}
-                    <ZRUInput
-                      size='3'
-                      required
-                      name='email'
-                      inputClassName='w-full'
-                      label='Username or email address'
-                      value={values?.email}
-                      errorNode={errors?.email}
-                      isValid={
-                        touched.email !== undefined
-                          ? touched.email && !isZNonEmptyString(errors?.email)
-                          : true
-                      }
-                      onChange={(e) => {
-                        handleChange(e);
-                      }}
-                      onBlur={(e) => {
-                        handleBlur(e);
-                      }}
-                    />
-
-                    {/* Password filed */}
-                    <ZRUInput
-                      size='3'
-                      required
-                      name='password'
-                      className='mt-5'
-                      label='Password'
-                      inputClassName='w-full'
-                      value={values?.password}
-                      errorNode={errors?.password}
-                      isValid={
-                        touched.password !== undefined
-                          ? touched.password &&
-                            !isZNonEmptyString(errors?.password)
-                          : true
-                      }
-                      onChange={(e) => {
-                        handleChange(e);
-                      }}
-                      onBlur={(e) => {
-                        handleBlur(e);
-                      }}
-                    />
-                    <ZRUBox className='text-end'>
-                      <ZRUText
-                        as={ZRUTextAsE.span}
-                        className='cursor-pointer text-primary hover:underline'
-                        onClick={forgotBtnClickHandler}
-                      >
-                        Forgot your password?
-                      </ZRUText>
-                    </ZRUBox>
-                  </ZRUBox>
-
-                  <ZRUBox className='mt-6'>
-                    <ZRUButton
-                      type='button'
-                      size='3'
-                      loading={compState?.isProcessing}
-                      className='flex items-center justify-center w-full normal-case'
-                      disabled={
-                        (!isValid && !values?.isApiError) ||
-                        compState?.isProcessing
-                      }
-                      onClick={() => {
-                        void submitForm();
-                      }}
-                    >
-                      Log in
-                    </ZRUButton>
-
-                    <ZRUText
-                      as={ZRUTextAsE.p}
-                      className='mt-2 maxSm:text-center'
-                    >
-                      New here?{' '}
-                      <ZRUText
-                        as={ZRUTextAsE.span}
-                        className='cursor-pointer text-primary hover:underline'
-                        onClick={registerBtnClickHandler}
-                      >
-                        Register now
-                      </ZRUText>{' '}
-                      to unlock exclusive features and benefits!
-                    </ZRUText>
-                  </ZRUBox>
-                </ZFormikForm>
-              );
-            }}
-          </ZFormik>
+            testSignUp
+          </button>
+          <button
+            onClick={textGetUserAuthTokenAndHitAPI}
+            className='px-4 py-3 mb-4 mr-4 text-white bg-primary'
+          >
+            textGetUserAuthTokenAndHitAPI
+          </button>
+          <button
+            onClick={textSignInWithEmailAndPassword}
+            className='px-4 py-3 mb-4 mr-4 text-white bg-primary'
+          >
+            textSignInWithEmailAndPassword
+          </button>
         </ZRUBox>
       </ZRUBox>
     </ZPage>
